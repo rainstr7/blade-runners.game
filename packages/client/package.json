@@ -8,7 +8,8 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest ./"
+    "test": "jest ./",
+    "commit": "cz"
   },
   "dependencies": {
     "dotenv": "^16.0.2",
@@ -25,6 +26,8 @@
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.23.0",
     "jest": "^28",
     "jest-environment-jsdom": "^29.0.1",
@@ -34,5 +37,10 @@
     "typescript": "^4.8.2",
     "vite": "^3.0.7"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
