@@ -1,7 +1,12 @@
-import cn from './Button.module.css';
-const Button = ({label}) => {
+import cn from './style.module.css';
+
+interface Props {
+  label: string;
+  type?: 'button' | 'reset' | 'submit';
+}
+const Button = ({label, type = 'button', ...props}: Props) => {
   return (
-    <button className={cn.Button}>
+    <button className={cn.Button} type={type} {...props}>
       {label}
     </button>
   );
