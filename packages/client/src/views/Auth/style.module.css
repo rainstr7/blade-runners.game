@@ -20,17 +20,6 @@
     flex-direction: column;
 }
 
-.Header {
-    color: #FFFFFF;
-    font-style: normal;
-    font-weight: 900;
-    font-size: 96px;
-    line-height: 110px;
-    text-align: center;
-    margin: 58px 0 0 0;
-    padding: 0;
-}
-
 .Message {
     color: #FFFFFF;
     font-size: 20px;
