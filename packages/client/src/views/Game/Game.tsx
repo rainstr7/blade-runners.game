@@ -1,6 +1,7 @@
 import { Engine } from '../../core/Engine'
+import { FC } from 'react'
 
-export const Game = () => {
+export const Game: FC = () => {
   return (
     <main>
       <Engine />
