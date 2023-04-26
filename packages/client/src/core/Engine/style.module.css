@@ -1,0 +1,16 @@
+.container {
+    position: relative;
+    background-color: #440c77;
+    width: 1024px;
+    height: 768px;
+}
+
+.character {
+    position: absolute;
+    display: block;
+    height: 100px;
+    width: 100px;
+    bottom: 0;
+    left: 0;
+    background-color: #ffff45;
+}
