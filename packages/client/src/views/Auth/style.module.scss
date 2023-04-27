@@ -1,0 +1,43 @@
+@import "src/styles/vars";
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center {
+  align-items: center;
+  flex-grow: 1;
+}
+
+
+.Container {
+  @include flex-column;
+  @include flex-center;
+
+  background-image: url("../../assets/bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.Block {
+  @include flex-column;
+  @include flex-center;
+
+  justify-content: space-between;
+  padding: 2.9rem;
+}
+
+.AuthForm {
+  @include flex-column;
+}
+
+.Message,
+.Authors {
+  color: $font-color;
+}
+
+.Message {
+  padding: 1rem 0.15rem;
+}

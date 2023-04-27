@@ -1,4 +1,4 @@
-import cn from './input.module.css'
+import cn from './styles.module.scss'
 
 import { ChangeEventHandler } from 'react'
 

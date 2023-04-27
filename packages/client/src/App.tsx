@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import './App.css'
+import './App.scss'
 import Auth from './views/Auth'
+import Layout from './components/HOC/Layout'
 
 function App() {
   useEffect(() => {
@@ -12,8 +13,12 @@ function App() {
     }
 
     fetchServerData()
-  }, [])
-  return <Auth />
+  }, []);
+
+  return (
+    <Layout>
+      <Auth />
+    </Layout>);
 }
 
 export default App

@@ -1,4 +1,4 @@
-import cn from './style.module.css';
+import cn from './style.module.scss';
 
 interface Props {
   label: string;
