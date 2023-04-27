@@ -8,9 +8,10 @@ interface Props {
   value: string
   name: string
   onChange: ChangeEventHandler<HTMLInputElement>
+  autoComplete?: string
 }
 
-const Input = ({ placeholder, type, value, name, onChange }: Props) => {
+const Input = ({ placeholder, type, value, name, onChange, autoComplete='off' }: Props) => {
   return (
     <input
       className={cn.Input}
@@ -20,6 +21,7 @@ const Input = ({ placeholder, type, value, name, onChange }: Props) => {
       onChange={onChange}
       id={name}
       name={name}
+      autoComplete={autoComplete}
     />
   )
 }

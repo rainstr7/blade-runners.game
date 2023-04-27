@@ -33,6 +33,7 @@ const Auth = () => {
             value={values.login}
             onChange={handleChange}
             name="login"
+            autoComplete='login'
           />
           <Input
             placeholder="PASSWORD"
@@ -40,6 +41,7 @@ const Auth = () => {
             value={values.password}
             onChange={handleChange}
             name="password"
+            autoComplete='password'
           />
           <Button label="SIGN IN" type="submit" />
           <p className={cn.Message}>
