@@ -1,4 +1,18 @@
+@import './src/styles/vars';
+
 .Layout {
-    display: flex;
-    flex-grow: 1;
+  display: flex;
+  flex-grow: 1;
+  font-family: $font-family;
+}
+
+.Layout a {
+  text-decoration: none;
+  color: $font-color;
+}
+
+.Layout input {
+  input {
+    outline: none;
+  }
 }

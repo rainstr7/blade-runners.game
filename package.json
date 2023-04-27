@@ -21,7 +21,6 @@
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.1.1",
-    "lerna": "^5.4.3",
-    "sass": "^1.62.1"
+    "lerna": "^5.4.3"
   }
 }

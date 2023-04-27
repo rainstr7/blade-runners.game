@@ -1,8 +1,8 @@
 import cn from './style.module.scss'
 
 interface Props {
-  label: string;
-  href?: string;
+  label: string
+  href?: string
 }
 
 const ButtonLink = ({ label, href = '#' }: Props) => {

@@ -1,16 +1,12 @@
-import { ReactElement } from 'react';
-import cn from './style.module.scss';
+import { ReactElement } from 'react'
+import cn from './style.module.scss'
 
 interface Props {
-  children: ReactElement;
+  children: ReactElement
 }
 
 const Layout = ({ children }: Props) => {
-  return (
-    <div className={cn.Layout}>
-      {children}
-    </div>
-  )
-};
+  return <div className={cn.Layout}>{children}</div>
+}
 
-export default Layout;
+export default Layout

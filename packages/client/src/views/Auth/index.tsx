@@ -8,16 +8,16 @@ import ButtonLink from '../../components/UI/ButtonLink'
 const Auth = () => {
   const [values, setValue] = useState({ login: '', password: '' })
 
-  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
     if (event.currentTarget) {
       setValue({
         ...values,
-        [event.currentTarget.name]: event.currentTarget.value
+        [event.currentTarget.name]: event.currentTarget.value,
       })
     }
   }
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault()
     console.log('body', JSON.stringify(values))
   }
@@ -25,25 +25,26 @@ const Auth = () => {
   return (
     <div className={cn.Container}>
       <div className={cn.Block}>
-        <Header title='BLADE RUNNER' />
+        <Header title="BLADE RUNNER" />
         <form className={cn.AuthForm} onSubmit={handleSubmit}>
           <Input
-            placeholder='LOGIN'
-            type='text'
+            placeholder="LOGIN"
+            type="text"
             value={values.login}
             onChange={handleChange}
-            name='login'
+            name="login"
           />
           <Input
-            placeholder='PASSWORD'
-            type='password'
+            placeholder="PASSWORD"
+            type="password"
             value={values.password}
             onChange={handleChange}
-            name='password'
+            name="password"
           />
-          <Button label='SIGN IN' type='submit' />
-          <p className={cn.Message}>Don’t you have an account?
-            <ButtonLink label='SIGN UP' />
+          <Button label="SIGN IN" type="submit" />
+          <p className={cn.Message}>
+            Don’t you have an account?
+            <ButtonLink label="SIGN UP" />
           </p>
         </form>
         <span className={cn.Authors}>BY blade runners</span>

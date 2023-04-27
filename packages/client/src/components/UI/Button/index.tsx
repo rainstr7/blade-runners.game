@@ -1,15 +1,15 @@
-import cn from './style.module.scss';
+import cn from './style.module.scss'
 
 interface Props {
-  label: string;
-  type?: 'button' | 'reset' | 'submit';
+  label: string
+  type?: 'button' | 'reset' | 'submit'
 }
-const Button = ({label, type = 'button', ...props}: Props) => {
+const Button = ({ label, type = 'button', ...props }: Props) => {
   return (
     <button className={cn.Button} type={type} {...props}>
       {label}
     </button>
-  );
+  )
 }
 
-export default Button;
+export default Button

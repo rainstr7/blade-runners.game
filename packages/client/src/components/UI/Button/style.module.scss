@@ -1,4 +1,4 @@
-@import "src/styles/vars";
+@import 'src/styles/vars';
 
 .Button {
   font-family: $font-family;
@@ -9,5 +9,4 @@
   box-shadow: $box-shadow;
   background-color: $background-lite-color;
   border-radius: $border-radius;
-
 }
