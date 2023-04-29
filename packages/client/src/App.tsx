@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import './App.css'
 import { Game } from './views/Game'
+import { Finish } from './views/Finish'
 
 function App() {
   useEffect(() => {
@@ -15,7 +16,7 @@ function App() {
   }, [])
   // TODO Router
   return <div className="App">
-    <Game />
+    <Finish />
   </div>
 }
 
