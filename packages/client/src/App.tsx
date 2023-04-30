@@ -14,9 +14,7 @@ function App() {
     fetchServerData()
   }, [])
 
-  return (
-      <Auth />
-  )
+  return <Auth />
 }
 
 export default App

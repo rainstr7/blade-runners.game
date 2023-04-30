@@ -12,7 +12,7 @@ const Auth = () => {
     if (event.currentTarget) {
       setAuthData({
         ...authData,
-        [event.currentTarget.name]: event.currentTarget.value
+        [event.currentTarget.name]: event.currentTarget.value,
       })
     }
   }
@@ -27,25 +27,25 @@ const Auth = () => {
       <div className={cn.Block}>
         <form className={cn.AuthForm} onSubmit={handleSubmit}>
           <Input
-            placeholder='LOGIN'
-            type='text'
+            placeholder="LOGIN"
+            type="text"
             value={authData.login}
             onChange={handleChange}
-            name='login'
-            autoComplete='login'
+            name="login"
+            autoComplete="login"
           />
           <Input
-            placeholder='PASSWORD'
-            type='password'
+            placeholder="PASSWORD"
+            type="password"
             value={authData.password}
             onChange={handleChange}
-            name='password'
-            autoComplete='password'
+            name="password"
+            autoComplete="password"
           />
-          <Button label='SIGN IN' type='submit' />
+          <Button label="SIGN IN" type="submit" />
           <p className={cn.Message}>
             Don’t you have an account?
-            <ButtonLink label='SIGN UP' />
+            <ButtonLink label="SIGN UP" />
           </p>
         </form>
       </div>

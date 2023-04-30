@@ -1,10 +1,10 @@
 import Layout from '../../components/HOC/Layout'
 const SignUp = () => {
   return (
-    <Layout >
+    <Layout>
       <div>SIGN UP</div>
     </Layout>
-  );
+  )
 }
 
-export default SignUp;
+export default SignUp
