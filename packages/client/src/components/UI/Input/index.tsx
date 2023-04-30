@@ -11,7 +11,14 @@ interface Props {
   autoComplete?: string
 }
 
-const Input = ({ placeholder = '', type='text', value, name, onChange, autoComplete='off' }: Props) => {
+const Input = ({
+  placeholder = '',
+  type = 'text',
+  value,
+  name,
+  onChange,
+  autoComplete = 'off',
+}: Props) => {
   return (
     <input
       className={cn.Input}
