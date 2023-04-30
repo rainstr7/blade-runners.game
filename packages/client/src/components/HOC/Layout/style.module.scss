@@ -1,18 +1,39 @@
 @import './src/styles/vars';
+@import './src/styles/mixins';
 
 .Layout {
   display: flex;
   flex-grow: 1;
   font-family: $font-family;
-}
 
-.Layout a {
-  text-decoration: none;
-  color: $font-color;
-}
+  a {
+    text-decoration: none;
+    color: $font-color;
+  }
 
-.Layout input {
   input {
     outline: none;
   }
+}
+
+.Container {
+  @include flex-column;
+  @include flex-center;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 2.9rem;
+}
+
+.GameOver {
+  background-image: url('../../../assets/gameover_bg.jpeg');
+}
+
+.Default {
+  background-image: url('../../../assets/default_bg.jpg');
+}
+
+.Authors {
+  color: $font-color;
 }

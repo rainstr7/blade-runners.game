@@ -2,8 +2,8 @@ import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import cn from './style.module.scss'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
-import Header from '../../components/UI/Header'
 import ButtonLink from '../../components/UI/ButtonLink'
+import Layout from '../../components/HOC/Layout'
 
 const Auth = () => {
   const [authData, setAuthData] = useState({ login: '', password: '' })
@@ -12,7 +12,7 @@ const Auth = () => {
     if (event.currentTarget) {
       setAuthData({
         ...authData,
-        [event.currentTarget.name]: event.currentTarget.value,
+        [event.currentTarget.name]: event.currentTarget.value
       })
     }
   }
@@ -23,35 +23,33 @@ const Auth = () => {
   }
 
   return (
-    <div className={cn.Container}>
+    <Layout>
       <div className={cn.Block}>
-        <Header title="BLADE RUNNER" />
         <form className={cn.AuthForm} onSubmit={handleSubmit}>
           <Input
-            placeholder="LOGIN"
-            type="text"
+            placeholder='LOGIN'
+            type='text'
             value={authData.login}
             onChange={handleChange}
-            name="login"
-            autoComplete="login"
+            name='login'
+            autoComplete='login'
           />
           <Input
-            placeholder="PASSWORD"
-            type="password"
+            placeholder='PASSWORD'
+            type='password'
             value={authData.password}
             onChange={handleChange}
-            name="password"
-            autoComplete="password"
+            name='password'
+            autoComplete='password'
           />
-          <Button label="SIGN IN" type="submit" />
+          <Button label='SIGN IN' type='submit' />
           <p className={cn.Message}>
             Don’t you have an account?
-            <ButtonLink label="SIGN UP" />
+            <ButtonLink label='SIGN UP' />
           </p>
         </form>
-        <span className={cn.Authors}>BY blade runners</span>
       </div>
-    </div>
+    </Layout>
   )
 }
 

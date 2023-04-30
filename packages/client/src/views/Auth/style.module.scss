@@ -1,24 +1,5 @@
 @import 'src/styles/vars';
-
-@mixin flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-@mixin flex-center {
-  align-items: center;
-  flex-grow: 1;
-}
-
-.Container {
-  @include flex-column;
-  @include flex-center;
-
-  background-image: url('../../assets/bg.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
+@import 'src/styles/mixins';
 
 .Block {
   @include flex-column;
@@ -32,8 +13,7 @@
   @include flex-column;
 }
 
-.Message,
-.Authors {
+.Message {
   color: $font-color;
 }
 

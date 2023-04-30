@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import Auth from './views/Auth'
-import Layout from './components/HOC/Layout'
 import './App.css'
 
 function App() {
@@ -16,9 +15,7 @@ function App() {
   }, [])
 
   return (
-    <Layout>
       <Auth />
-    </Layout>
   )
 }
 
