@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import Auth from './views/Auth'
 import './App.css'
+import SignUp from './views/SignUp'
 
 function App() {
   useEffect(() => {
@@ -14,7 +14,7 @@ function App() {
     fetchServerData()
   }, [])
 
-  return <Auth />
+  return <SignUp />
 }
 
 export default App
