@@ -6,12 +6,12 @@ import Header from '../../components/UI/Header'
 import ButtonLink from '../../components/UI/ButtonLink'
 
 const Auth = () => {
-  const [values, setValue] = useState({ login: '', password: '' })
+  const [authData, setAuthData] = useState({ login: '', password: '' })
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
     if (event.currentTarget) {
-      setValue({
-        ...values,
+      setAuthData({
+        ...authData,
         [event.currentTarget.name]: event.currentTarget.value,
       })
     }
@@ -19,7 +19,7 @@ const Auth = () => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault()
-    console.log('body', JSON.stringify(values))
+    console.log('body', JSON.stringify(authData))
   }
 
   return (
@@ -30,7 +30,7 @@ const Auth = () => {
           <Input
             placeholder="LOGIN"
             type="text"
-            value={values.login}
+            value={authData.login}
             onChange={handleChange}
             name="login"
             autoComplete='login'
@@ -38,7 +38,7 @@ const Auth = () => {
           <Input
             placeholder="PASSWORD"
             type="password"
-            value={values.password}
+            value={authData.password}
             onChange={handleChange}
             name="password"
             autoComplete='password'
