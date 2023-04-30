@@ -24,7 +24,7 @@ const Auth = () => {
 
   return (
     <Layout>
-      <div className={cn.Block}>
+      <main className={cn.Block}>
         <form className={cn.AuthForm} onSubmit={handleSubmit}>
           <Input
             placeholder="LOGIN"
@@ -48,7 +48,7 @@ const Auth = () => {
             <ButtonLink label="SIGN UP" />
           </p>
         </form>
-      </div>
+      </main>
     </Layout>
   )
 }
