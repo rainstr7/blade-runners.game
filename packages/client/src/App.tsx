@@ -13,18 +13,21 @@ function App() {
 
     fetchServerData()
   }, [])
-  return <div className="App">Вот тут будет жить ваше приложение :)
-    <Routes>
-      <Route path='/' element={<div>LOGIN</div>}/>
-      <Route path='/registr' element={<div>REGISTRATION</div>}/>
-      <Route path='/main' element={<div>MAIN</div>}/>
-      <Route path='/game' element={<div>GAME</div>}/>
-      <Route path='/settings' element={<div>SETTINGS</div>}/>
-      <Route path='/rating' element={<div>RATING</div>}/>
-      <Route path='/forum/*' element={<div>FORUM</div>}/>
-      <Route path='*' element={<div>Страница не найдена</div>}/>
-    </Routes>
-  </div>
+  return (
+    <div className="App">
+      Вот тут будет жить ваше приложение :)
+      <Routes>
+        <Route path="/" element={<div>Main</div>} />
+        <Route path="/signup" element={<div>Sign up / Registration</div>} />
+        <Route path="/signin" element={<div>Sign in / Login</div>} />
+        <Route path="/game" element={<div>Game</div>} />
+        <Route path="/settings" element={<div>Settings</div>} />
+        <Route path="/rating" element={<div>Leaderboard</div>} />
+        <Route path="/forum/*" element={<div>Forum</div>} />
+        <Route path="*" element={<div>Страница не найдена</div>} />
+      </Routes>
+    </div>
+  )
 }
 
 export default App
