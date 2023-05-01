@@ -4,18 +4,18 @@ import useEvent from '../../hooks/useEvent'
 import Background from '../background'
 import Enemy from '../enemy'
 import Player from '../player'
+import GameText from '../gameText'
+import bg from '../../assets/game_bg.png'
 
 // TODO Full screen
-const HEIGHT = 768;
-const WIDTH = 1024;
+const gameHeight = 768;
+const gameWidth = 1024;
 
 let score = 0;
 let gameOver = false;
 
-const jumpBoost = -20;
-
-const background = new Background();
-const player = new Player();
+const background = new Background(gameWidth, gameHeight, bg, 3);
+const player = new Player(gameWidth, gameHeight, 100, 100, 0.5);
 
 let enemies: Enemy[] = [];
 let enemyTimer = 0;
@@ -24,45 +24,34 @@ let randomEnemyInterval = Math.random() * 1000 + 500;
 
 const pressedKeyCodes: string[] = []
 
-const handleKeyDownPress = (e: KeyboardEvent) => {
-  if (e.code === 'Space' && !pressedKeyCodes.includes(e.code)) {
-    pressedKeyCodes.push(e.code);
-    console.log('Space down ', pressedKeyCodes)
-
-    if(!player.jump) {
-      player.yV = jumpBoost;
-    }
+const handleKeyDown = (e: Event) => {
+  const keyCode = (e as KeyboardEvent)?.code;
+  if (keyCode && keyCode === 'Space' && !pressedKeyCodes.includes(keyCode)) {
+    pressedKeyCodes.push(keyCode);
   }
 }
 
-const handleKeyUpPress = (e: KeyboardEvent) => {
-  if (e.code === 'Space') {
-    pressedKeyCodes.splice(pressedKeyCodes.indexOf(e.code), 1);
-    console.log(pressedKeyCodes)
-     if(player.yV < -3  ) {
-      player.yV  = -2   ;
-    }
+const handleKeyUp = (e: Event) => {
+  const keyCode = (e as KeyboardEvent)?.code;
+  if (keyCode && keyCode === 'Space') {
+    pressedKeyCodes.splice(pressedKeyCodes.indexOf(keyCode), 1);
+    // if(player.yV < -3  ) {
+    //   player.yV  = -2   ;
+    // }
   }
 }
 
-// TODO to class
 const displayScore = (ctx: CanvasRenderingContext2D) => {
-  ctx.fillStyle = '#000';
-  ctx.font = '40px Helvetica';
-  ctx.fillText(`Score: ${score}`, 50, 50)
+  GameText.displayText(ctx, 50, 50, `Score: ${score}`, 'Helvetica', 40);
 }
-
 const displayGameOver = (ctx: CanvasRenderingContext2D) => {
-  ctx.fillStyle = '#000';
-  ctx.font = '40px Helvetica';
-  ctx.fillText(`Game Over`, WIDTH/2, HEIGHT/2)
+  GameText.displayText(ctx, gameWidth/2 - 100, gameHeight/2 - 20, `Game Over`, 'Helvetica', 40);
 }
 
-// TODO make a service, maybe use singleton pattern
+// TODO сервис? синглтон?
 const checkCollisions = () => {
-  if (player.y + player.height > HEIGHT) {
-    player.jump = false;
-    player.y = HEIGHT - player.height
+  if (player.y + player.height > gameHeight) {
+    player.y = gameHeight - player.height
   }
 
   enemies.forEach(enemy => {
@@ -71,16 +60,14 @@ const checkCollisions = () => {
       player.y < enemy.y + enemy.height &&
       player.y + player.height > enemy.y
     ) {
-      console.log('collisison')
       gameOver = true;
     }
-
   })
 }
 
-const  handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
+const handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
   if (enemyTimer > enemyInterval + randomEnemyInterval) {
-    enemies.push(new Enemy(WIDTH, HEIGHT));
+    enemies.push(new Enemy(gameWidth, gameHeight,50, 50, 5));
     // TODO более разнообразно надо
     randomEnemyInterval = Math.random() * 1000 + 500;
     enemyTimer = 0;
@@ -107,26 +94,23 @@ const game = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
 
   handleEnemy(ctx, deltaTime)
 
-  player.draw(ctx);
-  player.update([])
-
   checkCollisions();
 
+  player.draw(ctx);
+  player.update(pressedKeyCodes);
+
   displayScore(ctx);
+
   if (gameOver) {
-    displayGameOver(ctx)
+    displayGameOver(ctx);
   }
 }
 
-
-
 const Engine: FC = () => {
-  // Key press events listeners
-  useEvent('keydown',    handleKeyDownPress)
-  useEvent('keyup', handleKeyUpPress)
+  useEvent('keydown', handleKeyDown)
+  useEvent('keyup', handleKeyUp)
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
-
   let lastTime = 0;
 
   useEffect(() => {
@@ -144,7 +128,6 @@ const Engine: FC = () => {
       }
       animationFrameId = requestAnimationFrame(render)
     }
-
     render(0)
 
     return () => {
@@ -154,7 +137,7 @@ const Engine: FC = () => {
 
   return (
     <div className={styles.container}>
-      <canvas ref={canvasRef} width={WIDTH} height={HEIGHT}/>
+      <canvas ref={canvasRef} width={gameWidth} height={gameHeight}/>
     </div>
   )
 }

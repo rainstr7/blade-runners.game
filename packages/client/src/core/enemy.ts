@@ -1,21 +1,22 @@
 class Enemy {
-  private gameWidth: number;
-  private gameHeight: number;
   x: number;
   y: number;
   height: number;
   width: number;
-  private speed: number;
   markForDelete: boolean;
 
-  constructor(gameWidth: number, gameHeight: number) {
+  private readonly gameWidth: number;
+  private readonly gameHeight: number;
+  private readonly speed: number;
+
+  constructor(gameWidth: number, gameHeight: number, width: number, height: number, speed: number) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
-    this.width = 50;
-    this.height = 50;
+    this.width = width;
+    this.height = height;
     this.x = this.gameWidth;
     this.y = this.gameHeight - this.height;
-    this.speed = 5
+    this.speed = speed
     this.markForDelete = false;
   }
 
@@ -24,7 +25,7 @@ class Enemy {
     ctx.fillRect(this.x, this.y, this.width, this.height)
   }
 
-  update() {
+  update(): void {
     this.x -= this.speed;
     if (this.x < 0 - this.width) {
       this.markForDelete = true;
