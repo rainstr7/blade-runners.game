@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import './App.css'
-import { Game } from './views/Game'
+// import { Game } from './views/Game'
+import LeaderBoard from './views/Leaderboard'
 
 function App() {
   useEffect(() => {
@@ -14,9 +15,7 @@ function App() {
     fetchServerData()
   }, [])
   // TODO Router
-  return <div className="App">
-    <Game />
-  </div>
+  return <LeaderBoard/>
 }
 
 export default App

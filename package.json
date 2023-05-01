@@ -21,6 +21,12 @@
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.1.1",
+    "git-cz": "^4.9.0",
     "lerna": "^5.4.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/git-cz"
+    }
   }
 }
