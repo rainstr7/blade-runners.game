@@ -1,4 +1,5 @@
-import Layout from '../../components/HOC/Layout'
+import Layout from '../../components/Layout'
+
 const SignUp = () => {
   return (
     <Layout>
