@@ -1,14 +1,19 @@
 import cn from './style.module.scss'
+import { FC, PropsWithChildren, ReactNode } from 'react'
 
-interface Props {
-  label: string
+interface ButtonLinkProps {
+  children: ReactNode
   href?: string
 }
 
-const ButtonLink = ({ label, href = '#' }: Props) => {
+const ButtonLink: FC<PropsWithChildren<ButtonLinkProps>> = ({
+  children,
+  href = '#',
+  ...props
+}) => {
   return (
-    <a className={cn.ButtonLink} href={href}>
-      {label}
+    <a className={cn.ButtonLink} href={href} {...props}>
+      {children}
     </a>
   )
 }

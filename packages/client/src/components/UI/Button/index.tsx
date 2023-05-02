@@ -1,13 +1,13 @@
 import cn from './style.module.scss'
+import { ButtonHTMLAttributes, FC } from 'react'
 
-interface Props {
-  label: string
-  type?: 'button' | 'reset' | 'submit'
-}
-const Button = ({ label, type = 'button', ...props }: Props) => {
+const Button: FC<ButtonHTMLAttributes<HTMLButtonElement>> = ({
+  children,
+  ...props
+}) => {
   return (
-    <button className={cn.Button} type={type} {...props}>
-      {label}
+    <button className={cn.Button} {...props}>
+      {children}
     </button>
   )
 }
