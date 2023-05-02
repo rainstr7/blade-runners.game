@@ -50,15 +50,25 @@ const displayGameOver = (ctx: CanvasRenderingContext2D) => {
 
 // TODO сервис? синглтон?
 const checkCollisions = () => {
-  if (player.y + player.height > gameHeight) {
+  const playerRightXPos = player.x + player.width
+  const playerBottomYPos = player.y + player.height;
+  const playerLeftXPos = player.x;
+  const playerTopYPos = player.y
+
+  if (playerBottomYPos > gameHeight) {
     player.y = gameHeight - player.height
   }
 
   enemies.forEach(enemy => {
-    if (player.x < enemy.x + enemy.width &&
-      player.x + player.width > enemy.x &&
-      player.y < enemy.y + enemy.height &&
-      player.y + player.height > enemy.y
+    const enemyRightXPos = enemy.x + enemy.width;
+    const enemyBottomYPos = enemy.y + enemy.height;
+    const enemyLeftXPos = enemy.x;
+    const enemyTopYPos = enemy.y
+
+    if (playerLeftXPos < enemyRightXPos &&
+      playerRightXPos > enemyLeftXPos &&
+      playerTopYPos < enemyBottomYPos &&
+      playerBottomYPos > enemyTopYPos
     ) {
       gameOver = true;
     }
@@ -111,16 +121,16 @@ const Engine: FC = () => {
   useEvent('keyup', handleKeyUp)
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  let lastTime = 0;
+  const lastTime = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const context = canvas!.getContext('2d')
+    const context = canvas!.getContext('2d');
     let animationFrameId = 0
 
     const render = (timeStamp: number) => {
-      const deltaTime = timeStamp - lastTime;
-      lastTime = timeStamp;
+      const deltaTime = timeStamp - lastTime.current;
+      lastTime.current = timeStamp;
 
       game(context!, deltaTime);
       if (gameOver) {
