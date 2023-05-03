@@ -5,20 +5,11 @@
   display: flex;
   flex-grow: 1;
   font-family: $font-family;
-
-  a {
-    text-decoration: none;
-    color: $font-color;
-  }
-
-  input {
-    outline: none;
-  }
 }
 
 .Container {
   @include flex-column;
-  @include flex-center;
+  @include flex-vertical-center;
 
   background-position: center;
   background-repeat: no-repeat;
@@ -27,11 +18,11 @@
 }
 
 .GameOver {
-  background-image: url('../../../assets/gameover_bg.jpeg');
+  background-image: url('../../assets/gameover_bg.jpeg');
 }
 
 .Default {
-  background-image: url('../../../assets/default_bg.jpg');
+  background-image: url('../../assets/default_bg.jpg');
 }
 
 .Authors {

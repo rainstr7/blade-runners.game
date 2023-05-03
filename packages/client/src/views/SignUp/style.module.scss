@@ -3,7 +3,7 @@
 
 .Block {
   @include flex-column;
-  @include flex-center;
+  @include flex-vertical-center;
 
   justify-content: space-between;
   padding: 2.9rem;

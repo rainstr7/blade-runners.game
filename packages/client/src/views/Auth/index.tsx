@@ -3,7 +3,14 @@ import cn from './style.module.scss'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import ButtonLink from '../../components/UI/ButtonLink'
-import Layout from '../../components/HOC/Layout'
+import Layout from '../../components/Layout'
+
+interface AuthDataInterface {
+  login: string
+  password: string
+}
+
+const initialState = { login: '', password: '' }
 
 const authFormData = [
   {
@@ -19,7 +26,7 @@ const authFormData = [
 ]
 
 const Auth = () => {
-  const [authData, setAuthData] = useState({ login: '', password: '' })
+  const [authData, setAuthData] = useState<AuthDataInterface>(initialState)
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
     if (event.currentTarget) {
@@ -49,10 +56,10 @@ const Auth = () => {
               key={name}
             />
           ))}
-          <Button label="SIGN IN" type="submit" />
+          <Button type="submit">SIGN IN</Button>
           <p className={cn.Message}>
             Don’t you have an account?
-            <ButtonLink label="SIGN UP" />
+            <ButtonLink>SIGN UP</ButtonLink>
           </p>
         </form>
       </main>

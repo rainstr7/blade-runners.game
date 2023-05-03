@@ -1,9 +1,9 @@
-import Layout from '../../components/HOC/Layout'
 import cn from './style.module.scss'
 import Input from '../../components/UI/Input'
 import Button from '../../components/UI/Button'
 import ButtonLink from '../../components/UI/ButtonLink'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
+import Layout from '../../components/Layout'
 
 const regFormData = [
   {
@@ -79,10 +79,10 @@ const SignUp = () => {
             ))}
           </div>
           <div className={cn.ButtonBlock}>
-            <Button label="SIGN UP" type="submit" />
+            <Button type="submit">SIGN UP</Button>
             <p className={cn.Message}>
               Already have an account?
-              <ButtonLink label="SIGN IN" />
+              <ButtonLink>SIGN IN</ButtonLink>
             </p>
           </div>
         </form>

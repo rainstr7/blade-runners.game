@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import cn from './style.module.scss'
-import Header from '../../UI/Header'
+import Header from '../UI/Header'
 
 interface Props {
   children: ReactElement
@@ -12,7 +12,7 @@ const Layout = ({ type = 'Default', children }: Props) => {
   return (
     <div className={cn.Layout}>
       <div className={`${cn.Container} ${background}`}>
-        <Header title="BLADE RUNNER" />
+        <Header>BLADE RUNNER</Header>
         {children}
         <span className={cn.Authors}>BY blade runners</span>
       </div>
