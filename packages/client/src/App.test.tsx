@@ -11,10 +11,6 @@ global.fetch = jest.fn(() =>
 )
 
 test('Example test', async () => {
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  )
+  render(<App />)
   expect(screen.getByText(appContent)).toBeDefined()
 })
