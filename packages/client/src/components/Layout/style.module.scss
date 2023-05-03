@@ -9,7 +9,7 @@
 
 .Container {
   @include flex-column;
-  @include flex-center;
+  @include flex-vertical-center;
 
   background-position: center;
   background-repeat: no-repeat;

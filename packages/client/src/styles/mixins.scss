@@ -3,7 +3,7 @@
   flex-direction: column;
 }
 
-@mixin flex-center {
+@mixin flex-vertical-center {
   align-items: center;
   flex-grow: 1;
 }
