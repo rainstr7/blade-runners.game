@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
+import Auth from './views/Auth'
 import './App.css'
-import { Game } from './views/Game'
 
 function App() {
   useEffect(() => {
@@ -13,10 +13,8 @@ function App() {
 
     fetchServerData()
   }, [])
-  // TODO Router
-  return <div className="App">
-    <Game />
-  </div>
+
+  return <Auth />
 }
 
 export default App

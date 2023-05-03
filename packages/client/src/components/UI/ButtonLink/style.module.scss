@@ -1,0 +1,10 @@
+.ButtonLink {
+  margin: 0.25rem;
+  border-bottom: 2px solid #ffffff;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.ButtonLink:hover {
+  opacity: 0.8;
+}
