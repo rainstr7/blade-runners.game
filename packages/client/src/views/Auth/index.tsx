@@ -12,6 +12,19 @@ interface AuthDataInterface {
 
 const initialState = { login: '', password: '' }
 
+const authFormData = [
+  {
+    placeholder: 'LOGIN',
+    name: 'login',
+    autoComplete: 'login',
+  },
+  {
+    placeholder: 'PASSWORD',
+    name: 'password',
+    autoComplete: 'password',
+  },
+]
+
 const Auth = () => {
   const [authData, setAuthData] = useState<AuthDataInterface>(initialState)
 
@@ -33,22 +46,16 @@ const Auth = () => {
     <Layout>
       <main className={cn.Block}>
         <form className={cn.AuthForm} onSubmit={handleSubmit}>
-          <Input
-            placeholder="LOGIN"
-            type="text"
-            value={authData.login}
-            onChange={handleChange}
-            name="login"
-            autoComplete="login"
-          />
-          <Input
-            placeholder="PASSWORD"
-            type="password"
-            value={authData.password}
-            onChange={handleChange}
-            name="password"
-            autoComplete="password"
-          />
+          {authFormData.map(({ placeholder, name, autoComplete }) => (
+            <Input
+              placeholder={placeholder}
+              value={authData[name as keyof typeof authData]}
+              onChange={handleChange}
+              name={name}
+              autoComplete={autoComplete}
+              key={name}
+            />
+          ))}
           <Button type="submit">SIGN IN</Button>
           <p className={cn.Message}>
             Don’t you have an account?
