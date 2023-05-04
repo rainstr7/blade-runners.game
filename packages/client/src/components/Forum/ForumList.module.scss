@@ -1,0 +1,85 @@
+$Black: rgb(0, 0, 0);
+
+.ListContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 0;
+}
+
+.ListElement {
+  list-style-type: none;
+  margin: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.LinkElement {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  
+}
+
+.List a {
+  text-decoration: none;
+  color: black;
+}
+
+.List {
+  padding: 0;
+  margin: 0;
+}
+
+.Title, .MsgCount, .TopicCount {
+  padding-bottom: 20px;
+  padding-top: 20px;
+  border: 2px solid $Black;
+  border-radius: 0.3em;
+  background-color: white;
+}
+
+.Title {
+  padding-left: 20px;
+  flex: 1;
+}
+.MsgCount {
+  width: 120px;
+}
+.TopicCount {
+  width: 85px;
+}
+
+.TitleHeader, .MsgCountHeader, .TopicCountHeader {
+  font-size: 1rem;
+}
+.MsgCountHeader, .TopicCountHeader, .MsgCount, .TopicCount {
+  margin-left: 10px;
+  text-align: center;
+}
+
+.TitleHeader {
+  padding: 3px;
+  flex: 1;
+}
+.MsgCountHeader {
+  width: 120px; 
+}
+.TopicCountHeader {
+  width: 90px;
+}
+.HeaderContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.TopicHeader {
+  display: flex;
+}
+.TopicHeader h2 {
+  flex: 1;
+  text-align: center;
+}
