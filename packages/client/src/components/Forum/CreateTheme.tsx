@@ -14,9 +14,9 @@ export const CreateTheme: React.FC = () => {
     navigate(-1);
   }
 
-  function handleSubmit(event: SubmitEvent) {
+  function handleSubmit(event) {
   event.preventDefault(); 
-  const themeTitle: HTMLInputElement = event.target!.elements.title;
+  const themeTitle: HTMLInputElement = event.target.elements.title;
   const title: string = themeTitle.value;
   const newTopic: Topic = {id: nanoid(10), title, messagesCount: 0, messages: []}
   //topics.push(newTopic)
