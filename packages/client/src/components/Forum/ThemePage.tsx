@@ -35,13 +35,13 @@ export const ThemePage: React.FC = () => {
   }
 
   const [state, setState] = React.useState(messages)
-
+//@ts-ignore
   function handleSubmit(event) {
     event.preventDefault();
     const now: Date = new Date();
-    const hours: string = now.getHours().toString().padStart(2, '0');
-    const minutes: string = now.getMinutes().toString().padStart(2, '0');
-    const time: string = `${hours}:${minutes}`; 
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const time = `${hours}:${minutes}`; 
     const messageInput: HTMLInputElement = event.target.elements.message;
     const message: string = messageInput.value;
     messageInput.value = '';
