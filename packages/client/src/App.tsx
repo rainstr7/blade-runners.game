@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
+import SignUp from './views/SignUp'
 
 function App() {
   useEffect(() => {
@@ -13,6 +14,7 @@ function App() {
 
     fetchServerData()
   }, [])
+
   return (
     <div className="App">
       Вот тут будет жить ваше приложение :)
@@ -28,6 +30,7 @@ function App() {
       </Routes>
     </div>
   )
+
 }
 
 export default App

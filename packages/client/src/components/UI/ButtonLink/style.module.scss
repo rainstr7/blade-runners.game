@@ -1,0 +1,17 @@
+.ButtonLink {
+  margin: 0.25rem;
+  border-bottom: 2px solid #ffffff;
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ButtonLink {
+    transition: opacity 0.3s ease-in-out;
+  }
+}
+
+@media (hover: hover) {
+  .ButtonLink:hover {
+    opacity: 0.8;
+  }
+}
