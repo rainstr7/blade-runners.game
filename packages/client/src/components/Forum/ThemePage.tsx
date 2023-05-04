@@ -7,7 +7,7 @@ import {
 import { nanoid } from 'nanoid'
 import styles from './ThemePage.module.scss';
 // import ava from '../../assets/ava.png'
-import { forums, messages, topics, Message } from './Forum'
+import { messages, topics, Message } from './Forum'
 import Button from '../UI/Button';
 
 export const ThemePage: React.FC = () => {
