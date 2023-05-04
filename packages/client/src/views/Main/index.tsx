@@ -1,15 +1,29 @@
+import React from 'react'
+import cn from './style.module.scss';
+
 const Main = () => {
+
+
   return (
-    <main>
-      <header>
-        header
-      </header>
-      <div>MAIn</div>
-      <div>about</div>
-      <div>galery</div>
-      <footer>footer</footer>
-    </main>
+      <main className={cn.Container}>
+
+        <header className={cn.Header}>
+          <div>
+            By Blade Runners
+          </div>
+          <div>Go To Game</div>
+        </header>
+
+        <div className={cn.Main}>
+          <h2 className='title'>Blade Runner</h2>
+
+        </div>
+
+        <div className={cn.Galery}>galery</div>
+
+        <footer className={cn.Footer}>footer</footer>
+      </main>
   )
 }
 
-export default Main;
+export default Main
