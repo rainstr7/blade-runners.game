@@ -1,18 +1,50 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins';
+
+.leaderboard {
+  width: 100%;
+  height: 100%;
+}
+
+.title {
+  font-size: 32px;
+  color: $font-color;
+  // @include flex-between
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
+}
+
+.header {
+  width: 100%;
+  @include flex-between;
+  color: $font-color;
+  font-size: 32px;
+}
+
 .list {
   width: 100%;
-  &-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  margin-top: 45px;
+}
+
+.item {
+  @include card;
+  @include flex-between;
+  width: 100%;
+  margin-bottom: 30px;
+  font-size: 24px;
+  padding: 25px;
+
+  & #text {
+    margin-left: 10px;
   }
-  &-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 30px;
-    &:last-child {
-      margin-bottom: 0;
-    }
+
+  &:last-child {
+    margin-bottom: 0;
   }
+}
+
+.name {
+  @include flex-between
 }

@@ -1,29 +1,28 @@
 import { useState } from 'react'
-// import cn from './style.module.scss'
-// import Button from '../../components/UI/Button'
-// import ButtonLink from '../../components/UI/ButtonLink'
-// import Layout from '../../components/HOC/Layout'
+import cn from './style.module.scss'
+import ButtonLink from '../../components/UI/ButtonLink'
+import Avatar from '../../components/UI/Avatar'
 
 const LeaderBoard = () => {
 
   const data = [
     {
-      player_id: '32',
-      player_avatar: '',
-      player_name: 'Keks Ovalniy',
-      player_score: '432'
+      id: Math.random(),
+      image: 'https://phonoteka.org/uploads/posts/2021-04/1617802986_26-p-kiberpank-fon-28.jpg',
+      name: 'Keks Ovalniy',
+      score: Math.floor(Math.random() * (10000000000 - 1) + 1)
     },
     {
-      player_id: '12',
-      player_avatar: '',
-      player_name: 'Keks Ovalniy1',
-      player_score: '213'
+      id: Math.random(),
+      image: 'https://phonoteka.org/uploads/posts/2021-04/1617802986_26-p-kiberpank-fon-28.jpg',
+      name: 'Keks Ovalniy1',
+      score: Math.floor(Math.random() * (10000000000 - 1) + 1)
     },
     {
-      player_id: '53',
-      player_avatar: '',
-      player_name: 'Keks Ovalniy2',
-      player_score: '123'
+      id: Math.random(),
+      image: 'https://phonoteka.org/uploads/posts/2021-04/1617802986_26-p-kiberpank-fon-28.jpg',
+      name: 'Keks Ovalniy2',
+      score: Math.floor(Math.random() * (10000000000 - 1) + 1)
     }
   ]
 
@@ -31,28 +30,28 @@ const LeaderBoard = () => {
 
 
   return (
-    <div className="layout">
-      <main>
-        <button>Back</button>
-        <div className="list">
-          <div className="list-header">
-            Player
-            Score
+    <main className={cn.leaderboard}>
+        <div className={cn.title}>
+          <ButtonLink to='/' card={true}>Back</ButtonLink>
+          LeaderBoard
+          <div className="empty"></div>
+        </div>
+        <div className={cn.list}>
+          <div className={cn.header}>
+            <span>Player</span>
+            <span>Score</span>
           </div>
-          <div className="list-content">
-            {playersData.map(item => (
-              <div className="list-item card" key={item.player_id}>
-                <div className="list-item__player">
-                  <div className="avatar">{item.player_avatar}</div>
-                  <div className="list-item__name">{item.player_name}</div>
-                </div>
-                <div className="list-item__score">{item.player_score}</div>
+          {playersData.map(item => (
+            <div className={cn.item} key={item.id}>
+              <div className={cn.name}>
+                <Avatar src={item.image}/>
+                <span style={{marginLeft: 10}}>{item.name}</span>
               </div>
-            ))}
-          </div>
+              {item.score}
+            </div>
+          ))}
         </div>
       </main>
-    </div>
   )
 }
 

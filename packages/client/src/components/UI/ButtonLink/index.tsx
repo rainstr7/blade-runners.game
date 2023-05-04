@@ -4,16 +4,19 @@ import { NavLink } from 'react-router-dom'
 
 interface ButtonLinkProps {
   children: ReactNode
-  to?: string
+  to?: string,
+  card?: boolean
 }
 
 const ButtonLink: FC<PropsWithChildren<ButtonLinkProps>> = ({
   children,
   to = '/',
+  card = false,
   ...props
 }) => {
+  const cardStyle = card ? cn['ButtonLinkCard'] : ''
   return (
-    <NavLink className={cn.ButtonLink} to={to} {...props}>
+    <NavLink className={`${cn.ButtonLink} ${cardStyle}`} to={to} {...props}>
       {children}
     </NavLink>
   )
