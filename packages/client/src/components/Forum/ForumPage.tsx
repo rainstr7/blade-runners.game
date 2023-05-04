@@ -11,12 +11,13 @@ export const ForumPage: React.FC = () => {
   function handleGoBack() {
     navigate('/forum');
   }
+
   function handleGoCreate(){
     navigate('/forum/newtheme')
   }
+  
   const { id } = useParams<{ id: string }>();
   const forum: Forum | undefined = forums.find((f) => f.id === id);
-  const { topics } = forum
 
   if (!forum) {
     // если форум с таким id не найден, отображаем страницу ошибки

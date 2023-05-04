@@ -14,12 +14,8 @@ export const ForumList: React.FC = () => {
   return (
     <div>
       <nav>
-        {/* <button className="BtnBack" onClick={handleGoBack}>
-          BACK
-        </button> */}
         <Button size='small' onClick={handleGoBack}>Back</Button>
       </nav>
-
       <div className={styles.ListContainer}>
         <ul className={styles.List}>
           <li className={styles.ListElement}>
