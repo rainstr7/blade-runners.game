@@ -15,9 +15,9 @@ function App() {
   }, [])
   return <div className="App">Вот тут будет жить ваше приложение :)
     <Routes>
-      <Route path='/' element={<div>LOGIN</div>}/>
-      <Route path='/registr' element={<div>REGISTRATION</div>}/>
-      <Route path='/main' element={<div>MAIN</div>}/>
+      <Route path='/' element={<div>MAIN</div>}/>
+      <Route path='/signup' element={<div>SIGN UP</div>}/>
+      <Route path='/signin' element={<div>SIGN IN</div>}/>
       <Route path='/game' element={<div>GAME</div>}/>
       <Route path='/settings' element={<div>SETTINGS</div>}/>
       <Route path='/rating' element={<div>RATING</div>}/>
