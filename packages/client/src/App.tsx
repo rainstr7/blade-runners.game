@@ -9,6 +9,7 @@ import Start from './views/Start'
 import Game from './views/Game'
 import Main from './views/Main'
 import { changeLayout } from './store/actions/changeLayout'
+import { Forum } from './components/Forum/Forum'
 
 function App() {
   useEffect(() => {
@@ -32,7 +33,7 @@ function App() {
         <Route path="/game" element={<Game />} />
         <Route path="/settings" element={<div>Settings</div>} />
         <Route path="/rating" element={<LeaderBoard />} />
-        <Route path="/forum/*" element={<div>Forum</div>} />
+        <Route path="/forum/*" element={<Forum />} />
         <Route path="*" element={<div>Страница не найдена</div>} />
       </Routes>
     </Layout>

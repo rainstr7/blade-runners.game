@@ -1,0 +1,66 @@
+.ThemeHeader {
+  display: flex;
+  justify-content: space-between;
+}
+.ThemeHeader h2 {
+  font-size: 2rem;
+}
+
+.Msg {
+  margin-left: 5px;
+  background-color: #fff;
+  border-radius: 0.3em;
+  border: 2px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: black;
+}
+.MsgContainer {
+  max-height: 50vh;
+  overflow: auto;
+}
+
+.MsgHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.MsgBody {
+  line-height: 1.5;
+  word-wrap: break-word;
+  word-break: break-all;
+  font-size: 1rem;
+}
+
+.Ava {
+  // background-image: url('../../assets/mava.jpg');
+  background-color: teal;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+.Author {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.FormSendMsg{
+  display: flex;
+  padding: 5px;
+  padding-left: 10px;
+}
+.InputSendMsg{
+  flex: 1;
+  align-self: center;
+  height: 40px;
+  margin-right: 10px;
+  border: 2px solid black;
+  border-radius: 0.3em;
+  font-size: 1rem;
+  padding: 2rem 0.5rem;
+}

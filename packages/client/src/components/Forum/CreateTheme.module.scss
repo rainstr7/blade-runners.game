@@ -1,0 +1,25 @@
+.FormSendMsg{
+  display: flex;
+  // padding: 5px;
+  // padding-left: 10px;
+}
+.InputSendMsg{
+  flex: 1;
+  align-self: center;
+  height: 40px;
+  margin-right: 10px;
+  border: 2px solid black;
+  border-radius: 0.3em;
+  // padding: 3px;
+  padding: 2rem 0.5rem;
+  padding-left: 10px;
+}
+
+.ThemeHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.ThemeHeader h2 {
+  font-size: 2rem;
+}
