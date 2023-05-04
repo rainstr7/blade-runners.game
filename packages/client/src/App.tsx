@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
-// import { Game } from './views/Game'
 import LeaderBoard from './views/Leaderboard'
 import SignUp from './views/SignUp'
 import Auth from './views/Auth'
