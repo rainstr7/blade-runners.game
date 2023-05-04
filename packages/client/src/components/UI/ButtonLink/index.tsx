@@ -1,20 +1,21 @@
 import cn from './style.module.scss'
 import { FC, PropsWithChildren, ReactNode } from 'react'
+import { NavLink } from 'react-router-dom'
 
 interface ButtonLinkProps {
   children: ReactNode
-  href?: string
+  to?: string
 }
 
 const ButtonLink: FC<PropsWithChildren<ButtonLinkProps>> = ({
   children,
-  href = '#',
+  to = '/',
   ...props
 }) => {
   return (
-    <a className={cn.ButtonLink} href={href} {...props}>
+    <NavLink className={cn.ButtonLink} to={to} {...props}>
       {children}
-    </a>
+    </NavLink>
   )
 }
 
