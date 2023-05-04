@@ -1,27 +1,22 @@
-
-import Header from '../../components/UI/Header'
 import Button from '../../components/UI/Button'
-
-import styles from './style.module.scss'
+import Layout from '../../components/Layout'
+import cn from './style.module.scss'
 
 const Start = () => {
-    return (
-        <div className={styles['game-container']}>
-            <div className={styles['content']}>
-                <Header title="BLADE RUNNER" />
-
-                <div className={styles['start-content']}>
-                    <Button label="Start Game" />
-                    <Button label="Settings" />
-                </div>
-            </div> 
-            
-            <div className={styles['buttons']}>
-                <Button label="Leaderboard" />
-                <Button label="Forum" />
-            </div>
+  return (
+    <Layout>
+      <main className={cn.Block}>
+        <div className={cn.MainButtonGroup}>
+          <Button>Start Game</ Button>
+          <Button>Settings</Button>
         </div>
-    );
-};
+        <div className={cn.AdditionalButtonGroup}>
+          <Button size='small'>Leaderboard</Button>
+          <Button size='small'>Forum</Button>
+        </div>
+      </main>
+    </Layout>
+  )
+}
 
-export default Start;
+export default Start

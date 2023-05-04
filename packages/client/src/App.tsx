@@ -13,10 +13,8 @@ function App() {
 
     fetchServerData()
   }, [])
-  // TODO Router
-  return <div className="App">
-    <Start />
-  </div>
+
+  return <Start />
 }
 
 export default App
