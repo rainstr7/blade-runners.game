@@ -80,7 +80,7 @@ const SignUp = () => {
           <Button type="submit">SIGN UP</Button>
           <p className={cn.Message}>
             Already have an account?
-            <ButtonLink>SIGN IN</ButtonLink>
+            <ButtonLink to="/signin">SIGN IN</ButtonLink>
           </p>
         </div>
       </form>

@@ -57,7 +57,7 @@ const Auth = () => {
         <Button type="submit">SIGN IN</Button>
         <p className={cn.Message}>
           Don’t you have an account?
-          <ButtonLink>SIGN UP</ButtonLink>
+          <ButtonLink to="/signup">SIGN UP</ButtonLink>
         </p>
       </form>
     </main>
