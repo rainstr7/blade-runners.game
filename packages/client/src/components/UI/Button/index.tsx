@@ -2,7 +2,7 @@ import cn from './style.module.scss'
 import { ButtonHTMLAttributes, FC } from 'react'
 
 interface Props {
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large'
 }
 
 const Button: FC<ButtonHTMLAttributes<HTMLButtonElement> & Props> = ({
@@ -10,7 +10,7 @@ const Button: FC<ButtonHTMLAttributes<HTMLButtonElement> & Props> = ({
   size = 'medium',
   ...props
 }) => {
-  const buttonSize = cn[size];
+  const buttonSize = cn[size]
   return (
     <button className={`${cn.Button} ${buttonSize}`} {...props}>
       {children}

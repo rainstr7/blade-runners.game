@@ -3,7 +3,6 @@ import cn from './style.module.scss'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import ButtonLink from '../../components/UI/ButtonLink'
-import Layout from '../../components/Layout'
 
 interface AuthDataInterface {
   login: string
@@ -43,27 +42,25 @@ const Auth = () => {
   }
 
   return (
-    <Layout>
-      <main className={cn.Block}>
-        <form className={cn.AuthForm} onSubmit={handleSubmit}>
-          {authFormData.map(({ placeholder, name, autoComplete }) => (
-            <Input
-              placeholder={placeholder}
-              value={authData[name as keyof typeof authData]}
-              onChange={handleChange}
-              name={name}
-              autoComplete={autoComplete}
-              key={name}
-            />
-          ))}
-          <Button type="submit">SIGN IN</Button>
-          <p className={cn.Message}>
-            Don’t you have an account?
-            <ButtonLink>SIGN UP</ButtonLink>
-          </p>
-        </form>
-      </main>
-    </Layout>
+    <main className={cn.Block}>
+      <form className={cn.AuthForm} onSubmit={handleSubmit}>
+        {authFormData.map(({ placeholder, name, autoComplete }) => (
+          <Input
+            placeholder={placeholder}
+            value={authData[name as keyof typeof authData]}
+            onChange={handleChange}
+            name={name}
+            autoComplete={autoComplete}
+            key={name}
+          />
+        ))}
+        <Button type="submit">SIGN IN</Button>
+        <p className={cn.Message}>
+          Don’t you have an account?
+          <ButtonLink>SIGN UP</ButtonLink>
+        </p>
+      </form>
+    </main>
   )
 }
 

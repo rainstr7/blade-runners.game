@@ -3,7 +3,6 @@ import Input from '../../components/UI/Input'
 import Button from '../../components/UI/Button'
 import ButtonLink from '../../components/UI/ButtonLink'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
-import Layout from '../../components/Layout'
 
 const regFormData = [
   {
@@ -63,31 +62,29 @@ const SignUp = () => {
   }
 
   return (
-    <Layout>
-      <main className={cn.Block}>
-        <form className={cn.RegForm} onSubmit={handleSubmit}>
-          <div className={cn.InputsGroup}>
-            {regFormData.map(({ placeholder, name, autoComplete }) => (
-              <Input
-                placeholder={placeholder}
-                value={registrationData[name as keyof typeof registrationData]}
-                onChange={handleChange}
-                name={name}
-                autoComplete={autoComplete}
-                key={name}
-              />
-            ))}
-          </div>
-          <div className={cn.ButtonBlock}>
-            <Button type="submit">SIGN UP</Button>
-            <p className={cn.Message}>
-              Already have an account?
-              <ButtonLink>SIGN IN</ButtonLink>
-            </p>
-          </div>
-        </form>
-      </main>
-    </Layout>
+    <main className={cn.Block}>
+      <form className={cn.RegForm} onSubmit={handleSubmit}>
+        <div className={cn.InputsGroup}>
+          {regFormData.map(({ placeholder, name, autoComplete }) => (
+            <Input
+              placeholder={placeholder}
+              value={registrationData[name as keyof typeof registrationData]}
+              onChange={handleChange}
+              name={name}
+              autoComplete={autoComplete}
+              key={name}
+            />
+          ))}
+        </div>
+        <div className={cn.ButtonBlock}>
+          <Button type="submit">SIGN UP</Button>
+          <p className={cn.Message}>
+            Already have an account?
+            <ButtonLink>SIGN IN</ButtonLink>
+          </p>
+        </div>
+      </form>
+    </main>
   )
 }
 

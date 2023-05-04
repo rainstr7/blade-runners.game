@@ -1,6 +1,11 @@
 import { useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
+import SignUp from './views/SignUp'
+import Auth from './views/Auth'
+import Layout from './components/Layout'
+import Start from './views/Start'
+import { Game } from './views/Game'
 
 function App() {
   useEffect(() => {
@@ -15,18 +20,19 @@ function App() {
   }, [])
 
   return (
+    <Layout>
       <Routes>
-        <Route path="/" element={<div>Main</div>} />
-        <Route path="/signup" element={<div>Sign up / Registration</div>} />
-        <Route path="/signin" element={<div>Sign in / Login</div>} />
-        <Route path="/game" element={<div>Game</div>} />
+        <Route path="/" element={<Start />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<Auth />} />
+        <Route path="/game" element={<Game />} />
         <Route path="/settings" element={<div>Settings</div>} />
         <Route path="/rating" element={<div>Leaderboard</div>} />
         <Route path="/forum/*" element={<div>Forum</div>} />
         <Route path="*" element={<div>Страница не найдена</div>} />
       </Routes>
+    </Layout>
   )
-
 }
 
 export default App
