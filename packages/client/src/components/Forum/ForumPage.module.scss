@@ -1,0 +1,79 @@
+$Black: rgb(0, 0, 0);
+
+.ListContainer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  padding: 0;
+}
+
+.ListElement {
+  list-style-type: none;
+  margin: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.LinkElement {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.ListElement a {
+  text-decoration: none;
+  color: black;
+}
+
+.List {
+  padding: 0;
+  margin: 0;
+}
+
+.Title, .MsgCount {
+  border: 2px solid $Black;
+  border-radius: 0.3em;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: white;
+}
+
+.Title {
+  padding-left: 10px;
+  flex: 1;
+}
+
+.MsgCount {
+  width: 120px;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.TitleHeader, .MsgCountHeader {
+  font-size: 1rem;
+}
+.TitleHeader {
+  flex: 1;
+}
+.MsgCountHeader {
+  width: 120px;
+  text-align: center;
+}
+
+.HeaderContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.TopicHeader {
+  display: flex;
+  align-items: center;
+}
+.TopicHeader h2 {
+  flex: 1;
+  text-align: center;
+  font-size: 2rem;
+}

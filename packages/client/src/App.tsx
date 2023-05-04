@@ -7,6 +7,7 @@ import Auth from './views/Auth'
 import Layout from './components/Layout'
 import Start from './views/Start'
 import Game from './views/Game'
+import { Forum } from './components/Forum/Forum'
 
 function App() {
   useEffect(() => {
@@ -29,7 +30,7 @@ function App() {
         <Route path="/game" element={<Game />} />
         <Route path="/settings" element={<div>Settings</div>} />
         <Route path="/rating" element={<LeaderBoard />} />
-        <Route path="/forum/*" element={<div>Forum</div>} />
+        <Route path="/forum/*" element={<Forum />} />
         <Route path="*" element={<div>Страница не найдена</div>} />
       </Routes>
     </Layout>
