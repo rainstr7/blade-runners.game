@@ -1,0 +1,12 @@
+@import 'src/styles/vars';
+
+.Button {
+  font-family: $font-family;
+  font-size: 1.8rem;
+  font-weight: 800;
+  padding: 1.5rem 6.5rem;
+  border: $border;
+  box-shadow: $box-shadow;
+  background-color: $background-lite-color;
+  border-radius: $border-radius;
+}

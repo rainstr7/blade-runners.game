@@ -1,9 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC } from 'react'
 
 export const Engine: FC = () => {
-  return (
-    <h1>
-      Blade Runner
-    </h1>
-  )
+  return <h1>Blade Runner</h1>
 }

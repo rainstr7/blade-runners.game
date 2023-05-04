@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import './App.css'
-import { Game } from './views/Game'
 import Start from './views/Start'
 
 function App() {
