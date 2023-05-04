@@ -32,7 +32,7 @@ const LeaderBoard = () => {
   return (
     <main className={cn.leaderboard}>
         <div className={cn.title}>
-          <ButtonLink to='/' card={true}>Back</ButtonLink>
+          <ButtonLink to='/' card>Back</ButtonLink>
           LeaderBoard
           <div className="empty"></div>
         </div>
