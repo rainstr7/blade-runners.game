@@ -1,12 +1,12 @@
-import Engine from '../../core/Engine'
-import { FC } from 'react'
+import React, { FC } from 'react'
+import GameLayout from '../../core/GameLayout'
 
 const Game: FC = () => {
   return (
     <main>
-      <Engine />
+      <GameLayout />
     </main>
   )
 }
 
-export default Game;
+export default Game

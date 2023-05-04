@@ -13,5 +13,5 @@ export default {
       '<rootDir>/__mocks__/fileMock.js',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
-  setupFiles: ["jest-canvas-mock"]
+  setupFiles: ['jest-canvas-mock'],
 }
