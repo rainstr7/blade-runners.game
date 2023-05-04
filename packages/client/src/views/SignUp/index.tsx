@@ -39,7 +39,7 @@ const regFormData = [
 ]
 
 const SignUp = () => {
-  const [regData, setRegData] = useState({
+  const [registrationData, setRegistrationData] = useState({
     firstName: '',
     secondName: '',
     email: '',
@@ -50,8 +50,8 @@ const SignUp = () => {
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
     if (event.currentTarget) {
-      setRegData({
-        ...regData,
+      setRegistrationData({
+        ...registrationData,
         [event.currentTarget.name]: event.currentTarget.value,
       })
     }
@@ -59,7 +59,7 @@ const SignUp = () => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault()
-    console.log('body', JSON.stringify(regData))
+    console.log('body', JSON.stringify(registrationData))
   }
 
   return (
@@ -70,7 +70,7 @@ const SignUp = () => {
             {regFormData.map(({ placeholder, name, autoComplete }) => (
               <Input
                 placeholder={placeholder}
-                value={regData[name as keyof typeof regData]}
+                value={registrationData[name as keyof typeof registrationData]}
                 onChange={handleChange}
                 name={name}
                 autoComplete={autoComplete}
