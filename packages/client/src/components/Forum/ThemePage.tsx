@@ -7,7 +7,7 @@ import {
 import { nanoid } from 'nanoid'
 import styles from './ThemePage.module.scss';
 // import ava from '../../assets/ava.png'
-import { forums, messages, topics } from './Forum'
+import { forums, messages, topics, Message } from './Forum'
 import Button from '../UI/Button';
 
 export const ThemePage: React.FC = () => {
@@ -38,14 +38,14 @@ export const ThemePage: React.FC = () => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const time = `${hours}:${minutes}`; 
-    const messageInput = event.target.elements.message;
-    const message = messageInput.value;
+    const now: Date = new Date();
+    const hours: string = now.getHours().toString().padStart(2, '0');
+    const minutes: string = now.getMinutes().toString().padStart(2, '0');
+    const time: string = `${hours}:${minutes}`; 
+    const messageInput: HTMLInputElement = event.target.elements.message;
+    const message: string = messageInput.value;
     messageInput.value = '';
-    const newMessage = {id: nanoid(12), author: 'currentUser', content: message, time}
+    const newMessage: Message = {id: nanoid(12), author: 'currentUser', content: message, time}
     console.log('Your Message : ',newMessage);
     setState([...state, newMessage])
   }
@@ -58,9 +58,7 @@ export const ThemePage: React.FC = () => {
       </nav>
       
       <div className={styles.MsgContainer}>
-
       {state.map((message) => (
-        
         <div className={styles.Msg} key={message.id}>
           <div className={styles.MsgHeader}>
             <img className={styles.Ava} />
