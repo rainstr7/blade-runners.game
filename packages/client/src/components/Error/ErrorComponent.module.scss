@@ -1,0 +1,30 @@
+$LightBlue: #3582ca;
+$Black: black;
+$White: white;
+
+.Container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    h1 {
+        font-size: 3.5rem;
+        color: $LightBlue;
+    }
+
+    button {
+        &:hover {
+        background-color: $LightBlue;
+        cursor: pointer;
+    }
+}
+}
+
+.Message {
+    border: 3px solid $Black;
+    border-radius: 0.3rem;
+    background-color: $White;
+    padding: 1rem 1rem;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}

@@ -7,6 +7,7 @@ import Auth from './views/Auth'
 import Layout from './components/Layout'
 import Start from './views/Start'
 import Game from './views/Game'
+import ErrorComponent from './components/Error/ErrorComponent'
 
 function App() {
   useEffect(() => {
@@ -30,7 +31,8 @@ function App() {
         <Route path="/settings" element={<div>Settings</div>} />
         <Route path="/rating" element={<LeaderBoard />} />
         <Route path="/forum/*" element={<div>Forum</div>} />
-        <Route path="*" element={<div>Страница не найдена</div>} />
+        <Route path="/500" element={<ErrorComponent errorCode={500}/>} />
+        <Route path="*" element={<ErrorComponent errorCode={404}/>} />
       </Routes>
     </Layout>
   )
