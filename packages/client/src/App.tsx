@@ -6,7 +6,7 @@ import SignUp from './views/SignUp'
 import Auth from './views/Auth'
 import Layout from './components/Layout'
 import Start from './views/Start'
-import { Game } from './views/Game'
+import Game from './views/Game'
 import Profile from './views/Profile'
 
 function App() {
