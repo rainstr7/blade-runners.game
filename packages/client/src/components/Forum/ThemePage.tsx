@@ -4,6 +4,7 @@ import {
   useParams,
   useLocation,
 } from 'react-router-dom';
+import { useForm, SubmitHandler } from 'react-hook-form'
 import { nanoid } from 'nanoid'
 import styles from './ThemePage.module.scss';
 // import ava from '../../assets/ava.png'
@@ -11,6 +12,7 @@ import { messages, topics, Message } from './Forum'
 import Button from '../UI/Button';
 
 export const ThemePage: React.FC = () => {
+  //navigation
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -26,6 +28,8 @@ export const ThemePage: React.FC = () => {
   function handleGoBack() {
     navigate(removePathSuffix(pathname));
   }
+
+  //find current topic
   const { id } = useParams<{ id: string }>();
   const topic = topics.find((f) => f.id === id);
 
@@ -34,20 +38,23 @@ export const ThemePage: React.FC = () => {
     return <div>Тема не найден</div>;
   }
 
+  //state
   const [state, setState] = React.useState(messages)
-//@ts-ignore
-  function handleSubmit(event) {
-    event.preventDefault();
-    const now: Date = new Date();
-    const hours = now.getHours().toString().padStart(2, '0');
-    const minutes = now.getMinutes().toString().padStart(2, '0');
-    const time = `${hours}:${minutes}`; 
-    const messageInput: HTMLInputElement = event.target.elements.message;
-    const message: string = messageInput.value;
-    messageInput.value = '';
-    const newMessage: Message = {id: nanoid(12), author: 'currentUser', content: message, time}
-    console.log('Your Message : ',newMessage);
-    setState([...state, newMessage])
+
+  //form logic
+  type Input = {
+    content: string
+  }
+  const { register, handleSubmit, reset } = useForm<Input>()
+  const onSubmit: SubmitHandler<Input> = data => {
+    const now = new Date()
+    const hours = now.getHours().toString();
+    const minutes = now.getMinutes().toString();
+    const time = `${hours}:${minutes}`;
+    const message = {...data, id: nanoid(12), author: 'currentUser', time}
+    console.log('Message data : ', message)
+    setState([...state, message])
+    reset({ content: '' })
   }
   
   return (
@@ -70,8 +77,8 @@ export const ThemePage: React.FC = () => {
       ))}
       </div>
 
-      <form className={styles.FormSendMsg} onSubmit={handleSubmit}>
-        <input className={styles.InputSendMsg}  name='message' placeholder='YOUR MESSAGE' autoComplete='off'/>
+      <form className={styles.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
+        <input className={styles.InputSendMsg} placeholder='YOUR MESSAGE' autoComplete='off' {...register('content', { required: true })} />
         <Button size='small' type='submit'>SEND</Button>
         </form>
     </div>
