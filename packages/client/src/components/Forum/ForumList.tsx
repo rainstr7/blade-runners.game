@@ -1,20 +1,22 @@
-import * as React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import styles from './ForumList.module.scss';
-import { forums } from './Forum';
-import Button from '../UI/Button';
+import * as React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import styles from './ForumList.module.scss'
+import { forums } from './Forum'
+import Button from '../UI/Button'
 
 export const ForumList: React.FC = () => {
-  const navigate = useNavigate();
-  
+  const navigate = useNavigate()
+
   function handleGoBack() {
-    navigate('/');
+    navigate('/')
   }
-  
+
   return (
     <div>
       <nav>
-        <Button size='small' onClick={handleGoBack}>Back</Button>
+        <Button size="small" onClick={handleGoBack}>
+          Back
+        </Button>
       </nav>
       <div className={styles.ListContainer}>
         <ul className={styles.List}>
@@ -25,7 +27,7 @@ export const ForumList: React.FC = () => {
               <div className={styles.MsgCountHeader}>COMMENTS</div>
             </div>
           </li>
-          {forums.map((forum) => (
+          {forums.map(forum => (
             <li className={styles.ListElement} key={forum.id}>
               <Link className={styles.LinkElement} to={`/forum/${forum.id}`}>
                 <div className={styles.Title}>{forum.title}</div>
@@ -37,5 +39,5 @@ export const ForumList: React.FC = () => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
