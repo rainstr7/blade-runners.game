@@ -18,7 +18,6 @@ $Black: rgb(0, 0, 0);
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  
 }
 
 .List a {
@@ -31,7 +30,9 @@ $Black: rgb(0, 0, 0);
   margin: 0;
 }
 
-.Title, .MsgCount, .TopicCount {
+.Title,
+.MsgCount,
+.TopicCount {
   padding-bottom: 20px;
   padding-top: 20px;
   border: 2px solid $Black;
@@ -50,10 +51,15 @@ $Black: rgb(0, 0, 0);
   width: 85px;
 }
 
-.TitleHeader, .MsgCountHeader, .TopicCountHeader {
+.TitleHeader,
+.MsgCountHeader,
+.TopicCountHeader {
   font-size: 1rem;
 }
-.MsgCountHeader, .TopicCountHeader, .MsgCount, .TopicCount {
+.MsgCountHeader,
+.TopicCountHeader,
+.MsgCount,
+.TopicCount {
   margin-left: 10px;
   text-align: center;
 }
@@ -63,7 +69,7 @@ $Black: rgb(0, 0, 0);
   flex: 1;
 }
 .MsgCountHeader {
-  width: 120px; 
+  width: 120px;
 }
 .TopicCountHeader {
   width: 90px;

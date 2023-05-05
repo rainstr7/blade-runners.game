@@ -22,7 +22,7 @@ $Black: rgb(0, 0, 0);
 
 .ListElement a {
   text-decoration: none;
-  color: black;
+  color: $Black;
 }
 
 .List {
@@ -30,7 +30,8 @@ $Black: rgb(0, 0, 0);
   margin: 0;
 }
 
-.Title, .MsgCount {
+.Title,
+.MsgCount {
   border: 2px solid $Black;
   border-radius: 0.3em;
   padding-top: 20px;
@@ -49,7 +50,8 @@ $Black: rgb(0, 0, 0);
   text-align: center;
 }
 
-.TitleHeader, .MsgCountHeader {
+.TitleHeader,
+.MsgCountHeader {
   font-size: 1rem;
 }
 .TitleHeader {
@@ -71,9 +73,9 @@ $Black: rgb(0, 0, 0);
 .TopicHeader {
   display: flex;
   align-items: center;
-}
-.TopicHeader h2 {
-  flex: 1;
-  text-align: center;
-  font-size: 2rem;
+  h2: {
+    flex: 1;
+    text-align: center;
+    font-size: 2rem;
+  }
 }
