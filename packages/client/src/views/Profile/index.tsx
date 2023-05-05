@@ -2,7 +2,7 @@ import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import cn from './style.module.scss'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
-import ButtonLink from '../../components/UI/ButtonLink'
+import CardLink from '../../components/UI/CardLink'
 
 const ProfileFormData = [
   {
@@ -61,7 +61,7 @@ const Profile = () => {
   return (
     <main className={cn.profile}>
         <div className={cn.title}>
-          <ButtonLink card>Back</ButtonLink>
+          <CardLink>Back</CardLink>
           <Button size='small' onClick={handleExit}>Exit</Button>
         </div>
         <div className={cn.formWrapper}>
