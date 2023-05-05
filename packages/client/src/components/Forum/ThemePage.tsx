@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { nanoid } from 'nanoid'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { nanoid } from 'nanoid';
 import styles from './ThemePage.module.scss'
 import { messages, topics, Message } from './Forum'
 import Button from '../UI/Button'
