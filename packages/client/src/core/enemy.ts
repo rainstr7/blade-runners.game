@@ -41,7 +41,7 @@ class Enemy implements GameObject {
     this.x -= this.speed
 
     if (this.x < 0 - this.width) {
-      this.isAlive = false;
+      this.isAlive = false
     }
   }
 }

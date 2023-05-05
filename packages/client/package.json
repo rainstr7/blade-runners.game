@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest ./",
-    "commit": "yarn lint && yarn format && cz"
+    "commit": "cz"
   },
   "dependencies": {
     "dotenv": "^16.0.2",
