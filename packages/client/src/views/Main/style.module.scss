@@ -5,9 +5,8 @@
   width: 100%;
   font-family: $font-family;
 
-
   .Header {
-    margin: 1.5rem 0 1.5rem;
+    height: 10%;
     padding: 0 2rem;
     display: flex;
     justify-content: space-between;
@@ -15,22 +14,54 @@
   }
 
   .Main {
+    color: $font-color;
     background-image: url('../../assets/landing_bg.jpg');
 
-    height: 85%;
+    height: 80%;
 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 
-  }
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 
-  .Galery {
+    .Title {
+      font-size: 8rem;
+    }
 
+    .Text {
+      padding: 0.8rem;
+      max-width: 65rem;
+      font-size: 2rem;
+    }
+
+    .Reviews {
+      margin: 0 0 1rem 0.8rem;
+      font-size: 1.6rem;
+    }
+
+    .Controls {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      align-items: center;
+
+      .Button {
+        margin: 0 0.8rem 0 0;
+      }
+
+    }
   }
 
   .Footer {
+    height: 10%;
 
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 
