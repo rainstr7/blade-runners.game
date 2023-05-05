@@ -4,8 +4,8 @@ import './App.css'
 import SignUp from './views/SignUp'
 import Auth from './views/Auth'
 import Layout from './components/Layout'
-import { Game } from './views/Game'
-import GameOver from './views/GameOver'
+import Start from './views/Start'
+import Game from './views/Game'
 
 function App() {
   useEffect(() => {
@@ -22,7 +22,7 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<GameOver />} />
+        <Route path="/" element={<Start />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<Auth />} />
         <Route path="/game" element={<Game />} />
