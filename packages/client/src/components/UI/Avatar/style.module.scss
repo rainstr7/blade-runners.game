@@ -1,0 +1,19 @@
+@import 'src/styles/mixins';
+
+.avatar {
+  @include flex-center;
+  border-radius: 50%;
+  overflow: hidden;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  &.small {
+    width: 60px;
+    height: 60px;
+  }
+  &.medium {
+    width: 80px;
+    height: 80px;
+  }
+}

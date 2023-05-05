@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
+import LeaderBoard from './views/Leaderboard'
 import SignUp from './views/SignUp'
 import Auth from './views/Auth'
 import Layout from './components/Layout'
@@ -27,7 +28,7 @@ function App() {
         <Route path="/signin" element={<Auth />} />
         <Route path="/game" element={<Game />} />
         <Route path="/settings" element={<div>Settings</div>} />
-        <Route path="/rating" element={<div>Leaderboard</div>} />
+        <Route path="/rating" element={<LeaderBoard />} />
         <Route path="/forum/*" element={<div>Forum</div>} />
         <Route path="*" element={<div>Страница не найдена</div>} />
       </Routes>
