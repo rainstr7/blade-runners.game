@@ -28,9 +28,9 @@
     "commitizen": {
       "path": "./node_modules/git-cz"
     }
-    
   },
   "dependencies": {
+    "nanoid": "^4.0.2",
     "react-hook-form": "^7.43.9"
   }
 }
