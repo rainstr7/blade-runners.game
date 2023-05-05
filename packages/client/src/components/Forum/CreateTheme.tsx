@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useNavigate } from 'react-router-dom'
-import { nanoid } from 'nanoid'
+// import { nanoid } from 'nanoid'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import styles from './CreateTheme.module.scss'
 import Button from '../UI/Button'
@@ -19,9 +19,10 @@ export const CreateTheme: React.FC = () => {
   }
   const { register, handleSubmit, reset } = useForm<Input>()
   const onSubmit: SubmitHandler<Input> = data => {
+    const now = new Date().toString()
     const topic: Topic = {
       ...data,
-      id: nanoid(10),
+      id: now, //nanoid(10),
       messagesCount: 0,
       messages: [],
     }

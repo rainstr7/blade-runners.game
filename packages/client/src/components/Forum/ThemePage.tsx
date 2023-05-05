@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import styles from './ThemePage.module.scss'
 import { messages, topics, Message } from './Forum'
 import Button from '../UI/Button'
@@ -48,7 +48,7 @@ export const ThemePage: React.FC = () => {
     const time = `${hours}:${minutes}`
     const message: Message = {
       ...data,
-      id: nanoid(10),
+      id: time, //nanoid(10),
       author: 'currentUser',
       time,
     }
