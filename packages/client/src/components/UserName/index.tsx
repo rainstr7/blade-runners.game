@@ -1,13 +1,10 @@
-import styles from './style.module.css';
+import cn from './style.module.scss'
 
-
-export const UserName = ({image, name}: {image: string, name: string}) => {
-    return (
-        <div className={styles['user']}>
-            <div className={styles['user_image']}>
-                <img src={image} alt={name} />
-            </div>
-            <span className={styles['user_name']}>{name}</span>
-        </div>
-    )
+export const UserName = ({ image, name }: { image: string; name: string }) => {
+  return (
+    <div className={cn.User}>
+      <div className={cn.Avatar} style={{ backgroundImage: `url(${image})` }} />
+      <div className={cn.Name}>{name}</div>
+    </div>
+  )
 }
