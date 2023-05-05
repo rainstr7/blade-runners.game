@@ -12,6 +12,7 @@ import Main from './views/Main'
 import Forum from './views/Forum'
 import { changeLayout } from './store/actions/changeLayout'
 import ErrorBoundary from './components/ErrorBoundary'
+import ErrorComponent from './components/Error/ErrorComponent'
 
 function App() {
   useEffect(() => {
@@ -29,16 +30,17 @@ function App() {
     <Layout>
       <ErrorBoundary>
         <Routes>
-        <Route path="/" element={<Main changeLayout={changeLayout} />} />
-        <Route path="/start" element={<Start />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<Auth />} />
-        <Route path="/game" element={<Game />} />
-        <Route path="/settings" element={<Profile />} />
-        <Route path="/rating" element={<LeaderBoard />} />
-        <Route path="/forum/*" element={<Forum />} />
-        <Route path="*" element={<div>Страница не найдена</div>} />
-      </Routes>
+          <Route path="/" element={<Main changeLayout={changeLayout} />} />
+          <Route path="/start" element={<Start />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<Auth />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/settings" element={<Profile />} />
+          <Route path="/rating" element={<LeaderBoard />} />
+          <Route path="/forum/*" element={<Forum />} />
+          <Route path="/500" element={<ErrorComponent errorCode={500} />} />
+          <Route path="*" element={<ErrorComponent errorCode={404} />} />
+        </Routes>
       </ErrorBoundary>
     </Layout>
   )
