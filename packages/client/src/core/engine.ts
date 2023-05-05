@@ -80,9 +80,6 @@ export class Engine {
     const keyCode = (e as KeyboardEvent)?.code
     if (keyCode && keyCode === 'Space') {
       this.pressedKeyCodes.splice(this.pressedKeyCodes.indexOf(keyCode), 1)
-      // if(player.yV < -3  ) {
-      //   player.yV  = -2   ;
-      // }
     }
   }
 
