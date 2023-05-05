@@ -1,9 +1,9 @@
 .ThemeHeader {
   display: flex;
   justify-content: space-between;
-}
-.ThemeHeader h2 {
-  font-size: 2rem;
+  h2: {
+    font-size: 2rem;
+  }
 }
 
 .Msg {
@@ -15,6 +15,7 @@
   margin-bottom: 10px;
   color: black;
 }
+
 .MsgContainer {
   max-height: 50vh;
   overflow: auto;
@@ -35,7 +36,6 @@
 }
 
 .Ava {
-  // background-image: url('../../assets/mava.jpg');
   background-color: teal;
   background-size: cover;
   background-position: center;
@@ -49,12 +49,12 @@
   margin-left: 10px;
 }
 
-.FormSendMsg{
+.FormSendMsg {
   display: flex;
   padding: 5px;
   padding-left: 10px;
 }
-.InputSendMsg{
+.InputSendMsg {
   flex: 1;
   align-self: center;
   height: 40px;
