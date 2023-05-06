@@ -1,17 +1,16 @@
 import cn from './style.module.scss'
 
 interface Props {
-  src: string,
+  src: string
   size?: 'small' | 'medium'
 }
 
-const Avatar = ({
-  size = 'small',
-  ...props
-}: Props) => {
+const Avatar = ({ size = 'small', ...props }: Props) => {
   const avatarSize = cn[size]
   return (
-    <div className={`${cn.avatar} ${avatarSize}`} style={{backgroundImage: `url(${props.src})`}}></div>
+    <div
+      className={`${cn.avatar} ${avatarSize}`}
+      style={{ backgroundImage: `url(${props.src})` }} />
   )
 }
 

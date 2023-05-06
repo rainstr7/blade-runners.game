@@ -1,0 +1,21 @@
+@import 'src/styles/vars';
+
+.Card {
+  background-color: $background-lite-color;
+  border: $border;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 1.5rem 4rem;
+  margin-bottom: 1.5rem;
+
+  ul {
+    padding: 0;
+    margin: 0;
+    :not(:last-child) {
+      margin-bottom: 1.5rem;
+    }
+  }
+  li {
+    list-style-type: none;
+  }
+}
