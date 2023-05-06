@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import styles from './Forum.module.scss'
+import cn from './Forum.module.scss'
 import { ForumList } from './ForumList'
 import { ForumPage } from './ForumPage'
 import { ThemePage } from './ThemePage'
@@ -25,7 +25,7 @@ export type Message = {
   id: string
   author: string
   content: string
-  time: string //Todo
+  time: string
 }
 
 export const messages: Message[] = [
@@ -86,7 +86,7 @@ export const forums: Forum[] = [
 ]
 export const Forum: React.FC = () => {
   return (
-    <div className={styles.ForumContainer}>
+    <div className={cn.ForumContainer}>
       <Routes>
         <Route path="/" element={<ForumList />} />
         <Route path="/newtheme" element={<CreateTheme />} />

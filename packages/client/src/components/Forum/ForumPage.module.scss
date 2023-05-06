@@ -73,9 +73,9 @@ $Black: rgb(0, 0, 0);
 .TopicHeader {
   display: flex;
   align-items: center;
-  h2: {
-    flex: 1;
-    text-align: center;
+  justify-content: space-between;
+
+  h2 {
     font-size: 2rem;
   }
 }
