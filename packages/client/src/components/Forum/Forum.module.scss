@@ -1,4 +1,5 @@
 $Black: rgb(0, 0, 0);
+$White: white;
 
 nav {
   margin-bottom: 20px;
@@ -6,9 +7,16 @@ nav {
 
 .ForumContainer {
   display: flex;
-  color: white;
+  color: $White;
   flex-direction: column;
   justify-content: flex-start;
   padding: 20px;
   width: 100%;
+
+  button {
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(215, 223, 230);
+    }
+  }
 }
