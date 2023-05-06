@@ -43,7 +43,7 @@ export const ThemePage: React.FC = () => {
     const time = `${hours}:${minutes}`
     const message: Message = {
       ...data,
-      id: now, //nanoid(10), TODO generic ID
+      id: time, //nanoid(10), TODO generic ID
       author: 'currentUser',
       time,
     }
