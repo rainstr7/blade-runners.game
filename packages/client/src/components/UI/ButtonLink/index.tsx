@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 interface ButtonLinkProps {
   children: ReactNode
-  to?: string,
+  to?: string
 }
 
 const ButtonLink: FC<PropsWithChildren<ButtonLinkProps>> = ({
