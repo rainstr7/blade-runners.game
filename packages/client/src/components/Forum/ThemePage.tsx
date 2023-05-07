@@ -25,7 +25,7 @@ const ThemePage: React.FC = () => {
     navigate(removePathSuffix(pathname))
   }
 
-  const topic = topics.find(f => f.id === id)
+  const topic = topics.find(f => f.id === Number(id))
 
   if (!topic) {
     return <div>Theme not found</div>
