@@ -66,7 +66,7 @@ const Main = ({ changeLayout }: MainProps) => {
 
       <footer className={cn.Footer}>
         <p>
-          By Blade Runners
+          BY blade runners
         </p>
         <p>
           2023 All rights reserved
