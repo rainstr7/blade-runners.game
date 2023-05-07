@@ -1,13 +1,40 @@
 @import 'src/styles/vars';
+@import 'src/styles/mixins';
 
 .Input {
   font-family: $font-family;
   font-size: 1.8rem;
   line-height: 2;
   padding: 1.5rem;
-  margin-bottom: 1.5rem;
   box-shadow: $box-shadow;
   background: $background-lite-color;
-  border: $border;
   border-radius: $border-radius;
+
+  &:focus {
+    border: none;
+    outline: $active solid 5px;
+  }
+}
+
+.Margin {
+  margin-bottom: 1.5rem;
+}
+
+.ErrorMessage {
+  color: $error-color;
+  text-align: end;
+}
+
+.Default {
+  border: $border;
+}
+
+.Invalid {
+  border: $border-err;
+}
+
+.Label {
+  display: flex;
+  justify-content: end;
+  flex-direction: column;
 }
