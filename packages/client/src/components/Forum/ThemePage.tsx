@@ -1,12 +1,11 @@
-import * as React from 'react'
+import React from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
-// import { nanoid } from 'nanoid' TODO
 import cn from './ThemePage.module.scss'
 import { messages, topics, Message } from './Forum'
 import Button from '../UI/Button'
 
-export const ThemePage: React.FC = () => {
+const ThemePage: React.FC = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { id } = useParams<{ id: string }>()
@@ -29,7 +28,7 @@ export const ThemePage: React.FC = () => {
   const topic = topics.find(f => f.id === id)
 
   if (!topic) {
-    return <div>Тема не найден</div>
+    return <div>Theme not found</div>
   }
 
   //form logic
@@ -43,7 +42,7 @@ export const ThemePage: React.FC = () => {
     const time = `${hours}:${minutes}`
     const message: Message = {
       ...data,
-      id: time, //nanoid(10), TODO generic ID
+      id: Math.random(), //TODO generic ID
       author: 'currentUser',
       time,
     }
@@ -88,3 +87,5 @@ export const ThemePage: React.FC = () => {
     </div>
   )
 }
+
+export default ThemePage

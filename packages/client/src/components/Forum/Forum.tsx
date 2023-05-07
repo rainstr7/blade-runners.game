@@ -1,10 +1,9 @@
-import * as React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import cn from './Forum.module.scss'
-import { ForumList } from './ForumList'
-import { ForumPage } from './ForumPage'
-import { ThemePage } from './ThemePage'
-import { CreateTheme } from './CreateTheme'
+import ForumList from './ForumList'
+import ForumPage from './ForumPage'
+import ThemePage from './ThemePage'
+import CreateTheme from './CreateTheme'
 
 export type Forum = {
   id: string

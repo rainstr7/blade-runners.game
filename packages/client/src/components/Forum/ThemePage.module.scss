@@ -1,31 +1,30 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins';
+
+$Black: black;
+
 .ThemeHeader {
-  display: flex;
-  justify-content: space-between;
-  h2: {
-    font-size: 2rem;
-  }
+  @include flex-between;
 }
 
 .Msg {
-  margin-left: 5px;
-  background-color: #fff;
-  border-radius: 0.3em;
-  border: 2px solid black;
-  padding: 10px;
-  margin-bottom: 10px;
-  color: black;
+  border: $border;
+  border-radius: $border-radius;
+  background-color: $background-lite-color;
+  margin-bottom: 0.6rem;
+  padding: 0.6rem;
+  color: $Black;
 }
 
 .MsgContainer {
   max-height: 50vh;
   overflow: auto;
+  margin-bottom: 0.6rem;
 }
 
 .MsgHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+  @include flex-between;
+  margin-bottom: 0.6rem;
 }
 
 .MsgBody {
@@ -46,21 +45,20 @@
 
 .Author {
   flex: 1;
-  margin-left: 10px;
+  margin-left: 0.6rem;
 }
 
 .FormSendMsg {
   display: flex;
-  padding: 5px;
-  padding-left: 10px;
 }
+
 .InputSendMsg {
+  border: $border;
+  border-radius: $border-radius;
   flex: 1;
   align-self: center;
-  height: 40px;
-  margin-right: 10px;
-  border: 2px solid black;
-  border-radius: 0.3em;
+  height: 2.5rem;
   font-size: 1rem;
+  margin-right: 0.6rem;
   padding: 2rem 0.5rem;
 }

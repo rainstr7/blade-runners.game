@@ -1,11 +1,10 @@
-import * as React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import cn from './ForumPage.module.scss'
 import Button from '../UI/Button'
 import { forums, topics } from './Forum'
 import { Topic, Forum } from './Forum'
 
-export const ForumPage: React.FC = () => {
+const ForumPage: React.FC = () => {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
@@ -20,7 +19,7 @@ export const ForumPage: React.FC = () => {
   const forum: Forum | undefined = forums.find(f => f.id === id)
 
   if (!forum) {
-    return <div>Форум не найден</div>
+    return <div>Forum not found</div>
   }
 
   return (
@@ -55,3 +54,5 @@ export const ForumPage: React.FC = () => {
     </div>
   )
 }
+
+export default ForumPage

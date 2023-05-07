@@ -1,16 +1,16 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins';
+
 $Black: rgb(0, 0, 0);
 
 .ListContainer {
+  @include flex-column;
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  padding: 0;
 }
 
 .ListElement {
   list-style-type: none;
-  margin: 5px;
+  margin-bottom: 0.3rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -20,35 +20,31 @@ $Black: rgb(0, 0, 0);
   width: 100%;
 }
 
-.List a {
-  text-decoration: none;
-  color: black;
-}
-
 .List {
   padding: 0;
-  margin: 0;
 }
 
 .Title,
 .MsgCount,
 .TopicCount {
-  padding-bottom: 20px;
-  padding-top: 20px;
-  border: 2px solid $Black;
-  border-radius: 0.3em;
-  background-color: white;
+  padding-bottom: 1.25rem;
+  padding-top: 1.25rem;
+  border: $border;
+  border-radius: $border-radius;
+  background-color: $background-lite-color;
 }
 
 .Title {
-  padding-left: 20px;
+  padding-left: 1.25rem;
   flex: 1;
 }
-.MsgCount {
-  width: 120px;
+.MsgCount,
+.MsgCountHeader {
+  width: 7.5rem;
 }
-.TopicCount {
-  width: 85px;
+.TopicCount,
+.TopicCountHeader {
+  width: 5.3rem;
 }
 
 .TitleHeader,
@@ -60,32 +56,28 @@ $Black: rgb(0, 0, 0);
 .TopicCountHeader,
 .MsgCount,
 .TopicCount {
-  margin-left: 10px;
+  margin-left: 0.6rem;
   text-align: center;
 }
 
 .TitleHeader {
-  padding: 3px;
+  padding: 0.2rem;
   flex: 1;
 }
-.MsgCountHeader {
-  width: 120px;
-}
-.TopicCountHeader {
-  width: 90px;
-}
+
 .HeaderContainer {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  font-size: 12px;
-  margin-bottom: 5px;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
 }
 
 .TopicHeader {
   display: flex;
-}
-.TopicHeader h2 {
-  flex: 1;
-  text-align: center;
+
+  h2 {
+    flex: 1;
+    text-align: center;
+  }
 }
