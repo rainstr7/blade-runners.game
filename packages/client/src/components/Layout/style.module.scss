@@ -10,10 +10,8 @@
 .Container {
   @include flex-column;
   @include flex-vertical-center;
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  @include background-styles;
+  
   padding: 2.9rem;
 }
 
