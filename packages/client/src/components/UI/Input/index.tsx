@@ -1,35 +1,53 @@
 import cn from './styles.module.scss'
-
-import { ChangeEventHandler } from 'react'
+import {
+  FieldError,
+  FieldErrorsImpl,
+  FieldValues,
+  Merge,
+  Path,
+  UseFormRegister,
+} from 'react-hook-form'
+import { RegisterOptions } from 'react-hook-form/dist/types/validator'
+import { DetailedHTMLProps, InputHTMLAttributes, ReactNode } from 'react'
 
 interface Props {
-  placeholder?: string
-  type?: 'text' | 'password' | 'phone'
-  value: string
-  name: string
-  onChange: ChangeEventHandler<HTMLInputElement>
-  autoComplete?: string
+  name: Path<FieldValues>
+  autoComplete: string
+  register: UseFormRegister<FieldValues>
+  options?: RegisterOptions
+  error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>
 }
 
 const Input = ({
-  placeholder = '',
-  type = 'text',
-  value,
   name,
-  onChange,
+  register,
+  error,
   autoComplete = 'off',
-}: Props) => {
+  options,
+  ...props
+}: Props &
+  DetailedHTMLProps<
+    InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >) => {
+  const inputClasses = [cn.Input]
+  if (error) {
+    inputClasses.push(cn.Invalid)
+  } else {
+    inputClasses.push(cn.Margin)
+  }
   return (
-    <input
-      className={cn.Input}
-      placeholder={placeholder}
-      type={type}
-      value={value}
-      onChange={onChange}
-      id={name}
-      name={name}
-      autoComplete={autoComplete}
-    />
+    <label className={cn.Label}>
+      <input
+        className={inputClasses.join(' ')}
+        autoComplete={autoComplete}
+        {...register(name, options)}
+        {...props}
+      />
+      <div className={cn.ErrorMessage}>
+        <span>{error && (error.message as ReactNode)}</span>
+      </div>
+    </label>
   )
 }
 
