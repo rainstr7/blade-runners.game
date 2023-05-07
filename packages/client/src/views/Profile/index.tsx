@@ -1,4 +1,3 @@
-import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import cn from './style.module.scss'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
@@ -42,24 +41,6 @@ const ProfileFormData = [
     autoComplete: 'password',
   },
 ]
-
-interface ProfileDataInterface {
-  first_name: string,
-  second_name: string,
-  email: string,
-  phone: string,
-  login: string,
-  password: string
-}
-
-const initialState = {
-  first_name: '',
-  second_name: '',
-  email: '',
-  phone: '',
-  login: '',
-  password: ''
-}
 
 const phoneRegExp = /^([+]?\d{1,2}[-\s]?|)\d{3}[-\s]?\d{3}[-\s]?\d{4}$/
 
