@@ -16,7 +16,7 @@ const ForumPage: React.FC = () => {
     navigate('/forum/newtheme')
   }
 
-  const forum: Forum | undefined = forums.find(f => f.id === id)
+  const forum: Forum | undefined = forums.find(f => f.id === Number(id))
 
   if (!forum) {
     return <div>Forum not found</div>
