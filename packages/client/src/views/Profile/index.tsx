@@ -37,7 +37,7 @@ const ProfileFormData = [
   },
 ]
 
-interface ProfleDataInterface {
+interface ProfileDataInterface {
   first_name: string,
   second_name: string,
   email: string,
@@ -56,7 +56,7 @@ const initialState = {
 }
 
 const Profile = () => {
-  const [profileData, setprofileData] = useState<ProfleDataInterface>(initialState)
+  const [profileData, setprofileData] = useState<ProfileDataInterface>(initialState)
 
   const handleExit = () => {
     console.log('exit')
