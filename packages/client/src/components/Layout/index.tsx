@@ -11,7 +11,7 @@ interface Props {
 
 const Layout = ({ children, type = 'Default' }: Props) => {
   if (type === 'Landing') {
-    return <div>{children}</div>
+    return <div className={cn.Layout}>{children}</div>
   }
   const background = cn[type]
   const header = type === 'Default' ? 'BLADE RUNNER' : 'GAME OVER'
