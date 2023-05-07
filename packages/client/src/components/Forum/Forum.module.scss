@@ -1,22 +1,32 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins';
+
 $Black: rgb(0, 0, 0);
 $White: white;
 
 nav {
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .ForumContainer {
-  display: flex;
+  @include flex-column;
   color: $White;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 20px;
+  padding: 1.25rem;
   width: 100%;
+
+  a {
+    color: $Black;
+  }
 
   button {
     &:hover {
       cursor: pointer;
-      background-color: rgb(215, 223, 230);
+      background-color: $hover-background-color;
     }
+  }
+
+  h2 {
+    font-size: 2rem;
+    padding: 0.3rem;
   }
 }
