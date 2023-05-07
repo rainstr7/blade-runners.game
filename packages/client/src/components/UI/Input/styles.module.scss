@@ -9,6 +9,11 @@
   box-shadow: $box-shadow;
   background: $background-lite-color;
   border-radius: $border-radius;
+
+  &:focus {
+    border: none;
+    outline: $active solid 5px;
+  }
 }
 
 .Margin {
