@@ -1,8 +1,11 @@
 $font-family: FutureMillennium, sans-serif;
 
-$border: 5px solid #000000;
+$default-color: #000000;
+$font-color: #ffffff;
+$error-color: #ff0000;
+$background-lite-color: #ffffff;
+
+$border: 5px solid $default-color;
+$border-err: 5px solid $error-color;
 $border-radius: 5px;
 $box-shadow: 0 4px 5px 4px rgba(0, 0, 0, 0.3);
-
-$font-color: #ffffff;
-$background-lite-color: #ffffff;

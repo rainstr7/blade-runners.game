@@ -10,7 +10,8 @@ const Avatar = ({ size = 'small', ...props }: Props) => {
   return (
     <div
       className={`${cn.avatar} ${avatarSize}`}
-      style={{ backgroundImage: `url(${props.src})` }} />
+      style={{ backgroundImage: `url(${props.src})` }}
+    />
   )
 }
 
