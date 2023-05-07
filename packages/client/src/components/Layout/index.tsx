@@ -1,18 +1,25 @@
 import { ReactElement } from 'react'
 import cn from './style.module.scss'
 import Header from '../UI/Header'
+import { connect } from 'react-redux'
+import { IRootStore, LayoutView } from '../../store/reduces/interfaces'
 
 interface Props {
   children: ReactElement
-  type?: 'Default' | 'GameOver'
+  type: LayoutView
 }
 
-const Layout = ({ type = 'Default', children }: Props) => {
+const Layout = ({ children, type = 'Default' }: Props) => {
+  if (type === 'Landing') {
+    return <div>{children}</div>
+  }
   const background = cn[type]
+  const header = type === 'Default' ? 'BLADE RUNNER' : 'GAME OVER'
+
   return (
     <div className={cn.Layout}>
       <div className={`${cn.Container} ${background}`}>
-        <Header>BLADE RUNNER</Header>
+        <Header>{header}</Header>
         {children}
         <span className={cn.Authors}>BY blade runners</span>
       </div>
@@ -20,4 +27,10 @@ const Layout = ({ type = 'Default', children }: Props) => {
   )
 }
 
-export default Layout
+function mapStateToProps(state: IRootStore) {
+  return {
+    type: state.layout.type,
+  }
+}
+
+export default connect(mapStateToProps)(Layout)

@@ -2,6 +2,8 @@ import App from './App'
 import { render, screen } from '@testing-library/react'
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from './store'
 
 const appContent = 'BY blade runners'
 
@@ -13,9 +15,11 @@ global.fetch = jest.fn(() =>
 
 test('Example test', async () => {
   render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
   )
   expect(screen.getByText(appContent)).toBeDefined()
 })
