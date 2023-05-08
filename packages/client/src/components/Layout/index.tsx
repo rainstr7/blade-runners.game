@@ -21,7 +21,7 @@ const Layout = ({ children, type = 'Default' }: Props) => {
       <div className={`${cn.Container} ${background}`}>
         <Header>{header}</Header>
         {children}
-        <span className={cn.Authors}>BY blade runners</span>
+        <div className={cn.Authors}>BY blade runners</div>
       </div>
     </div>
   )

@@ -78,7 +78,7 @@ const Profile = () => {
   return (
     <main className={cn.profile}>
         <div className={cn.title}>
-          <CardLink>Back</CardLink>
+          <CardLink to='/start'>Back</CardLink>
           <Button size='small' onClick={handleExit}>Exit</Button>
         </div>
         <div className={cn.formWrapper}>
