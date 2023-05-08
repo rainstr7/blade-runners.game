@@ -1,4 +1,5 @@
 @import './src/styles/vars';
+@import 'src/styles/mixins';
 
 .Container {
   height: 100%;
@@ -6,14 +7,13 @@
   font-family: $font-family;
 
   .Header {
+    @include flex-between;
     height: 10%;
     padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 
   .Main {
+    @include flex-column;
     color: $font-color;
     background-image: url('../../assets/landing_bg.jpg');
 
@@ -23,8 +23,6 @@
     background-repeat: no-repeat;
     background-size: cover;
 
-    display: flex;
-    flex-direction: column;
     justify-content: space-around;
 
     .Title {
@@ -43,10 +41,7 @@
     }
 
     .Controls {
-      display: flex;
-      justify-content: space-between;
-      flex-direction: row;
-      align-items: center;
+      @include flex-between;
 
       .Button {
         margin: 0 0.8rem 0 0;
@@ -56,12 +51,10 @@
   }
 
   .Footer {
-    height: 10%;
+    @include flex-between;
 
+    height: 10%;
     padding: 0 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 }
 

@@ -31,7 +31,7 @@ const Main = ({ changeLayout }: MainProps) => {
         <p>
           By Blade Runners
         </p>
-        <ButtonLink to={'/start'}>Go To Game</ButtonLink>
+        <ButtonLink to={'/start'}>start to play</ButtonLink>
       </header>
 
       <div className={cn.Main}>
@@ -57,7 +57,7 @@ const Main = ({ changeLayout }: MainProps) => {
           </div>
 
           <div className={cn.Button}>
-            <Button type='button' onClick={goToGameHandler}>Go to game</Button>
+            <Button type='button' onClick={goToGameHandler}>let's play</Button>
           </div>
 
         </div>
