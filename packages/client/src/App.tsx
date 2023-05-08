@@ -7,6 +7,8 @@ import Auth from './views/Auth'
 import Layout from './components/Layout'
 import Start from './views/Start'
 import Game from './views/Game'
+import Main from './views/Main'
+import { changeLayout } from './store/actions/changeLayout'
 
 function App() {
   useEffect(() => {
@@ -23,7 +25,8 @@ function App() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Start />} />
+        <Route path="/" element={<Main changeLayout={changeLayout} />} />
+        <Route path="/start" element={<Start />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<Auth />} />
         <Route path="/game" element={<Game />} />
