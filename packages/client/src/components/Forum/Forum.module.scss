@@ -1,21 +1,18 @@
 @import 'src/styles/vars';
 @import 'src/styles/mixins';
 
-$Black: rgb(0, 0, 0);
-$White: white;
-
 nav {
   margin-bottom: 1.25rem;
 }
 
 .ForumContainer {
   @include flex-column;
-  color: $White;
+  color: $font-color;
   padding: 1.25rem;
   width: 100%;
 
   a {
-    color: $Black;
+    color: $default-color;
   }
 
   @media (any-hover: hover) {

@@ -1,8 +1,6 @@
 @import 'src/styles/vars';
 @import 'src/styles/mixins';
 
-$Black: rgb(0, 0, 0);
-
 .ListContainer {
   @include flex-column;
   width: 100%;

@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import cn from './CreateTheme.module.scss'
 import Button from '../UI/Button'
-import { Topic } from './Forum'
+import Input from '../UI/Input'
+import { Topic } from './types'
 
 const CreateTheme: React.FC = () => {
-  const { register, handleSubmit, reset } = useForm<Input>()
+  const { register, handleSubmit, reset } = useForm<FieldValues>()
   const navigate = useNavigate()
 
   //navigation
@@ -14,12 +15,10 @@ const CreateTheme: React.FC = () => {
   }
 
   //form logic
-  type Input = {
-    title: string
-  }
-  const onSubmit: SubmitHandler<Input> = data => {
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+    console.log('DATA', data)
     const topic: Topic = {
-      ...data,
+      title: data.title,
       id: Math.random(), //TODO generic ID
       messagesCount: 0,
       messages: [],
@@ -37,11 +36,12 @@ const CreateTheme: React.FC = () => {
         <h2>Current forum</h2>
       </div>
       <form className={cn.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
-        <input
-          className={cn.InputSendMsg}
+        <Input
           placeholder="NEW TITLE THEME"
           autoComplete="off"
-          {...register('title', { required: true })}
+          name="title"
+          register={register}
+          options={{ required: true }}
         />
         <Button size="small">CREATE</Button>
       </form>

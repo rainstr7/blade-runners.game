@@ -1,21 +1,15 @@
 @import 'src/styles/vars';
 @import 'src/styles/mixins';
 
-$Black: black;
-
 .FormSendMsg {
   display: flex;
-}
-
-.InputSendMsg {
-  border: $border;
-  border-radius: $border-radius;
-  flex: 1;
-  align-self: center;
-  height: 2.5rem;
-  margin-right: 0.6rem;
-  padding: 2rem 0.5rem;
-  padding-left: 0.6rem;
+  gap: 0.6rem;
+  label {
+    flex: 1;
+  }
+  button {
+    margin-bottom: 1.5rem;
+  }
 }
 
 .ThemeHeader {

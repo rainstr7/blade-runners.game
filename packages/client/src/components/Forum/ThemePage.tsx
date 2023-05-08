@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import cn from './ThemePage.module.scss'
-import { messages, topics, Message } from './Forum'
+import { Message } from './types'
+import { messages, topics } from './forumData'
 import Button from '../UI/Button'
+import Input from '../UI/Input'
 import removePathSuffix from '../../utils/removePathSuffix'
 
 const ThemePage: React.FC = () => {
@@ -11,7 +13,7 @@ const ThemePage: React.FC = () => {
   const { pathname } = useLocation()
   const { id } = useParams<{ id: string }>()
   const [state, setState] = React.useState(messages)
-  const { register, handleSubmit, reset } = useForm<Input>()
+  const { register, handleSubmit, reset } = useForm<FieldValues>()
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
   const scrollToBottom = () => {
@@ -33,16 +35,13 @@ const ThemePage: React.FC = () => {
   }
 
   //form logic
-  type Input = {
-    content: string
-  }
-  const onSubmit: SubmitHandler<Input> = data => {
+  const onSubmit: SubmitHandler<FieldValues> = data => {
     const now = new Date()
     const hours = now.getHours().toString()
     const minutes = now.getMinutes().toString()
     const time = `${hours}:${minutes}`
     const message: Message = {
-      ...data,
+      content: data.content,
       id: Math.random(), //TODO generic ID
       author: 'currentUser',
       time,
@@ -76,11 +75,12 @@ const ThemePage: React.FC = () => {
       </section>
 
       <form className={cn.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
-        <input
-          className={cn.InputSendMsg}
+        <Input
           placeholder="YOUR MESSAGE"
           autoComplete="off"
-          {...register('content', { required: true })}
+          name="content"
+          options={{ required: true }}
+          register={register}
         />
         <Button size="small" type="submit">
           SEND

@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom'
 import cn from './ForumList.module.scss'
-import { forums } from './Forum'
+import { forums } from './forumData'
 import Button from '../UI/Button'
 import { PathList } from './Forum'
 

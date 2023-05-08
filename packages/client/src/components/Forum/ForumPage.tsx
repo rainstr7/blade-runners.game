@@ -1,8 +1,8 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import cn from './ForumPage.module.scss'
 import Button from '../UI/Button'
-import { forums, topics } from './Forum'
-import { Topic, Forum } from './Forum'
+import { forums, topics } from './forumData'
+import { Topic, Forum } from './types'
 import { PathList } from './Forum'
 
 const ForumPage: React.FC = () => {
