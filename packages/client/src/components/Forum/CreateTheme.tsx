@@ -18,7 +18,6 @@ const CreateTheme: React.FC = () => {
     title: string
   }
   const onSubmit: SubmitHandler<Input> = data => {
-    const now = new Date().toString()
     const topic: Topic = {
       ...data,
       id: Math.random(), //TODO generic ID
@@ -35,7 +34,7 @@ const CreateTheme: React.FC = () => {
         <Button size="small" onClick={handleGoBack}>
           Back
         </Button>
-        <h2>topic.title</h2>
+        <h2>Current forum</h2>
       </div>
       <form className={cn.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
         <input

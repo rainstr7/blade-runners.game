@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import cn from './ThemePage.module.scss'
 import { messages, topics, Message } from './Forum'
 import Button from '../UI/Button'
+import removePathSuffix from '../../utils/removePathSuffix'
 
 const ThemePage: React.FC = () => {
   const navigate = useNavigate()
@@ -11,15 +12,15 @@ const ThemePage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const [state, setState] = React.useState(messages)
   const { register, handleSubmit, reset } = useForm<Input>()
+  const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
-  function removePathSuffix(path: string): string {
-    const index = path.lastIndexOf('/')
-    if (index >= 0) {
-      return path.substring(0, index)
-    } else {
-      return path
-    }
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [state])
 
   function handleGoBack() {
     navigate(removePathSuffix(pathname))
@@ -52,7 +53,7 @@ const ThemePage: React.FC = () => {
   }
 
   return (
-    <div>
+    <>
       <nav className={cn.ThemeHeader}>
         <Button size="small" onClick={handleGoBack}>
           Back
@@ -60,7 +61,7 @@ const ThemePage: React.FC = () => {
         <h2>{topic.title}</h2>
       </nav>
 
-      <div className={cn.MsgContainer}>
+      <section className={cn.MsgContainer}>
         {state.map(message => (
           <div className={cn.Msg} key={message.id}>
             <div className={cn.MsgHeader}>
@@ -69,9 +70,10 @@ const ThemePage: React.FC = () => {
               <span className={cn.Time}>{message.time}</span>
             </div>
             <div className={cn.MsgBody}>{message.content}</div>
+            <div ref={messagesEndRef}></div>
           </div>
         ))}
-      </div>
+      </section>
 
       <form className={cn.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
         <input
@@ -84,7 +86,7 @@ const ThemePage: React.FC = () => {
           SEND
         </Button>
       </form>
-    </div>
+    </>
   )
 }
 

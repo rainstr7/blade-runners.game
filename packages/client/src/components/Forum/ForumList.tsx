@@ -2,16 +2,17 @@ import { Link, useNavigate } from 'react-router-dom'
 import cn from './ForumList.module.scss'
 import { forums } from './Forum'
 import Button from '../UI/Button'
+import { PathList } from './Forum'
 
 const ForumList: React.FC = () => {
   const navigate = useNavigate()
 
   function handleGoBack() {
-    navigate('/')
+    navigate(PathList.start)
   }
 
   return (
-    <div>
+    <>
       <nav>
         <Button size="small" onClick={handleGoBack}>
           Back
@@ -37,7 +38,7 @@ const ForumList: React.FC = () => {
           ))}
         </ul>
       </div>
-    </div>
+    </>
   )
 }
 

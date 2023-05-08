@@ -18,8 +18,19 @@ $Black: black;
 
 .MsgContainer {
   max-height: 50vh;
-  overflow: auto;
   margin-bottom: 0.6rem;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    background-color: $background-lite-color;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $background-lite-color;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #3b7dc9;
+  }
 }
 
 .MsgHeader {

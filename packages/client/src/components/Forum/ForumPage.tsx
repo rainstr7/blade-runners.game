@@ -3,17 +3,18 @@ import cn from './ForumPage.module.scss'
 import Button from '../UI/Button'
 import { forums, topics } from './Forum'
 import { Topic, Forum } from './Forum'
+import { PathList } from './Forum'
 
 const ForumPage: React.FC = () => {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
   function handleGoBack() {
-    navigate('/forum')
+    navigate(PathList.forum)
   }
 
   function handleGoCreate() {
-    navigate('/forum/newtheme')
+    navigate(PathList.createTheme)
   }
 
   const forum: Forum | undefined = forums.find(f => f.id === Number(id))
@@ -23,7 +24,7 @@ const ForumPage: React.FC = () => {
   }
 
   return (
-    <div>
+    <>
       <nav className={cn.TopicHeader}>
         <Button size="small" onClick={handleGoBack}>
           Back
@@ -51,7 +52,7 @@ const ForumPage: React.FC = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </>
   )
 }
 

@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import cn from './Forum.module.scss'
 import ForumList from './ForumList'
 import ForumPage from './ForumPage'
@@ -83,7 +83,16 @@ export const forums: Forum[] = [
     messagesCount: 112,
   },
 ]
-export const Forum: React.FC = () => {
+export const PathList: Record<string, string> = {
+  main: '/',
+  start: '/start',
+  signup: '/signup',
+  auth: '/signin',
+  game: '/game',
+  forum: '/forum',
+  createTheme: '/forum/newtheme',
+}
+const Forum: React.FC = () => {
   return (
     <div className={cn.ForumContainer}>
       <Routes>
@@ -95,3 +104,5 @@ export const Forum: React.FC = () => {
     </div>
   )
 }
+
+export default Forum

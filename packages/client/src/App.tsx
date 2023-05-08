@@ -9,7 +9,7 @@ import Start from './views/Start'
 import Game from './views/Game'
 import Main from './views/Main'
 import { changeLayout } from './store/actions/changeLayout'
-import { Forum } from './components/Forum/Forum'
+import Forum from './components/Forum/Forum'
 
 function App() {
   useEffect(() => {

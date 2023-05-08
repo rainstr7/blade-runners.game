@@ -18,10 +18,10 @@ nav {
     color: $Black;
   }
 
-  button {
-    &:hover {
+  @media (any-hover: hover) {
+    button:hover {
       cursor: pointer;
-      background-color: $hover-background-color;
+      background-color: $active;
     }
   }
 
