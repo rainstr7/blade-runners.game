@@ -1,0 +1,136 @@
+@import 'src/styles/vars';
+
+.Loader {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+}
+
+.CircleFW,
+.CircleSW {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.CircleFW {
+  animation: rotate 2s linear infinite;
+}
+
+.CircleSW {
+  animation: rotate-reverse 4s linear infinite;
+}
+
+.Path,
+.Path2,
+.Path3,
+.Path4,
+.Path5,
+.Path6,
+.Path7,
+.Path8,
+.Path9 {
+  stroke-linecap: square;
+  stroke-width: 0.3rem;
+  opacity: 0.8;
+  stroke: $active;
+}
+
+.Path {
+  stroke-dasharray: 1400, 2600;
+  stroke-dashoffset: 0;
+  animation: dash 3.7s ease-in-out infinite;
+  opacity: 0.3;
+}
+
+.Path2 {
+  stroke-dasharray: 40, 2600;
+  stroke-dashoffset: -50px;
+}
+
+.Path3 {
+  stroke-dasharray: 200, 2600;
+  stroke-dashoffset: -70px;
+}
+
+.Path4 {
+  stroke-dasharray: 40, 2600;
+  stroke-dashoffset: -20px;
+}
+
+.Path5 {
+  stroke-dasharray: 100, 1600;
+  stroke-dashoffset: 0;
+}
+
+.Path6 {
+  stroke-dasharray: 300, 2600;
+  stroke-dashoffset: -1000px;
+}
+
+.Path7 {
+  stroke-dasharray: 40, 2600;
+  stroke-dashoffset: -1200px;
+}
+
+.Path8 {
+  stroke-dasharray: 100, 2600;
+  stroke-dashoffset: -300px;
+}
+
+.Path9 {
+  stroke-dashoffset: -300px;
+  opacity: 0.8;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate-reverse {
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 2000, 2600;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 2400, 2600;
+    stroke-dashoffset: -500px;
+  }
+  100% {
+    stroke-dasharray: 2000, 2600;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dash2 {
+  0% {
+    stroke-dasharray: 100, 2600;
+    stroke-dashoffset: -2000px;
+  }
+  50% {
+    stroke-dasharray: 500, 2600;
+    stroke-dashoffset: -1000px;
+  }
+  100% {
+    stroke-dasharray: 100, 2600;
+    stroke-dashoffset: -1960px;
+  }
+}

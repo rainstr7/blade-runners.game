@@ -7,6 +7,7 @@ import Auth from './views/Auth'
 import Layout from './components/Layout'
 import Start from './views/Start'
 import Game from './views/Game'
+import Loader from './components/UI/Loader'
 
 function App() {
   useEffect(() => {

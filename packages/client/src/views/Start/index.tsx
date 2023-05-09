@@ -1,6 +1,7 @@
 import Button from '../../components/UI/Button'
 import { useNavigate } from 'react-router-dom'
 import cn from './style.module.scss'
+import Loader from '../../components/UI/Loader'
 
 const Start = () => {
   const navigate = useNavigate()
@@ -21,6 +22,7 @@ const Start = () => {
 
   return (
     <main className={cn.Block}>
+      <Loader />
       <div className={cn.MainButtonGroup}>
         <Button onClick={startButton}>Start Game</Button>
         <Button onClick={settingsButton}>Settings</Button>
