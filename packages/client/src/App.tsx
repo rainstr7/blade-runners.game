@@ -10,6 +10,7 @@ import Game from './views/Game'
 import Profile from './views/Profile'
 import Main from './views/Main'
 import { changeLayout } from './store/actions/changeLayout'
+import ErrorBoundary from './components/ErrorBoundary'
 
 function App() {
   useEffect(() => {
@@ -25,7 +26,8 @@ function App() {
 
   return (
     <Layout>
-      <Routes>
+      <ErrorBoundary>
+        <Routes>
         <Route path="/" element={<Main changeLayout={changeLayout} />} />
         <Route path="/start" element={<Start />} />
         <Route path="/signup" element={<SignUp />} />
@@ -36,6 +38,7 @@ function App() {
         <Route path="/forum/*" element={<div>Forum</div>} />
         <Route path="*" element={<div>Страница не найдена</div>} />
       </Routes>
+      </ErrorBoundary>
     </Layout>
   )
 }
