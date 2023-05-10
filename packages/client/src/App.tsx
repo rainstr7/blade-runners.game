@@ -28,7 +28,7 @@ function App() {
       <ErrorBoundary>
         <Routes>
           <Route path="/" element={<Main changeLayout={changeLayout} />} />
-        <Route path="/start" element={<Start />} />
+          <Route path="/start" element={<Start />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<Auth />} />
           <Route path="/game" element={<Game />} />
