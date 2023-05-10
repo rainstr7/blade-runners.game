@@ -9,6 +9,7 @@ import Start from './views/Start'
 import Game from './views/Game'
 import Profile from './views/Profile'
 import Main from './views/Main'
+import Forum from './views/Forum'
 import { changeLayout } from './store/actions/changeLayout'
 import ErrorBoundary from './components/ErrorBoundary'
 
@@ -35,7 +36,7 @@ function App() {
         <Route path="/game" element={<Game />} />
         <Route path="/settings" element={<Profile />} />
         <Route path="/rating" element={<LeaderBoard />} />
-        <Route path="/forum/*" element={<div>Forum</div>} />
+        <Route path="/forum/*" element={<Forum />} />
         <Route path="*" element={<div>Страница не найдена</div>} />
       </Routes>
       </ErrorBoundary>
