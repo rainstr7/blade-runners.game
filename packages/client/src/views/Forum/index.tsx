@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom'
-import cn from './Forum.module.scss'
-import ForumList from './ForumList'
-import ForumPage from './ForumPage'
-import ThemePage from './ThemePage'
-import CreateTheme from './CreateTheme'
+import cn from './style.module.scss'
+import ForumList from '../../components/Forum/ForumList'
+import ForumPage from '../../components/Forum/ForumPage'
+import ThemePage from '../../components/Forum/ThemePage'
+import CreateTheme from '../../components/Forum/CreateTheme'
 
 export const PathList: Record<string, string> = {
   main: '/',

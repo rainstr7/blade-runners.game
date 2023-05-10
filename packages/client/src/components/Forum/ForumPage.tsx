@@ -1,9 +1,9 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import cn from './ForumPage.module.scss'
 import Button from '../UI/Button'
-import { forums, topics } from './forumData'
-import { Topic, Forum } from './types'
-import { PathList } from './Forum'
+import { forums, topics } from '../../views/Forum/forumData'
+import { Topic, Forum } from '../../views/Forum/types'
+import { PathList } from '../../views/Forum'
 
 const ForumPage: React.FC = () => {
   const navigate = useNavigate()

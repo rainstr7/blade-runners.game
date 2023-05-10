@@ -3,7 +3,7 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import cn from './CreateTheme.module.scss'
 import Button from '../UI/Button'
 import Input from '../UI/Input'
-import { Topic } from './types'
+import { Topic } from '../../views/Forum/types'
 
 const CreateTheme: React.FC = () => {
   const { register, handleSubmit, reset } = useForm<FieldValues>()

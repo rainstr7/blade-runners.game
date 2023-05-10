@@ -8,8 +8,8 @@ import Layout from './components/Layout'
 import Start from './views/Start'
 import Game from './views/Game'
 import Main from './views/Main'
+import Forum from './views/Forum'
 import { changeLayout } from './store/actions/changeLayout'
-import Forum from './components/Forum/Forum'
 
 function App() {
   useEffect(() => {

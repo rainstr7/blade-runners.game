@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
 import cn from './ForumList.module.scss'
-import { forums } from './forumData'
+import { forums } from '../../views/Forum/forumData'
 import Button from '../UI/Button'
-import { PathList } from './Forum'
+import { PathList } from '../../views/Forum'
 
 const ForumList: React.FC = () => {
   const navigate = useNavigate()
