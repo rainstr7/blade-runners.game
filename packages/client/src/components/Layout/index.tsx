@@ -17,11 +17,11 @@ const Layout = ({ children, type = 'Default' }: Props) => {
   const header = type === 'Default' ? 'BLADE RUNNER' : 'GAME OVER'
 
   return (
-    <div className={cn.Layout}>
-      <div className={`${cn.Container} ${background}`}>
+    <div className={`${cn.Layout} ${background}`}>
+      <div className={`${cn.Container}`}>
         <Header>{header}</Header>
         {children}
-        <div className={cn.Authors}>BY blade runners</div>
+        <p className={cn.Authors}>BY blade runners</p>
       </div>
     </div>
   )

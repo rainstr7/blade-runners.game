@@ -5,15 +5,22 @@
   display: flex;
   flex-grow: 1;
   font-family: $font-family;
+  @include background-styles;
+  height: 100vh;
+  overflow: hidden
 }
 
 .Container {
-  @include flex-column;
-  @include flex-vertical-center;
-  @include background-styles;
-  
+  // @include flex-column;
+  // @include flex-vertical-center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  height: 100%;
+  // min-height: 100%;
+  width: 100%;
   padding: 2.9rem;
-  overflow-y: auto;
 }
 
 .GameOver {
@@ -25,6 +32,6 @@
 }
 
 .Authors {
-  margin-top: 1.5rem;
   color: $font-color;
+  text-align: center;
 }
