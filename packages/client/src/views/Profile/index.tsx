@@ -2,7 +2,7 @@ import cn from './style.module.scss'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import CardLink from '../../components/UI/CardLink'
-import * as yup from 'yup'
+import { validationProfileSchema } from '../../services/validation/validationProfile'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 
@@ -42,29 +42,13 @@ const ProfileFormData = [
   },
 ]
 
-const phoneRegExp = /^([+]?\d{1,2}[-\s]?|)\d{3}[-\s]?\d{3}[-\s]?\d{4}$/
-
-const schema = yup
-  .object({
-    firstName: yup.string().required(),
-    secondName: yup.string(),
-    email: yup.string().email().required(),
-    phone: yup
-      .string()
-      .required()
-      .matches(phoneRegExp, 'Phone number is not valid'),
-    login: yup.string(),
-    password: yup.string()
-  })
-  .required()
-
 const Profile = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(validationProfileSchema),
   })
 
   const handleExit = () => {
