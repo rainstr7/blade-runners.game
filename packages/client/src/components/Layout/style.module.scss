@@ -11,14 +11,11 @@
 }
 
 .Container {
-  // @include flex-column;
-  // @include flex-vertical-center;
   position: absolute;
   top: 0;
   left: 0;
   overflow: auto;
   height: 100%;
-  // min-height: 100%;
   width: 100%;
   padding: 2.9rem;
 }
