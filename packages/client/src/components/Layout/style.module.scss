@@ -7,7 +7,7 @@
   font-family: $font-family;
   @include background-styles;
   height: 100vh;
-  overflow: hidden
+  overflow: hidden;
 }
 
 .Container {
@@ -24,7 +24,8 @@
   background-image: url('../../assets/gameover_bg.jpeg');
 }
 
-.Default {
+.Default,
+.Error {
   background-image: url('../../assets/default_bg.jpg');
 }
 

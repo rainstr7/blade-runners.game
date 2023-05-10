@@ -12,7 +12,7 @@ import Main from './views/Main'
 import Forum from './views/Forum'
 import { changeLayout } from './store/actions/changeLayout'
 import ErrorBoundary from './components/ErrorBoundary'
-import ErrorComponent from './components/Error/ErrorComponent'
+import ErrorComponent from './components/Error'
 
 function App() {
   useEffect(() => {
@@ -38,8 +38,18 @@ function App() {
           <Route path="/settings" element={<Profile />} />
           <Route path="/rating" element={<LeaderBoard />} />
           <Route path="/forum/*" element={<Forum />} />
-          <Route path="/500" element={<ErrorComponent errorCode={500} />} />
-          <Route path="*" element={<ErrorComponent errorCode={404} />} />
+          <Route
+            path="/500"
+            element={
+              <ErrorComponent errorCode={'500'} changeLayout={changeLayout} />
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <ErrorComponent errorCode={'404'} changeLayout={changeLayout} />
+            }
+          />
         </Routes>
       </ErrorBoundary>
     </Layout>
