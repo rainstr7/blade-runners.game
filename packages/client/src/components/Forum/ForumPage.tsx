@@ -1,32 +1,31 @@
-import * as React from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import styles from './ForumPage.module.scss'
-import { forums, topics } from './Forum'
+import cn from './ForumPage.module.scss'
 import Button from '../UI/Button'
-import { Topic, Forum } from './Forum'
+import { forums, topics } from './forumData'
+import { Topic, Forum } from './types'
+import { PathList } from './Forum'
 
-export const ForumPage: React.FC = () => {
+const ForumPage: React.FC = () => {
   const navigate = useNavigate()
+  const { id } = useParams<{ id: string }>()
 
   function handleGoBack() {
-    navigate('/forum')
+    navigate(PathList.forum)
   }
 
   function handleGoCreate() {
-    navigate('/forum/newtheme')
+    navigate(PathList.createTheme)
   }
 
-  const { id } = useParams<{ id: string }>()
-  const forum: Forum | undefined = forums.find(f => f.id === id)
+  const forum: Forum | undefined = forums.find(f => f.id === Number(id))
 
   if (!forum) {
-    // если форум с таким id не найден, отображаем страницу ошибки
-    return <div>Форум не найден</div>
+    return <div>Forum not found</div>
   }
 
   return (
-    <div>
-      <nav className={styles.TopicHeader}>
+    <>
+      <nav className={cn.TopicHeader}>
         <Button size="small" onClick={handleGoBack}>
           Back
         </Button>
@@ -35,24 +34,26 @@ export const ForumPage: React.FC = () => {
           CREATE THEME
         </Button>
       </nav>
-      <ul className={styles.ListContainer}>
-        <li className={styles.ListElement}>
-          <div className={styles.HeaderContainer}>
-            <div className={styles.TitleHeader}>THEME</div>
-            <div className={styles.MsgCountHeader}>COMMENTS</div>
+      <ul className={cn.ListContainer}>
+        <li className={cn.ListElement}>
+          <div className={cn.HeaderContainer}>
+            <div className={cn.TitleHeader}>THEME</div>
+            <div className={cn.MsgCountHeader}>COMMENTS</div>
           </div>
         </li>
         {topics.map((topic: Topic) => (
-          <li className={styles.ListElement} key={topic.id}>
+          <li className={cn.ListElement} key={topic.id}>
             <Link
-              className={styles.LinkElement}
+              className={cn.LinkElement}
               to={`/forum/${forum.id}/${topic.id}`}>
-              <div className={styles.Title}>{topic.title}</div>
-              <div className={styles.MsgCount}>{topic.messagesCount}</div>
+              <div className={cn.Title}>{topic.title}</div>
+              <div className={cn.MsgCount}>{topic.messagesCount}</div>
             </Link>
           </li>
         ))}
       </ul>
-    </div>
+    </>
   )
 }
+
+export default ForumPage

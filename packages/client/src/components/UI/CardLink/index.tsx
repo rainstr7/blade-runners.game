@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 interface CardLinkProps {
   children: ReactNode
-  to?: string,
+  to?: string
 }
 
 const CardLink: FC<PropsWithChildren<CardLinkProps>> = ({

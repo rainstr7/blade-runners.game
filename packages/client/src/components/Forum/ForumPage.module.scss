@@ -1,28 +1,22 @@
-$Black: rgb(0, 0, 0);
+@import 'src/styles/vars';
+@import 'src/styles/mixins';
 
 .ListContainer {
+  @include flex-column;
   width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  flex-direction: column;
-  padding: 0;
 }
 
 .ListElement {
   list-style-type: none;
-  margin: 5px;
+  margin-bottom: 0.3rem;
   display: flex;
   flex-wrap: wrap;
 }
+
 .LinkElement {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-}
-
-.ListElement a {
-  text-decoration: none;
-  color: $Black;
 }
 
 .List {
@@ -32,21 +26,22 @@ $Black: rgb(0, 0, 0);
 
 .Title,
 .MsgCount {
-  border: 2px solid $Black;
-  border-radius: 0.3em;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: white;
+  border: $border;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  background-color: $background-lite-color;
 }
 
 .Title {
-  padding-left: 10px;
+  padding-left: 0.6rem;
   flex: 1;
 }
 
 .MsgCount {
-  width: 120px;
-  margin-left: 10px;
+  width: 7.5rem;
+  margin-left: 0.6rem;
   text-align: center;
 }
 
@@ -58,7 +53,7 @@ $Black: rgb(0, 0, 0);
   flex: 1;
 }
 .MsgCountHeader {
-  width: 120px;
+  width: 7.5rem;
   text-align: center;
 }
 
@@ -66,16 +61,10 @@ $Black: rgb(0, 0, 0);
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  font-size: 12px;
-  margin-bottom: 5px;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
 }
 
 .TopicHeader {
-  display: flex;
-  align-items: center;
-  h2: {
-    flex: 1;
-    text-align: center;
-    font-size: 2rem;
-  }
+  @include flex-between;
 }

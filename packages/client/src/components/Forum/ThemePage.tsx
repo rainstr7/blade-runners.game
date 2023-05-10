@@ -1,54 +1,48 @@
-import * as React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
-import { useForm, SubmitHandler } from 'react-hook-form'
-// import { nanoid } from 'nanoid';
-import styles from './ThemePage.module.scss'
-import { messages, topics, Message } from './Forum'
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
+import cn from './ThemePage.module.scss'
+import { Message } from './types'
+import { messages, topics } from './forumData'
 import Button from '../UI/Button'
+import Input from '../UI/Input'
+import removePathSuffix from '../../utils/removePathSuffix'
 
-export const ThemePage: React.FC = () => {
-  //navigation
+const ThemePage: React.FC = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const { id } = useParams<{ id: string }>()
+  const [state, setState] = React.useState(messages)
+  const { register, handleSubmit, reset } = useForm<FieldValues>()
+  const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
-  function removePathSuffix(path: string): string {
-    const index = path.lastIndexOf('/')
-    if (index >= 0) {
-      return path.substring(0, index)
-    } else {
-      return path
-    }
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [state])
 
   function handleGoBack() {
     navigate(removePathSuffix(pathname))
   }
 
-  //find current topic
-  const { id } = useParams<{ id: string }>()
-  const topic = topics.find(f => f.id === id)
+  const topic = topics.find(f => f.id === Number(id))
 
   if (!topic) {
-    // если форум с таким id не найден, отображаем страницу ошибки
-    return <div>Тема не найден</div>
+    return <div>Theme not found</div>
   }
-
-  //state
-  const [state, setState] = React.useState(messages)
 
   //form logic
-  type Input = {
-    content: string
-  }
-  const { register, handleSubmit, reset } = useForm<Input>()
-  const onSubmit: SubmitHandler<Input> = data => {
+  const onSubmit: SubmitHandler<FieldValues> = data => {
     const now = new Date()
     const hours = now.getHours().toString()
     const minutes = now.getMinutes().toString()
     const time = `${hours}:${minutes}`
     const message: Message = {
-      ...data,
-      id: time, //nanoid(10),
+      content: data.content,
+      id: Math.random(), //TODO generic ID
       author: 'currentUser',
       time,
     }
@@ -58,38 +52,42 @@ export const ThemePage: React.FC = () => {
   }
 
   return (
-    <div>
-      <nav className={styles.ThemeHeader}>
+    <>
+      <nav className={cn.ThemeHeader}>
         <Button size="small" onClick={handleGoBack}>
           Back
         </Button>
         <h2>{topic.title}</h2>
       </nav>
 
-      <div className={styles.MsgContainer}>
+      <section className={cn.MsgContainer}>
         {state.map(message => (
-          <div className={styles.Msg} key={message.id}>
-            <div className={styles.MsgHeader}>
-              <img className={styles.Ava} />
-              <span className={styles.Author}>{message.author} </span>
-              <span className={styles.Time}>{message.time}</span>
+          <div className={cn.Msg} key={message.id}>
+            <div className={cn.MsgHeader}>
+              <img className={cn.Ava} />
+              <span className={cn.Author}>{message.author} </span>
+              <span className={cn.Time}>{message.time}</span>
             </div>
-            <div className={styles.MsgBody}>{message.content}</div>
+            <div className={cn.MsgBody}>{message.content}</div>
+            <div ref={messagesEndRef}></div>
           </div>
         ))}
-      </div>
+      </section>
 
-      <form className={styles.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
-        <input
-          className={styles.InputSendMsg}
+      <form className={cn.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
+        <Input
           placeholder="YOUR MESSAGE"
           autoComplete="off"
-          {...register('content', { required: true })}
+          name="content"
+          options={{ required: true }}
+          register={register}
         />
         <Button size="small" type="submit">
           SEND
         </Button>
       </form>
-    </div>
+    </>
   )
 }
+
+export default ThemePage

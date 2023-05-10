@@ -1,28 +1,25 @@
-import * as React from 'react'
 import { useNavigate } from 'react-router-dom'
-// import { nanoid } from 'nanoid'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import styles from './CreateTheme.module.scss'
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
+import cn from './CreateTheme.module.scss'
 import Button from '../UI/Button'
-import { Topic } from './Forum'
+import Input from '../UI/Input'
+import { Topic } from './types'
 
-export const CreateTheme: React.FC = () => {
-  //navigation
+const CreateTheme: React.FC = () => {
+  const { register, handleSubmit, reset } = useForm<FieldValues>()
   const navigate = useNavigate()
+
+  //navigation
   function handleGoBack() {
     navigate(-1)
   }
 
   //form logic
-  type Input = {
-    title: string
-  }
-  const { register, handleSubmit, reset } = useForm<Input>()
-  const onSubmit: SubmitHandler<Input> = data => {
-    const now = new Date().toString()
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+    console.log('DATA', data)
     const topic: Topic = {
-      ...data,
-      id: now, //nanoid(10),
+      title: data.title,
+      id: Math.random(), //TODO generic ID
       messagesCount: 0,
       messages: [],
     }
@@ -32,21 +29,24 @@ export const CreateTheme: React.FC = () => {
 
   return (
     <div>
-      <div className={styles.ThemeHeader}>
+      <div className={cn.ThemeHeader}>
         <Button size="small" onClick={handleGoBack}>
           Back
         </Button>
-        <h2>topic.title</h2>
+        <h2>Current forum</h2>
       </div>
-      <form className={styles.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
-        <input
-          className={styles.InputSendMsg}
+      <form className={cn.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
+        <Input
           placeholder="NEW TITLE THEME"
           autoComplete="off"
-          {...register('title', { required: true })}
+          name="title"
+          register={register}
+          options={{ required: true }}
         />
         <Button size="small">CREATE</Button>
       </form>
     </div>
   )
 }
+
+export default CreateTheme

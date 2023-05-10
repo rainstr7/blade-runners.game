@@ -5,3 +5,7 @@ node_modules/
 .lock
 dist
 tmp
+*.zip
+.yarn/install-state.gz
+.yarnrc.yml
+*.lock
