@@ -24,12 +24,16 @@
   background-image: url('../../assets/gameover_bg.jpeg');
 }
 
-.Default,
-.Error {
+.Default {
   background-image: url('../../assets/default_bg.jpg');
+}
+
+.Error {
+  background-image: url('../../assets/error_bg.png');
 }
 
 .Authors {
   color: $font-color;
   text-align: center;
 }
+
