@@ -23,9 +23,21 @@
   flex-grow: 1;
 }
 
+@mixin flex-horizontal-center {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
 @mixin card {
   border: $border;
   background: $background-lite-color;
   box-shadow: $box-shadow;
   border-radius: $border-radius;
+}
+
+@mixin background-styles {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }

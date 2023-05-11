@@ -7,7 +7,12 @@ import Auth from './views/Auth'
 import Layout from './components/Layout'
 import Start from './views/Start'
 import Game from './views/Game'
-import ErrorComponent from './components/Error/ErrorComponent'
+import Profile from './views/Profile'
+import Main from './views/Main'
+import Forum from './views/Forum'
+import { changeLayout } from './store/actions/changeLayout'
+import ErrorBoundary from './components/ErrorBoundary'
+import ErrorComponent from './components/Error'
 
 function App() {
   useEffect(() => {
@@ -23,17 +28,30 @@ function App() {
 
   return (
     <Layout>
-      <Routes>
-        <Route path="/" element={<Start />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<Auth />} />
-        <Route path="/game" element={<Game />} />
-        <Route path="/settings" element={<div>Settings</div>} />
-        <Route path="/rating" element={<LeaderBoard />} />
-        <Route path="/forum/*" element={<div>Forum</div>} />
-        <Route path="/500" element={<ErrorComponent errorCode={500}/>} />
-        <Route path="*" element={<ErrorComponent errorCode={404}/>} />
-      </Routes>
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/" element={<Main changeLayout={changeLayout} />} />
+          <Route path="/start" element={<Start />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<Auth />} />
+          <Route path="/game" element={<Game />} />
+          <Route path="/settings" element={<Profile />} />
+          <Route path="/rating" element={<LeaderBoard />} />
+          <Route path="/forum/*" element={<Forum />} />
+          <Route
+            path="/500"
+            element={
+              <ErrorComponent errorCode={'500'} changeLayout={changeLayout} />
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <ErrorComponent errorCode={'404'} changeLayout={changeLayout} />
+            }
+          />
+        </Routes>
+      </ErrorBoundary>
     </Layout>
   )
 }

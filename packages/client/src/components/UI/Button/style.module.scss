@@ -8,6 +8,7 @@
   box-shadow: $box-shadow;
   background-color: $background-lite-color;
   border-radius: $border-radius;
+  cursor: pointer;
 }
 
 .small {
@@ -20,4 +21,16 @@
 
 .large {
   padding: 2rem 6.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .Button {
+    transition: background-color 0.3s ease-in-out;
+  }
+}
+
+@media (hover: hover) {
+  .Button:hover {
+    background-color: $active;
+  }
 }

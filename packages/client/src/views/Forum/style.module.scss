@@ -1,0 +1,29 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins';
+
+nav {
+  margin-bottom: 1.25rem;
+}
+
+.ForumContainer {
+  @include flex-column;
+  color: $font-color;
+  padding: 1.25rem;
+  width: 100%;
+
+  a {
+    color: $default-color;
+  }
+
+  @media (any-hover: hover) {
+    button:hover {
+      cursor: pointer;
+      background-color: $active;
+    }
+  }
+
+  h2 {
+    font-size: 2rem;
+    padding: 0.3rem;
+  }
+}

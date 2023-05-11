@@ -5,15 +5,18 @@
   display: flex;
   flex-grow: 1;
   font-family: $font-family;
+  @include background-styles;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .Container {
-  @include flex-column;
-  @include flex-vertical-center;
-
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  height: 100%;
+  width: 100%;
   padding: 2.9rem;
 }
 
@@ -21,10 +24,12 @@
   background-image: url('../../assets/gameover_bg.jpeg');
 }
 
-.Default {
+.Default,
+.Error {
   background-image: url('../../assets/default_bg.jpg');
 }
 
 .Authors {
   color: $font-color;
+  text-align: center;
 }

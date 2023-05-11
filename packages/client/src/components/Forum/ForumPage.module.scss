@@ -1,0 +1,70 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins';
+
+.ListContainer {
+  @include flex-column;
+  width: 100%;
+}
+
+.ListElement {
+  list-style-type: none;
+  margin-bottom: 0.3rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.LinkElement {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.List {
+  padding: 0;
+  margin: 0;
+}
+
+.Title,
+.MsgCount {
+  border: $border;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  background-color: $background-lite-color;
+}
+
+.Title {
+  padding-left: 0.6rem;
+  flex: 1;
+}
+
+.MsgCount {
+  width: 7.5rem;
+  margin-left: 0.6rem;
+  text-align: center;
+}
+
+.TitleHeader,
+.MsgCountHeader {
+  font-size: 1rem;
+}
+.TitleHeader {
+  flex: 1;
+}
+.MsgCountHeader {
+  width: 7.5rem;
+  text-align: center;
+}
+
+.HeaderContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.TopicHeader {
+  @include flex-between;
+}

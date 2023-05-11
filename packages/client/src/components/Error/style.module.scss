@@ -1,0 +1,21 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins';
+
+.Container {
+  @include flex-column;
+  align-items: center;
+  margin-bottom: 55vh;
+  button {
+    width: fit-content;
+  }
+}
+
+.Message {
+  width: fit-content;
+  border: $border;
+  border-radius: $border-radius;
+  background-color: $background-lite-color;
+  padding: 1rem 1rem;
+  margin: 1.5rem auto;
+  font-size: 1.5rem;
+}
