@@ -20,6 +20,12 @@
   padding: 2.9rem;
 }
 
+.Wrapper {
+  @include flex-column;
+  justify-content: space-between;
+  height: 100%;
+}
+
 .GameOver {
   background-image: url('../../assets/gameover_bg.jpeg');
 }
@@ -30,10 +36,13 @@
 
 .Error {
   background-image: url('../../assets/error_bg.png');
+
+  h1 {
+    color: $active;
+  }
 }
 
 .Authors {
   color: $font-color;
   text-align: center;
 }
-

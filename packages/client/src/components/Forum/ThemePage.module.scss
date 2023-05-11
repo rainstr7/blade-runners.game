@@ -60,9 +60,14 @@
 .FormSendMsg {
   display: flex;
   gap: 0.6rem;
+  margin-top: 1.5rem;
 
   label {
     flex: 1;
+  }
+  input {
+    padding: 0;
+    padding-left: 1rem;
   }
   button {
     margin-bottom: 1.5rem;
