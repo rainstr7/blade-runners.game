@@ -1,11 +1,4 @@
-export interface GameTextParams {
-  ctx: CanvasRenderingContext2D
-  x: number
-  y: number
-  text: string
-  font: string
-  fontSize: number
-}
+import { GameTextParams } from './types'
 
 class GameText {
   public static displayText(params: GameTextParams): void {

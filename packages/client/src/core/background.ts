@@ -1,9 +1,4 @@
-export interface BackgroundParams {
-  gameWidth: number
-  gameHeight: number
-  source: string
-  speed: number
-}
+import { BackgroundParams } from './types'
 
 class Background {
   private x: number
