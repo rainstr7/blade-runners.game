@@ -55,9 +55,15 @@ export class Engine {
     })
 
     this.enemiesParams = [
-      {imageSrc: enemy1Image, width: 50, height: 50},
-      {imageSrc: enemy2Image, width: 50, height: 50, y: () => randomFromInterval(this.gameHeight - 100, this.gameHeight - 250)},
-      {imageSrc: enemy3Image, width: 150, height: 100}
+      { imageSrc: enemy1Image, width: 50, height: 50 },
+      {
+        imageSrc: enemy2Image,
+        width: 50,
+        height: 50,
+        y: () =>
+          randomFromInterval(this.gameHeight - 100, this.gameHeight - 250),
+      },
+      { imageSrc: enemy3Image, width: 150, height: 100 },
     ]
   }
 
@@ -122,6 +128,7 @@ export class Engine {
   }
 
   // TODO сервис? синглтон?
+  // FIXME collisionDetection работает криво, сейчас проверяет пересечение квадратов
   private checkCollisions = () => {
     const {
       top: playerTop,
@@ -155,7 +162,6 @@ export class Engine {
 
   private handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
     if (this.enemyTimer > this.enemyInterval + this.randomEnemyInterval) {
-
       const random = randomFromInterval(0, this.enemiesParams.length - 1)
       const enemyParams = this.enemiesParams[random]
 
@@ -167,7 +173,7 @@ export class Engine {
           height: enemyParams.height,
           speed: 5,
           imageSrc: enemyParams.imageSrc,
-          y: enemyParams.y ? enemyParams.y() : undefined
+          y: enemyParams.y ? enemyParams.y() : undefined,
         })
       )
       // TODO более разнообразно надо

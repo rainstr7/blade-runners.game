@@ -3,18 +3,17 @@ import { GameObject, PlayerParams } from './types'
 class Player implements GameObject {
   x: number
   y: number
-  xV: number
   yV: number
   height: number
   width: number
 
-  private frameX: number;
-  private frameY: number;
-  private frameTimer: number;
+  private frameX: number
+  private frameY: number
+  private frameTimer: number
 
-  private readonly maxFrame: number;
-  private readonly fps: number;
-  private readonly frameInterval: number;
+  private readonly maxFrame: number
+  private readonly fps: number
+  private readonly frameInterval: number
 
   private readonly runImage: HTMLImageElement
   private readonly weight: number
@@ -23,14 +22,20 @@ class Player implements GameObject {
   private readonly jumpForce: number
 
   constructor(params: PlayerParams) {
-    const { gameWidth, gameHeight, height, width, imageSrc, weight = 0.5 } = params
+    const {
+      gameWidth,
+      gameHeight,
+      height,
+      width,
+      imageSrc,
+      weight = 0.5,
+    } = params
     this.gameWidth = gameWidth
     this.gameHeight = gameHeight
     this.height = height
     this.width = width
     this.x = 150
     this.y = gameHeight - height
-    this.xV = 0
     this.yV = 20
     this.weight = weight
     this.jumpForce = 20
@@ -42,20 +47,30 @@ class Player implements GameObject {
     //Скорость обновления анимации
     this.fps = 15
     this.frameTimer = 0
-    this.frameInterval = 1000/this.fps
+    this.frameInterval = 1000 / this.fps
 
-    this.runImage = new Image();
-    this.runImage.src = imageSrc;
+    this.runImage = new Image()
+    this.runImage.src = imageSrc
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    ctx.drawImage(this.runImage, this.frameX * this.width, this.frameY * this.height, this.width, this.height,  this.x, this.y, this.width, this.height)
+    ctx.drawImage(
+      this.runImage,
+      this.frameX * this.width,
+      this.frameY * this.height,
+      this.width,
+      this.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    )
   }
 
   update(pressedKeyCodes: string[], deltaTime: number): void {
     // TODO более реальный джамп, поидее надо реагировать keyup отдельно чтобы проверять силу прыжка
     if (pressedKeyCodes.includes('Space') && this.onGround()) {
-       this.yV = -this.jumpForce
+      this.yV = -this.jumpForce
     }
 
     this.y += this.yV
@@ -66,49 +81,51 @@ class Player implements GameObject {
       this.yV = 0
     }
 
-    // Sprite animation
     this.updateAnimation(deltaTime)
   }
 
   private updateAnimation(deltaTime: number): void {
-    if(this.inJump()) {
+    if (!this.onGround()) {
+      this.renderJumpAnimation()
+      return
+    }
+    this.renderRunAnimation(deltaTime)
+  }
 
-      this.frameY = 1;
+  // TODO Поидее это надо в какойнибудь SpriteManager, но пока не придумал как
+  private renderRunAnimation(deltaTime: number) {
+    this.frameY = 0
 
-      if (this.yV < -this.jumpForce/2) {
-        this.frameX = 0
-      } else if (this.yV < 0) {
-        this.frameX = 1
-      } else if (this.yV > 0 && this.yV < this.jumpForce/2) {
-        this.frameX = 2
-      } else {
-        this.frameX = 3
-      }
-
-      return;
+    if (this.frameTimer < this.frameInterval) {
+      this.frameTimer += deltaTime
+      return
     }
 
-    this.frameY = 0;
-
-    if (this.frameTimer > this.frameInterval) {
-      if(this.frameX >=  this.maxFrame) {
-        this.frameX = 0;
-      } else {
-        this.frameX++;
-      }
-
-      this.frameTimer = 0
+    if (this.frameX >= this.maxFrame) {
+      this.frameX = 0
     } else {
-      this.frameTimer += deltaTime
+      this.frameX++
+    }
+
+    this.frameTimer = 0
+  }
+
+  private renderJumpAnimation() {
+    this.frameY = 1
+
+    if (this.yV < -this.jumpForce / 2) {
+      this.frameX = 0
+    } else if (this.yV < 0) {
+      this.frameX = 1
+    } else if (this.yV > 0 && this.yV < this.jumpForce / 2) {
+      this.frameX = 2
+    } else {
+      this.frameX = 3
     }
   }
 
   private onGround(): boolean {
     return this.y >= this.gameHeight - this.height
-  }
-
-  private inJump(): boolean {
-     return this.yV !== 0;
   }
 }
 

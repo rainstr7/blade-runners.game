@@ -1,5 +1,3 @@
-import enemy2Image from '../assets/enemy2.png'
-
 export interface GameObject {
   x: number
   y: number

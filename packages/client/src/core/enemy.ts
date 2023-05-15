@@ -11,12 +11,12 @@ class Enemy implements GameObject {
   private readonly gameHeight: number
   private readonly speed: number
   private readonly sprite: HTMLImageElement
-  private readonly fps: number;
-  private readonly maxFrame: number;
-  private readonly frameInterval: number;
+  private readonly fps: number
+  private readonly maxFrame: number
+  private readonly frameInterval: number
 
   private frameX: number
-  private frameTimer: number;
+  private frameTimer: number
 
   constructor(params: EnemyParams) {
     const { gameWidth, gameHeight, width, height, speed, imageSrc, y } = params
@@ -35,14 +35,24 @@ class Enemy implements GameObject {
     //Скорость обновления анимации
     this.fps = 15
     this.frameTimer = 0
-    this.frameInterval = 1000/this.fps
+    this.frameInterval = 1000 / this.fps
 
     this.sprite = new Image()
     this.sprite.src = imageSrc
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    ctx.drawImage(this.sprite, this.frameX * this.width, 0, this.width, this.height, this.x, this.y, this.width, this.height)
+    ctx.drawImage(
+      this.sprite,
+      this.frameX * this.width,
+      0,
+      this.width,
+      this.height,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    )
   }
 
   update(deltaTime: number): void {
@@ -56,17 +66,18 @@ class Enemy implements GameObject {
   }
 
   private updateAnimation(deltaTime: number): void {
-    if(this.frameTimer > this.frameInterval) {
-      if(this.frameX >=  this.maxFrame) {
-        this.frameX = 0;
-      } else {
-        this.frameX++;
-      }
-
-      this.frameTimer = 0
-    } else {
+    if (this.frameTimer < this.frameInterval) {
       this.frameTimer += deltaTime
+      return
     }
+
+    if (this.frameX >= this.maxFrame) {
+      this.frameX = 0
+    } else {
+      this.frameX++
+    }
+
+    this.frameTimer = 0
   }
 }
 
