@@ -12,7 +12,7 @@ import Main from './views/Main'
 import Forum from './views/Forum'
 import { changeLayout } from './store/actions/changeLayout'
 import ErrorBoundary from './components/ErrorBoundary'
-import ErrorComponent from './components/Error'
+import Error from './views/Error'
 
 function App() {
   useEffect(() => {
@@ -41,13 +41,13 @@ function App() {
           <Route
             path="/500"
             element={
-              <ErrorComponent errorCode={'500'} changeLayout={changeLayout} />
+              <Error errorCode={'500'} changeLayout={changeLayout} />
             }
           />
           <Route
             path="*"
             element={
-              <ErrorComponent errorCode={'404'} changeLayout={changeLayout} />
+              <Error errorCode={'404'} changeLayout={changeLayout} />
             }
           />
         </Routes>
