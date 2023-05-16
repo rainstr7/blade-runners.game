@@ -13,15 +13,29 @@ const Layout = ({ children, type = 'Default' }: Props) => {
   if (type === 'Landing') {
     return <div className={cn.Layout}>{children}</div>
   }
+  
   const background = cn[type]
-  const header = type === 'Default' ? 'BLADE RUNNER' : 'GAME OVER'
+
+  let header
+  switch (type) {
+    case 'Error':
+      header = ''
+      break
+    case 'GameOver':
+      header = 'GameOver'
+      break
+    default:
+      header = 'BLADE RUNNER'
+  }
 
   return (
     <div className={`${cn.Layout} ${background}`}>
       <div className={`${cn.Container}`}>
-        <Header>{header}</Header>
-        {children}
-        <p className={cn.Authors}>BY blade runners</p>
+        <div className={cn.Wrapper}>
+          <Header>{header}</Header>
+          {children}
+          <p className={cn.Authors}>BY blade runners</p>
+        </div>
       </div>
     </div>
   )
