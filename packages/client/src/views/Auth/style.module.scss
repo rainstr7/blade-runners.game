@@ -11,6 +11,7 @@
 
 .AuthForm {
   @include flex-column;
+  gap: 30px;
 }
 
 .Message {

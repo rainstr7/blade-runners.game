@@ -1,4 +1,4 @@
-export type LayoutView = 'Default' | 'GameOver' | 'Landing'
+export type LayoutView = 'Default' | 'GameOver' | 'Landing' | 'Error'
 
 export interface IRootStore {
   layout: {

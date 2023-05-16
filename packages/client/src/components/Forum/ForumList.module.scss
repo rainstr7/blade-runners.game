@@ -1,0 +1,82 @@
+@import 'src/styles/vars';
+@import 'src/styles/mixins';
+
+.ListContainer {
+  @include flex-column;
+  width: 100%;
+}
+
+.ListElement {
+  list-style-type: none;
+  margin-bottom: 0.3rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+.LinkElement {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 0.6rem;
+}
+
+.List {
+  padding: 0;
+}
+
+.Title,
+.MsgCount,
+.TopicCount {
+  padding-bottom: 1.25rem;
+  padding-top: 1.25rem;
+  border: $border;
+  border-radius: $border-radius;
+  background-color: $background-lite-color;
+}
+
+.Title {
+  padding-left: 1.25rem;
+  flex: 1;
+}
+.MsgCount,
+.MsgCountHeader {
+  width: 7.5rem;
+}
+.TopicCount,
+.TopicCountHeader {
+  width: 5.3rem;
+}
+
+.TitleHeader,
+.MsgCountHeader,
+.TopicCountHeader {
+  font-size: 1rem;
+}
+.MsgCountHeader,
+.TopicCountHeader,
+.MsgCount,
+.TopicCount {
+  text-align: center;
+}
+
+.TitleHeader {
+  padding: 0.2rem;
+  flex: 1;
+}
+
+.HeaderContainer {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  gap: 0.6rem;
+}
+
+.TopicHeader {
+  display: flex;
+
+  h2 {
+    flex: 1;
+    text-align: center;
+  }
+}
