@@ -9,7 +9,7 @@
   font-size: 32px;
   color: $font-color;
   @include flex-between;
-  margin-bottom: 1.5rem
+  margin-bottom: 1.5rem;
 }
 
 .form {
@@ -19,12 +19,12 @@
 
 .formWrapper {
   width: 100%;
-  @include flex-horizontal-center
+  @include flex-horizontal-center;
 }
 
 .formSubmit {
   width: 100%;
   grid-column-start: 1;
   grid-column-end: 3;
-  @include flex-horizontal-center
+  @include flex-horizontal-center;
 }

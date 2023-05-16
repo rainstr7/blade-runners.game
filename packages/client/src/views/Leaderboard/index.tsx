@@ -33,7 +33,7 @@ const LeaderBoard = () => {
   return (
     <main className={cn.leaderboard}>
       <div className={cn.title}>
-        <CardLink to='/start'>Back</CardLink>
+        <CardLink to="/start">Back</CardLink>
         LeaderBoard
         <div className="empty" />
       </div>

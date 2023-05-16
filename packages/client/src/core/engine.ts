@@ -1,9 +1,16 @@
 import Background from './background'
+
 import bg from '../assets/game_bg.png'
+import enemy1Image from '../assets/enemy1.png'
+import enemy2Image from '../assets/enemy2.png'
+import enemy3Image from '../assets/enemy3.png'
+import heroImage from '../assets/hero_run.png'
+
 import Player from './player'
 import Enemy from './enemy'
 import GameText from './gameText'
-import { calcPosition } from './utils'
+import { calcPosition, randomFromInterval } from './utils'
+import { EnemySpriteParams } from './types'
 
 export class Engine {
   get gameOver(): boolean {
@@ -27,6 +34,8 @@ export class Engine {
   private readonly background: Background
   private readonly player: Player
 
+  private readonly enemiesParams: EnemySpriteParams[] = []
+
   constructor(gameWidth: number, gameHeight: number) {
     this.gameHeight = gameHeight
     this.gameWidth = gameWidth
@@ -41,8 +50,21 @@ export class Engine {
       gameHeight: this.gameHeight,
       height: 100,
       width: 100,
+      imageSrc: heroImage,
       weight: 0.5,
     })
+
+    this.enemiesParams = [
+      { imageSrc: enemy1Image, width: 50, height: 50 },
+      {
+        imageSrc: enemy2Image,
+        width: 50,
+        height: 50,
+        y: () =>
+          randomFromInterval(this.gameHeight - 100, this.gameHeight - 250),
+      },
+      { imageSrc: enemy3Image, width: 150, height: 100 },
+    ]
   }
 
   game = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
@@ -56,7 +78,7 @@ export class Engine {
     this.checkCollisions()
 
     this.player.draw(ctx)
-    this.player.update(this.pressedKeyCodes)
+    this.player.update(this.pressedKeyCodes, deltaTime)
 
     this.displayScore(ctx)
 
@@ -106,6 +128,7 @@ export class Engine {
   }
 
   // TODO сервис? синглтон?
+  // FIXME collisionDetection работает криво, сейчас проверяет пересечение квадратов
   private checkCollisions = () => {
     const {
       top: playerTop,
@@ -139,13 +162,18 @@ export class Engine {
 
   private handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
     if (this.enemyTimer > this.enemyInterval + this.randomEnemyInterval) {
+      const random = randomFromInterval(0, this.enemiesParams.length - 1)
+      const enemyParams = this.enemiesParams[random]
+
       this.enemies.push(
         new Enemy({
           gameWidth: this.gameWidth,
           gameHeight: this.gameHeight,
-          width: 50,
-          height: 50,
+          width: enemyParams.width,
+          height: enemyParams.height,
           speed: 5,
+          imageSrc: enemyParams.imageSrc,
+          y: enemyParams.y ? enemyParams.y() : undefined,
         })
       )
       // TODO более разнообразно надо
@@ -157,7 +185,7 @@ export class Engine {
 
     this.enemies.forEach(enemy => {
       enemy.draw(ctx)
-      enemy.update()
+      enemy.update(deltaTime)
     })
 
     const oldLength = this.enemies.length

@@ -11,7 +11,7 @@ const ProfileFormData = [
     placeholder: 'FIRST NAME',
     name: 'firstName',
     autoComplete: 'firstName',
-    required: true
+    required: true,
   },
   {
     placeholder: 'SECOND NAME',
@@ -22,13 +22,13 @@ const ProfileFormData = [
     placeholder: 'E-MAIL',
     name: 'email',
     autoComplete: 'email',
-    required: true
+    required: true,
   },
   {
     placeholder: 'PHONE',
     name: 'phone',
     autoComplete: 'phone',
-    required: true
+    required: true,
   },
   {
     placeholder: 'LOGIN',
@@ -61,13 +61,16 @@ const Profile = () => {
 
   return (
     <main className={cn.profile}>
-        <div className={cn.title}>
-          <CardLink to='/start'>Back</CardLink>
-          <Button size='small' onClick={handleExit}>Exit</Button>
-        </div>
-        <div className={cn.formWrapper}>
-          <form className={cn.form} onSubmit={handleSubmit(onSubmit)}>
-            {ProfileFormData.map(({ placeholder, name, autoComplete, required }) => (
+      <div className={cn.title}>
+        <CardLink to="/start">Back</CardLink>
+        <Button size="small" onClick={handleExit}>
+          Exit
+        </Button>
+      </div>
+      <div className={cn.formWrapper}>
+        <form className={cn.form} onSubmit={handleSubmit(onSubmit)}>
+          {ProfileFormData.map(
+            ({ placeholder, name, autoComplete, required }) => (
               <Input
                 placeholder={placeholder}
                 name={name}
@@ -77,12 +80,15 @@ const Profile = () => {
                 options={{ required }}
                 error={errors[name]}
               />
-            ))}
-            <div className={cn.formSubmit}><Button type='submit'>Save</Button></div>
-            {errors.login && <span>This field is required</span>}
-          </form>
-        </div>
-      </main>
+            )
+          )}
+          <div className={cn.formSubmit}>
+            <Button type="submit">Save</Button>
+          </div>
+          {errors.login && <span>This field is required</span>}
+        </form>
+      </div>
+    </main>
   )
 }
 
