@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react'
-import styles from './style.module.css'
+import cn from './style.module.css'
 import useEvent from '../../hooks/useEvent'
 import { Engine } from '../engine'
 import { useDispatch } from 'react-redux'
@@ -55,7 +55,7 @@ const GameLayout = () => {
   }, [engine.game])
 
   return (
-    <div className={styles.container}>
+    <div className={cn.Container}>
       <canvas ref={canvasRef} width={1024} height={768} />
     </div>
   )

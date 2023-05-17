@@ -32,27 +32,33 @@ export class Engine {
   private score = 0
   private enemies: Enemy[] = []
   private enemyTimer = 0
-  private randomEnemyInterval = Math.random() * 1000 + 500
-  private pressedKeyCodes: string[] = []
+  private keyCodes: string[] = []
 
   private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
   private readonly _isGameStartDelayWord = 1000
   private readonly enemyInterval = 2000
   private readonly gameHeight: number
   private readonly gameWidth: number
+
+  // погрешность при коллизиях, по хорошему надо поправить спрайтмап и
+  // задать подходяшие размеры. Либо просто переписать collisionDetection
+  private readonly collisionOffset = 20
+
   private readonly background: Background
   private readonly player: Player
 
-  private readonly enemiesParams: EnemySpriteParams[] = []
+  private enemiesParams: EnemySpriteParams[] = []
+  private enemySpeed = 5
 
   constructor(gameWidth: number, gameHeight: number) {
     this.gameHeight = gameHeight
     this.gameWidth = gameWidth
+
     this.background = new Background({
       gameWidth: this.gameWidth,
       gameHeight: this.gameHeight,
       source: bg,
-      speed: 3,
+      speed: 1,
     })
     this.player = new Player({
       gameWidth: this.gameWidth,
@@ -63,6 +69,10 @@ export class Engine {
       weight: 0.5,
     })
 
+    this.init()
+  }
+
+  private init() {
     this.enemiesParams = [
       { imageSrc: enemy1Image, width: 50, height: 50 },
       {
@@ -85,7 +95,7 @@ export class Engine {
     this.checkCollisions()
 
     this.player.draw(ctx)
-    this.player.update(this.pressedKeyCodes, deltaTime)
+    this.player.update(this.keyCodes, deltaTime)
 
     this.displayScore(ctx)
 
@@ -97,6 +107,8 @@ export class Engine {
 
     this.handleEnemy(ctx, deltaTime)
 
+    this.checkSpeed(ctx)
+
     if (this.gameOver) {
       this.displayGameOver(ctx)
     }
@@ -104,19 +116,15 @@ export class Engine {
 
   handleKeyDown = (e: Event) => {
     const keyCode = (e as KeyboardEvent)?.code
-    if (
-      keyCode &&
-      keyCode === 'Space' &&
-      !this.pressedKeyCodes.includes(keyCode)
-    ) {
-      this.pressedKeyCodes.push(keyCode)
+    if (keyCode && keyCode === 'Space' && !this.keyCodes.includes(keyCode)) {
+      this.keyCodes.push(keyCode)
     }
   }
 
   handleKeyUp = (e: Event) => {
     const keyCode = (e as KeyboardEvent)?.code
     if (keyCode && keyCode === 'Space') {
-      this.pressedKeyCodes.splice(this.pressedKeyCodes.indexOf(keyCode), 1)
+      this.keyCodes.splice(this.keyCodes.indexOf(keyCode), 1)
     }
   }
 
@@ -173,6 +181,57 @@ export class Engine {
     })
   }
 
+  private showMessage = (ctx: CanvasRenderingContext2D, message: string) => {
+    GameText.displayText({
+      ctx,
+      x: this.gameWidth / 2 - 100,
+      y: this.gameHeight / 2 - 20,
+      text: message,
+      font: 'Helvetica',
+      fontSize: 40,
+    })
+  }
+
+  // FIXME както потупому
+  private checkSpeed(ctx: CanvasRenderingContext2D): void {
+    switch (this.score) {
+      case 5:
+        this.showMessage(ctx, 'Hurry up!')
+        this.background.speed = 2
+        this.enemySpeed = 6
+        this.enemyInterval = 1600
+        break
+      case 10:
+        this.enemySpeed = 7
+        this.enemyInterval = 1300
+        this.player.animationSpeed = 17
+        break
+      case 15:
+        this.showMessage(ctx, 'Faster!')
+        this.background.speed = 3
+        this.enemySpeed = 8
+        this.enemyInterval = 1000
+        break
+      case 20:
+        this.enemySpeed = 9
+        this.enemyInterval = 700
+        this.player.animationSpeed = 20
+        break
+      case 30:
+        this.showMessage(ctx, 'Run!!!')
+        this.background.speed = 4
+        this.enemySpeed = 10
+        this.enemyInterval = 400
+        break
+      case 40:
+        this.enemySpeed = 12
+        this.enemyInterval = 200
+        break
+      default:
+        break
+    }
+  }
+
   // TODO сервис? синглтон?
   // FIXME collisionDetection работает криво, сейчас проверяет пересечение квадратов
   private checkCollisions = () => {
@@ -196,10 +255,10 @@ export class Engine {
       } = calcPosition(enemy)
 
       if (
-        playerLeft < enemyRight &&
-        playerRight > enemyLeft &&
-        playerTop < enemyBottom &&
-        playerBottom > enemyTop
+        playerLeft + this.collisionOffset < enemyRight &&
+        playerRight - this.collisionOffset > enemyLeft &&
+        playerTop + this.collisionOffset < enemyBottom &&
+        playerBottom - this.collisionOffset > enemyTop
       ) {
         this.gameOver = true
       }
@@ -207,7 +266,7 @@ export class Engine {
   }
 
   private handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
-    if (this.enemyTimer > this.enemyInterval + this.randomEnemyInterval) {
+    if (this.enemyTimer > this.enemyInterval + randomFromInterval(100, 1000)) {
       const random = randomFromInterval(0, this.enemiesParams.length - 1)
       const enemyParams = this.enemiesParams[random]
 
@@ -217,13 +276,12 @@ export class Engine {
           gameHeight: this.gameHeight,
           width: enemyParams.width,
           height: enemyParams.height,
-          speed: 5,
+          speed: this.enemySpeed,
           imageSrc: enemyParams.imageSrc,
           y: enemyParams.y ? enemyParams.y() : undefined,
         })
       )
-      // TODO более разнообразно надо
-      this.randomEnemyInterval = Math.random() * 1000 + 500
+
       this.enemyTimer = 0
     } else {
       this.enemyTimer += deltaTime

@@ -9,7 +9,7 @@ class Enemy implements GameObject {
 
   private readonly gameWidth: number
   private readonly gameHeight: number
-  private readonly speed: number
+  private _speed: number
   private readonly sprite: HTMLImageElement
   private readonly fps: number
   private readonly maxFrame: number
@@ -17,6 +17,14 @@ class Enemy implements GameObject {
 
   private frameX: number
   private frameTimer: number
+
+  get speed(): number {
+    return this._speed
+  }
+
+  set speed(value: number) {
+    this._speed = value
+  }
 
   constructor(params: EnemyParams) {
     const { gameWidth, gameHeight, width, height, speed, imageSrc, y } = params
@@ -27,7 +35,7 @@ class Enemy implements GameObject {
     this.height = height
     this.x = this.gameWidth
     this.y = y ?? this.gameHeight - this.height
-    this.speed = speed
+    this._speed = speed
     this.isAlive = true
 
     this.frameX = 0
@@ -56,7 +64,7 @@ class Enemy implements GameObject {
   }
 
   update(deltaTime: number): void {
-    this.x -= this.speed
+    this.x -= this._speed
 
     if (this.x < 0 - this.width) {
       this.isAlive = false

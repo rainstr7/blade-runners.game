@@ -1,0 +1,5 @@
+@import 'src/styles/mixins';
+
+.Container {
+  @include flex-center;
+}

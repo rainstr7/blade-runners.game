@@ -6,7 +6,7 @@ class Background {
   private readonly y: number
   private readonly width: number
   private readonly height: number
-  private readonly speed: number
+  private _speed: number
 
   constructor(params: BackgroundParams) {
     const { gameWidth, gameHeight, source, speed } = params
@@ -18,7 +18,15 @@ class Background {
     this.y = 0
     this.width = gameWidth
     this.height = gameHeight
-    this.speed = speed
+    this._speed = speed
+  }
+
+  set speed(speed: number) {
+    this._speed = speed
+  }
+
+  get speed(): number {
+    return this._speed
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -33,7 +41,7 @@ class Background {
   }
 
   update(): void {
-    this.x -= this.speed
+    this.x -= this._speed
     if (this.x < 0 - this.width) {
       this.x = 0
     }

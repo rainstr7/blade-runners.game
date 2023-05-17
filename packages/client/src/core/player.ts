@@ -12,7 +12,7 @@ class Player implements GameObject {
   private frameTimer: number
 
   private readonly maxFrame: number
-  private readonly fps: number
+  private _animationSpeed: number
   private readonly frameInterval: number
 
   private readonly runImage: HTMLImageElement
@@ -20,6 +20,14 @@ class Player implements GameObject {
   private readonly gameHeight: number
   private readonly gameWidth: number
   private readonly jumpForce: number
+
+  get animationSpeed(): number {
+    return this._animationSpeed
+  }
+
+  set animationSpeed(value: number) {
+    this._animationSpeed = value
+  }
 
   constructor(params: PlayerParams) {
     const {
@@ -45,9 +53,9 @@ class Player implements GameObject {
     this.maxFrame = 5
 
     //Скорость обновления анимации
-    this.fps = 15
+    this._animationSpeed = 15
     this.frameTimer = 0
-    this.frameInterval = 1000 / this.fps
+    this.frameInterval = 1000 / this._animationSpeed
 
     this.runImage = new Image()
     this.runImage.src = imageSrc
