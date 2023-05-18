@@ -1,32 +1,32 @@
-import { ReactElement } from 'react'
+import { ReactElement, useMemo } from 'react'
 import cn from './style.module.scss'
 import Header from '../UI/Header'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { IRootStore, LayoutView } from '../../store/reduces/interfaces'
 
 interface Props {
   children: ReactElement
-  type: LayoutView
 }
 
-const Layout = ({ children, type = 'Default' }: Props) => {
+const Layout = ({ children }: Props) => {
+  const type = useSelector<IRootStore>(state => state.layout.type)
+
+  const header = useMemo(() => {
+    switch (type) {
+      case 'Default':
+        return 'BLADE RUNNER'
+      case 'GameOver':
+        return 'GAME OVER'
+      default:
+        return type as LayoutView
+    }
+  }, [type])
+
   if (type === 'Landing') {
     return <div className={cn.Layout}>{children}</div>
   }
-  
-  const background = cn[type]
 
-  let header
-  switch (type) {
-    case 'Error':
-      header = ''
-      break
-    case 'GameOver':
-      header = 'GameOver'
-      break
-    default:
-      header = 'BLADE RUNNER'
-  }
+  const background = cn[type as LayoutView] || cn.Error
 
   return (
     <div className={`${cn.Layout} ${background}`}>
@@ -41,10 +41,4 @@ const Layout = ({ children, type = 'Default' }: Props) => {
   )
 }
 
-function mapStateToProps(state: IRootStore) {
-  return {
-    type: state.layout.type,
-  }
-}
-
-export default connect(mapStateToProps)(Layout)
+export default Layout

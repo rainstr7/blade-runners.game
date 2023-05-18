@@ -2,13 +2,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import cn from './ForumList.module.scss'
 import { forums } from '../../views/Forum/forumData'
 import Button from '../UI/Button'
-import { PathList } from '../../views/Forum'
+import { FC } from 'react'
 
-const ForumList: React.FC = () => {
+const ForumList: FC = () => {
   const navigate = useNavigate()
 
-  function handleGoBack() {
-    navigate(PathList.start)
+  const handleGoBack = () => {
+    navigate(-1)
   }
 
   return (
@@ -27,12 +27,12 @@ const ForumList: React.FC = () => {
               <div className={cn.MsgCountHeader}>COMMENTS</div>
             </div>
           </li>
-          {forums.map(forum => (
-            <li className={cn.ListElement} key={forum.id}>
-              <Link className={cn.LinkElement} to={`/forum/${forum.id}`}>
-                <div className={cn.Title}>{forum.title}</div>
-                <div className={cn.TopicCount}>{forum.topicsCount}</div>
-                <div className={cn.MsgCount}>{forum.messagesCount}</div>
+          {forums.map(({ id, title, topicsCount, messagesCount }) => (
+            <li className={cn.ListElement} key={id}>
+              <Link className={cn.LinkElement} to={`/forum/${id}`}>
+                <div className={cn.Title}>{title}</div>
+                <div className={cn.TopicCount}>{topicsCount}</div>
+                <div className={cn.MsgCount}>{messagesCount}</div>
               </Link>
             </li>
           ))}
