@@ -1,4 +1,5 @@
 import { GameObject, PlayerParams } from './types'
+import { FallingState, JumpingState, PlayerStates, RunningState, State } from './playerStates'
 
 class Player implements GameObject {
   x: number
@@ -8,7 +9,7 @@ class Player implements GameObject {
   width: number
 
   private frameX: number
-  private frameY: number
+  frameY: number
   private frameTimer: number
 
   private readonly maxFrame: number
@@ -16,10 +17,13 @@ class Player implements GameObject {
   private readonly frameInterval: number
 
   private readonly runImage: HTMLImageElement
-  private readonly weight: number
+  readonly weight: number
   private readonly gameHeight: number
   private readonly gameWidth: number
-  private readonly jumpForce: number
+  readonly jumpForce: number
+
+  private readonly states: State[]
+  private currentState: State
 
   get animationSpeed(): number {
     return this._animationSpeed
@@ -59,6 +63,11 @@ class Player implements GameObject {
 
     this.runImage = new Image()
     this.runImage.src = imageSrc
+
+    // В данный момент зависит от порядка enum PlayerStates, в обьект?
+    this.states = [new RunningState(this), new JumpingState(this), new FallingState(this)]
+    this.currentState = this.states[PlayerStates.RUNNING]
+    this.currentState.init()
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
@@ -76,10 +85,7 @@ class Player implements GameObject {
   }
 
   update(pressedKeyCodes: string[], deltaTime: number): void {
-    // TODO более реальный джамп, поидее надо реагировать keyup отдельно чтобы проверять силу прыжка
-    if (pressedKeyCodes.includes('Space') && this.onGround()) {
-      this.yV = -this.jumpForce
-    }
+    this.currentState.handleState(pressedKeyCodes)
 
     this.y += this.yV
 
@@ -92,6 +98,15 @@ class Player implements GameObject {
     this.updateAnimation(deltaTime)
   }
 
+  setState(state: PlayerStates) {
+    this.currentState = this.states[state]
+    this.currentState.init()
+  }
+
+  onGround(): boolean {
+    return this.y >= this.gameHeight - this.height
+  }
+
   private updateAnimation(deltaTime: number): void {
     if (!this.onGround()) {
       this.renderJumpAnimation()
@@ -102,7 +117,6 @@ class Player implements GameObject {
 
   // TODO Поидее это надо в какойнибудь SpriteManager, но пока не придумал как
   private renderRunAnimation(deltaTime: number) {
-    this.frameY = 0
 
     if (this.frameTimer < this.frameInterval) {
       this.frameTimer += deltaTime
@@ -119,8 +133,6 @@ class Player implements GameObject {
   }
 
   private renderJumpAnimation() {
-    this.frameY = 1
-
     if (this.yV < -this.jumpForce / 2) {
       this.frameX = 0
     } else if (this.yV < 0) {
@@ -130,10 +142,6 @@ class Player implements GameObject {
     } else {
       this.frameX = 3
     }
-  }
-
-  private onGround(): boolean {
-    return this.y >= this.gameHeight - this.height
   }
 }
 
