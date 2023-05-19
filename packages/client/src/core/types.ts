@@ -34,8 +34,8 @@ export interface PlayerParams {
 export interface BackgroundParams {
   gameWidth: number
   gameHeight: number
-  source: string
-  speed: number
+  gameSpeed: number
+  sources: string[]
 }
 
 export interface GameTextParams {
@@ -46,4 +46,12 @@ export interface GameTextParams {
   font: string
   fontSize: number,
   fillStyle?: string
+}
+
+export interface LayerParams {
+  gameSpeed: number
+  gameWidth: number
+  gameHeight: number
+  speedModifier: number
+  image: HTMLImageElement
 }

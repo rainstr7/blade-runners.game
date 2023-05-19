@@ -1,6 +1,10 @@
 import Background from './background'
 
-import bg from '../assets/game_bg.png'
+import bgLayer1 from '../assets/bg/layer1.png'
+import bgLayer2 from '../assets/bg/layer2.png'
+import bgLayer3 from '../assets/bg/layer3.png'
+import bgLayer4 from '../assets/bg/layer4.png'
+import bgLayer5 from '../assets/bg/layer5.png'
 import enemy1Image from '../assets/enemy1.png'
 import enemy2Image from '../assets/enemy2.png'
 import enemy3Image from '../assets/enemy3.png'
@@ -47,6 +51,8 @@ export class Engine {
   private readonly background: Background
   private readonly player: Player
 
+  private gameSpeed = 1
+
   private enemiesParams: EnemySpriteParams[] = []
   private enemySpeed = 5
 
@@ -55,18 +61,25 @@ export class Engine {
     this.gameWidth = gameWidth
 
     this.background = new Background({
-      gameWidth: this.gameWidth,
-      gameHeight: this.gameHeight,
-      source: bg,
-      speed: 1,
+      gameSpeed: this.gameSpeed,
+      gameWidth: gameWidth,
+      gameHeight: gameHeight,
+      sources: [
+        bgLayer1,
+        bgLayer2,
+        bgLayer3,
+        bgLayer4,
+        bgLayer5
+      ]
     })
+
     this.player = new Player({
       gameWidth: this.gameWidth,
       gameHeight: this.gameHeight,
       height: 100,
       width: 100,
       imageSrc: heroImage,
-      weight: 0.5,
+      weight: 0.5
     })
 
     this.init()
@@ -80,9 +93,9 @@ export class Engine {
         width: 50,
         height: 50,
         y: () =>
-          randomFromInterval(this.gameHeight - 100, this.gameHeight - 250),
+          randomFromInterval(this.gameHeight - 100, this.gameHeight - 250)
       },
-      { imageSrc: enemy3Image, width: 150, height: 100 },
+      { imageSrc: enemy3Image, width: 150, height: 100 }
     ]
   }
 
@@ -135,7 +148,7 @@ export class Engine {
       y: 50,
       text: `Score: ${this.score}`,
       font: 'Helvetica',
-      fontSize: 40,
+      fontSize: 40
     })
   }
 
@@ -177,7 +190,7 @@ export class Engine {
       y: this.gameHeight / 2 - 20,
       text: `Game Over`,
       font: 'Helvetica',
-      fontSize: 40,
+      fontSize: 40
     })
   }
 
@@ -188,7 +201,7 @@ export class Engine {
       y: this.gameHeight / 2 - 20,
       text: message,
       font: 'Helvetica',
-      fontSize: 40,
+      fontSize: 40
     })
   }
 
@@ -197,7 +210,6 @@ export class Engine {
     switch (this.score) {
       case 5:
         this.showMessage(ctx, 'Hurry up!')
-        this.background.speed = 2
         this.enemySpeed = 6
         this.enemyInterval = 1600
         break
@@ -208,7 +220,6 @@ export class Engine {
         break
       case 15:
         this.showMessage(ctx, 'Faster!')
-        this.background.speed = 3
         this.enemySpeed = 8
         this.enemyInterval = 1000
         break
@@ -219,7 +230,6 @@ export class Engine {
         break
       case 30:
         this.showMessage(ctx, 'Run!!!')
-        this.background.speed = 4
         this.enemySpeed = 10
         this.enemyInterval = 400
         break
@@ -239,7 +249,7 @@ export class Engine {
       top: playerTop,
       left: playerLeft,
       right: playerRight,
-      bottom: playerBottom,
+      bottom: playerBottom
     } = calcPosition(this.player)
 
     if (playerBottom > this.gameHeight) {
@@ -251,7 +261,7 @@ export class Engine {
         top: enemyTop,
         left: enemyLeft,
         right: enemyRight,
-        bottom: enemyBottom,
+        bottom: enemyBottom
       } = calcPosition(enemy)
 
       if (
@@ -278,7 +288,7 @@ export class Engine {
           height: enemyParams.height,
           speed: this.enemySpeed,
           imageSrc: enemyParams.imageSrc,
-          y: enemyParams.y ? enemyParams.y() : undefined,
+          y: enemyParams.y ? enemyParams.y() : undefined
         })
       )
 
