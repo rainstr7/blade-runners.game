@@ -1,1 +1,3 @@
 export const CHANGE_LAYOUT_VIEW = 'CHANGE_LAYOUT_VIEW'
+
+export const PLAYER_SCORE = 'PLAYER_SCORE'

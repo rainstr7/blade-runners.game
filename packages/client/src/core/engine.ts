@@ -21,6 +21,10 @@ export class Engine {
     this._gameOver = value
   }
 
+  get getScore(): number {
+    return this.score
+  }
+
   private _gameOver = false
   private score = 0
   private enemies: Enemy[] = []
