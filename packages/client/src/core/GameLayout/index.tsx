@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeScore } from '../../store/actions/changeScore'
 
-const GameLayout = () => {
+const GameLayout = ({changeScore}: any) => {
   // TODO Необходимо сделать адаптивно
 const engine = new Engine(1024, 768)
 

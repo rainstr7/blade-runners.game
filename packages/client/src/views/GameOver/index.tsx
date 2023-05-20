@@ -4,26 +4,15 @@ import Button from '../../components/UI/Button'
 import { changeLayout } from '../../store/actions/changeLayout'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { useSelector } from "react-redux";
 import { IRootStore, LayoutView } from '../../store/reduces/interfaces'
 import Card from '../../components/Card'
 import { useNavigate } from 'react-router-dom'
 interface GameOverProps {
-  changeLayout: (type: LayoutView) => void
+  changeLayout: (type: LayoutView) => void,
+  score: number
 }
-const GameOver = ({ changeLayout }: GameOverProps) => {
+const GameOver = ({ changeLayout, score }: GameOverProps) => {
   const navigate = useNavigate()
-
-  const score = useSelector((state: IRootStore) => {
-    return state.score
-  })
-
-  const template = [
-    {
-      label: 'score',
-      value: score.value,
-    }
-  ]
 
   useEffect(() => {
     changeLayout('GameOver')
@@ -40,7 +29,7 @@ const GameOver = ({ changeLayout }: GameOverProps) => {
   return (
     <main className={cn.Block}>
       <div className={''}>
-        <Card info={template} />
+        <Card info={[{label: 'score', value: score}]} />
         <div className={cn.ButtonsGroup}>
           <Button onClick={restartButton}>Restart</Button>
           <Button size="small" onClick={startButton}>
@@ -52,6 +41,12 @@ const GameOver = ({ changeLayout }: GameOverProps) => {
   )
 }
 
+function mapStateToProps(state: IRootStore) {
+  return {
+    score: state.score.value
+  }
+}
+
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     changeLayout: (type: LayoutView) => dispatch(changeLayout(type)),
@@ -59,4 +54,5 @@ function mapDispatchToProps(dispatch: Dispatch) {
 }
 
 type DispatchProps = typeof mapDispatchToProps
-export default connect<null, DispatchProps>(null, mapDispatchToProps)(GameOver)
+type StateProps = typeof mapStateToProps
+export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(GameOver)
