@@ -13,13 +13,13 @@ export interface EnemySpriteParams {
 }
 
 export interface EnemyParams {
-  gameWidth: number
-  gameHeight: number
-  width: number
-  height: number
-  speed: number
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  gameSpeed: number,
+  speedModifier: number,
   imageSrc: string
-  y?: number
 }
 
 export interface PlayerParams {

@@ -11,10 +11,9 @@ import enemy3Image from '../assets/enemy3.png'
 import heroImage from '../assets/hero_run.png'
 
 import Player from './player'
-import Enemy from './enemy'
+import { Enemy, FlyingEnemy, GroundEnemy } from './enemy'
 import GameText from './gameText'
 import { calcPosition, randomFromInterval } from './utils'
-import { EnemySpriteParams } from './types'
 
 export class Engine {
   get gameOver(): boolean {
@@ -53,7 +52,6 @@ export class Engine {
 
   private gameSpeed = 1
 
-  private enemiesParams: EnemySpriteParams[] = []
   private enemySpeed = 5
 
   constructor(gameWidth: number, gameHeight: number) {
@@ -81,22 +79,6 @@ export class Engine {
       imageSrc: heroImage,
       weight: 0.5
     })
-
-    this.init()
-  }
-
-  private init() {
-    this.enemiesParams = [
-      { imageSrc: enemy1Image, width: 50, height: 50 },
-      {
-        imageSrc: enemy2Image,
-        width: 50,
-        height: 50,
-        y: () =>
-          randomFromInterval(this.gameHeight - 100, this.gameHeight - 250)
-      },
-      { imageSrc: enemy3Image, width: 150, height: 100 }
-    ]
   }
 
   game = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
@@ -121,6 +103,7 @@ export class Engine {
     this.handleEnemy(ctx, deltaTime)
 
     this.checkSpeed(ctx)
+    // this.checkSpeed(ctx)
 
     if (this.gameOver) {
       this.displayGameOver(ctx)
@@ -277,20 +260,46 @@ export class Engine {
 
   private handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
     if (this.enemyTimer > this.enemyInterval + randomFromInterval(100, 1000)) {
-      const random = randomFromInterval(0, this.enemiesParams.length - 1)
-      const enemyParams = this.enemiesParams[random]
+      const enemyType = randomFromInterval(0, 2)
 
-      this.enemies.push(
-        new Enemy({
-          gameWidth: this.gameWidth,
-          gameHeight: this.gameHeight,
-          width: enemyParams.width,
-          height: enemyParams.height,
-          speed: this.enemySpeed,
-          imageSrc: enemyParams.imageSrc,
-          y: enemyParams.y ? enemyParams.y() : undefined
-        })
-      )
+      let enemy: Enemy | undefined
+
+      switch (enemyType) {
+        case 0:
+          enemy = new GroundEnemy({
+            x: this.gameWidth,
+            y: this.gameHeight - 50,
+            width: 50,
+            height: 50,
+            gameSpeed: this.gameSpeed,
+            speedModifier: 3,
+            imageSrc: enemy1Image
+          })
+          break
+        case 1:
+          enemy = new GroundEnemy({
+            x: this.gameWidth,
+            y: this.gameHeight - 100,
+            width: 150,
+            height: 100,
+            gameSpeed: this.gameSpeed,
+            speedModifier: 4,
+            imageSrc: enemy3Image
+          })
+          break
+        case 2:
+          enemy = new FlyingEnemy({
+            x: this.gameWidth,
+            y: randomFromInterval(this.gameHeight - 100, this.gameHeight - 250),
+            width: 50,
+            height: 50,
+            gameSpeed: this.gameSpeed,
+            speedModifier: 3,
+            imageSrc: enemy2Image
+          })
+      }
+
+      this.enemies.push(enemy as Enemy)
 
       this.enemyTimer = 0
     } else {
