@@ -6,6 +6,11 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeScore } from '../../store/actions/changeScore'
 
+const gameWidth = 1024
+const gameHeight = 768
+// TODO Необходимо сделать адаптивно
+const engine = new Engine(gameWidth, gameHeight)
+
 const GameLayout = () => {
   // TODO Необходимо сделать адаптивно
   const engine = new Engine(1024, 768)
@@ -14,13 +19,17 @@ const GameLayout = () => {
   const navigate = useNavigate()
 
   useEvent('keydown', engine.handleKeyDown)
-  useEvent('keyup', engine.handleKeyUp)   
+  useEvent('keyup', engine.handleKeyUp)
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const lastTime = useRef(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
+    if(canvas) {
+      canvas.width = gameWidth
+      canvas.height = gameHeight
+    }
     const context = canvas?.getContext('2d')
 
     if (!context) {
@@ -30,7 +39,7 @@ const GameLayout = () => {
 
     const gameOver = (): void => {
       dispatch(changeScore(engine.getScore))
-      
+
       navigate('/gameover')
     }
 
@@ -56,7 +65,7 @@ const GameLayout = () => {
 
   return (
     <div className={cn.Container}>
-      <canvas ref={canvasRef} width={1024} height={768} />
+      <canvas ref={canvasRef} className={cn.Canvas}/>
     </div>
   )
 }
