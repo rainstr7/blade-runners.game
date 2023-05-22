@@ -44,5 +44,6 @@ export interface GameTextParams {
   y: number
   text: string
   font: string
-  fontSize: number
+  fontSize: number,
+  fillStyle?: string
 }

@@ -141,13 +141,18 @@ export class Engine {
       this._isGameStartTimeStamp = Date.now()
     }
 
+    ctx.rect(0, 0, this.gameWidth, this.gameHeight);
+    ctx.fillStyle = "#00000070";
+    ctx.fill();
+
     GameText.displayText({
       ctx,
       x: this.gameWidth / 2 - 100,
       y: this.gameHeight / 2 - 20,
       text: `${this._isGameStartWords[this._isGameStartIteration]}`,
       font: 'Helvetica',
-      fontSize: 40,
+      fontSize: 100,
+      fillStyle: '#00fffe'
     })
 
     if (Date.now() - this._isGameStartTimeStamp > this._isGameStartDelayWord) {
