@@ -1,4 +1,5 @@
 import Player from './player'
+import { KeyConfiguration } from './types'
 
 export enum PlayerStates {
   RUNNING,
@@ -13,7 +14,7 @@ export abstract class State {
   }
 
   abstract init(): void
-  abstract handleState(keys: string[]): void
+  abstract handleState(keyConfiguration: KeyConfiguration): void
 
   abstract update(deltaTime: number): void
 }
@@ -29,10 +30,10 @@ export class RunningState extends State {
     this.player.frameY = 0
   }
 
-  handleState(keys: string[]): void {
+  handleState(keyConfiguration: KeyConfiguration): void {
     console.log('RunningState')
 
-    if (keys.includes('Space')) {
+    if (keyConfiguration.Space === 'down') {
       this.player.setState(PlayerStates.JUMPING)
     }
   }
@@ -61,7 +62,6 @@ export class JumpingState extends State {
   }
 
   init(): void {
-    // TODO более реальный джамп, поидее надо реагировать keyup отдельно чтобы проверять силу прыжка
     if (this.player.onGround()) {
       this.player.yV += -this.player.jumpForce
     }
@@ -69,10 +69,10 @@ export class JumpingState extends State {
     this.player.frameY = 1
   }
 
-  handleState(keys: string[]): void {
+  handleState(keyConfiguration: KeyConfiguration): void {
     console.log('JumpingState')
 
-    if (this.player.yV > this.player.weight) {
+    if (keyConfiguration.Space === 'up' || this.player.yV > this.player.weight) {
       this.player.setState(PlayerStates.FALLING)
     }
   }
@@ -80,7 +80,7 @@ export class JumpingState extends State {
   update(deltaTime: number) {
     if (this.player.yV < -this.player.jumpForce / 2) {
       this.player.frameX = 0
-    } else if (this.player.yV < 0) {
+    } else  {
       this.player.frameX = 1
     }
   }
@@ -95,9 +95,10 @@ export class FallingState extends State {
 
   init(): void {
     this.player.frameY = 2
+    this.player.yV = 0
   }
 
-  handleState(keys: string[]): void {
+  handleState(keyConfiguration: KeyConfiguration): void {
     console.log('FallingState')
     if(this.player.onGround()) {
       this.player.setState(PlayerStates.RUNNING)
@@ -105,6 +106,7 @@ export class FallingState extends State {
   }
 
   update(deltaTime: number) {
+    console.log(this.player.yV)
     if (this.player.yV > 0 && this.player.yV < this.player.jumpForce / 2) {
       this.player.frameX = 0
     } else {

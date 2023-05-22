@@ -1,4 +1,7 @@
 import Background from './background'
+import Player from './player'
+import { Enemy, FlyingEnemy, GroundEnemy } from './enemy'
+import GameText from './gameText'
 
 import bgLayer1 from '../assets/bg/layer1.png'
 import bgLayer2 from '../assets/bg/layer2.png'
@@ -10,10 +13,8 @@ import enemy2Image from '../assets/enemy2.png'
 import enemy3Image from '../assets/enemy3.png'
 import heroImage from '../assets/hero_run.png'
 
-import Player from './player'
-import { Enemy, FlyingEnemy, GroundEnemy } from './enemy'
-import GameText from './gameText'
 import { calcPosition, randomFromInterval } from './utils'
+import { KeyConfiguration } from './types'
 
 export class Engine {
   get gameOver(): boolean {
@@ -36,6 +37,7 @@ export class Engine {
   private enemies: Enemy[] = []
   private enemyTimer = 0
   private keyCodes: string[] = []
+  private keyConfig: KeyConfiguration = {Space: 'up'}
 
   private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
   private readonly _isGameStartDelayWord = 1000
@@ -90,7 +92,7 @@ export class Engine {
     this.checkCollisions()
 
     this.player.draw(ctx)
-    this.player.update(this.keyCodes, deltaTime)
+    this.player.update(this.keyConfig, deltaTime)
 
     this.displayScore(ctx)
 
@@ -111,16 +113,16 @@ export class Engine {
   }
 
   handleKeyDown = (e: Event) => {
-    const keyCode = (e as KeyboardEvent)?.code
-    if (keyCode && keyCode === 'Space' && !this.keyCodes.includes(keyCode)) {
-      this.keyCodes.push(keyCode)
+    const {code} = (e as KeyboardEvent)
+    if (code === 'Space') {
+      this.keyConfig.Space = 'down'
     }
   }
 
   handleKeyUp = (e: Event) => {
-    const keyCode = (e as KeyboardEvent)?.code
-    if (keyCode && keyCode === 'Space') {
-      this.keyCodes.splice(this.keyCodes.indexOf(keyCode), 1)
+    const {code} = (e as KeyboardEvent)
+    if (code === 'Space') {
+      this.keyConfig.Space = 'up'
     }
   }
 

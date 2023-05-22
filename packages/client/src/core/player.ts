@@ -1,4 +1,4 @@
-import { GameObject, PlayerParams } from './types'
+import { GameObject, KeyConfiguration, PlayerParams } from './types'
 import { FallingState, JumpingState, PlayerStates, RunningState, State } from './playerStates'
 
 class Player implements GameObject {
@@ -84,8 +84,8 @@ class Player implements GameObject {
     )
   }
 
-  update(pressedKeyCodes: string[], deltaTime: number): void {
-    this.currentState.handleState(pressedKeyCodes)
+  update(keyConfiguration: KeyConfiguration, deltaTime: number): void {
+    this.currentState.handleState(keyConfiguration)
 
     this.currentState.update(deltaTime)
 
