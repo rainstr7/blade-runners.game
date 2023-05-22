@@ -36,7 +36,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<Auth />} />
           <Route path="/game" element={<Game />} />
-          <Route path="/gameover" element={<GameOver changeLayout={changeLayout} score={0} />} />
+          <Route path="/gameover" element={<GameOver changeLayout={changeLayout} />} />
           <Route path="/settings" element={<Profile />} />
           <Route path="/rating" element={<LeaderBoard />} />
           <Route path="/forum/*" element={<Forum />} />

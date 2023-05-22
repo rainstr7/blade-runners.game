@@ -41,7 +41,7 @@ const GameOver = ({ changeLayout, score }: GameOverProps) => {
   )
 }
 
-function mapStateToProps(state: IRootStore) {
+function mapStateToProps (state: any)  {
   return {
     score: state.score.value
   }
@@ -54,5 +54,5 @@ function mapDispatchToProps(dispatch: Dispatch) {
 }
 
 type DispatchProps = typeof mapDispatchToProps
-type StateProps = typeof mapStateToProps
-export default connect<StateProps, DispatchProps>(mapStateToProps, mapDispatchToProps)(GameOver)
+// type StateProps = typeof mapStateToProps
+export default connect<{ score: number }, DispatchProps>(mapStateToProps, mapDispatchToProps)(GameOver)
