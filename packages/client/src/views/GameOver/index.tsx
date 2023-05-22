@@ -54,5 +54,5 @@ function mapDispatchToProps(dispatch: Dispatch) {
 }
 
 type DispatchProps = typeof mapDispatchToProps
-// type StateProps = typeof mapStateToProps
+
 export default connect<{ score: number }, DispatchProps>(mapStateToProps, mapDispatchToProps)(GameOver)
