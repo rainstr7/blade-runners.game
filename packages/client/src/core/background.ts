@@ -65,14 +65,6 @@ class Background {
 
       return new Layer({ gameSpeed, gameWidth, gameHeight, speedModifier, image })
     })
-
-    // this.layers.concat([
-    //   new Layer({gameSpeed, gameWidth, gameHeight, speedModifier: 1, image: s }),
-    //   new Layer({gameSpeed, gameWidth, gameHeight, speedModifier: 1, image: this.image1 }),
-    //   new Layer({gameSpeed, gameWidth, gameHeight, speedModifier: 1, image: this.image1 }),
-    //   new Layer({gameSpeed, gameWidth, gameHeight, speedModifier: 1, image: this.image1 }),
-    //   new Layer({gameSpeed, gameWidth, gameHeight, speedModifier: 1, image: this.image1 }),
-    // ])
   }
 
   update(): void {

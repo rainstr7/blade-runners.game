@@ -36,7 +36,6 @@ export class Engine {
   private score = 0
   private enemies: Enemy[] = []
   private enemyTimer = 0
-  private keyCodes: string[] = []
   private keyConfig: KeyConfiguration = {Space: 'up'}
 
   private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
@@ -53,8 +52,6 @@ export class Engine {
   private readonly player: Player
 
   private gameSpeed = 1
-
-  private enemySpeed = 5
 
   constructor(gameWidth: number, gameHeight: number) {
     this.gameHeight = gameHeight
@@ -106,6 +103,7 @@ export class Engine {
 
     this.checkSpeed(ctx)
     // this.checkSpeed(ctx)
+    this.checkSpeed(ctx)
 
     if (this.gameOver) {
       this.displayGameOver(ctx)
@@ -194,32 +192,29 @@ export class Engine {
   private checkSpeed(ctx: CanvasRenderingContext2D): void {
     switch (this.score) {
       case 5:
+        this.gameSpeed = 2
         this.showMessage(ctx, 'Hurry up!')
-        this.enemySpeed = 6
         this.enemyInterval = 1600
         break
       case 10:
-        this.enemySpeed = 7
         this.enemyInterval = 1300
-        this.player.animationSpeed = 17
         break
       case 15:
+        this.gameSpeed = 3
         this.showMessage(ctx, 'Faster!')
-        this.enemySpeed = 8
         this.enemyInterval = 1000
         break
       case 20:
-        this.enemySpeed = 9
+        this.gameSpeed = 4
         this.enemyInterval = 700
-        this.player.animationSpeed = 20
         break
       case 30:
+        this.gameSpeed = 5
         this.showMessage(ctx, 'Run!!!')
-        this.enemySpeed = 10
         this.enemyInterval = 400
         break
       case 40:
-        this.enemySpeed = 12
+        this.gameSpeed = 6
         this.enemyInterval = 200
         break
       default:

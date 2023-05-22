@@ -1,4 +1,5 @@
 import { EnemyParams, GameObject } from './types'
+import { randomFromInterval } from './utils'
 
 export class Enemy implements GameObject{
   private frameX: number
@@ -92,7 +93,7 @@ export class FlyingEnemy extends Enemy {
     this.sprite.src = imageSrc
 
     this.angle = 0
-    this.vAngle = Math.random() * 0.1
+    this.vAngle = randomFromInterval(0, 1) * 0.1 + 0.1
   }
 
   update(deltaTime: number) {
