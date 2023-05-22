@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders correctly large: large-button 1`] = `
+<button
+  class="undefined undefined"
+>
+  Click me
+</button>
+`;
+
+exports[`Button renders correctly: default-button 1`] = `
+<button
+  class="undefined undefined"
+>
+  Click me
+</button>
+`;
+
+exports[`Button size: small-button 1`] = `
+<button
+  class="undefined function small() { [native code] }"
+  data-testid="small-button"
+>
+  Click me
+</button>
+`;
