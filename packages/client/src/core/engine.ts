@@ -26,12 +26,17 @@ export class Engine {
   }
 
   private _gameOver = false
+  private _isGameStart = false
+  private _isGameStartIteration = 0
+  private _isGameStartTimeStamp = 0
   private score = 0
   private enemies: Enemy[] = []
   private enemyTimer = 0
   private randomEnemyInterval = Math.random() * 1000 + 500
   private pressedKeyCodes: string[] = []
 
+  private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
+  private readonly _isGameStartDelayWord = 1000
   private readonly enemyInterval = 2000
   private readonly gameHeight: number
   private readonly gameWidth: number
@@ -71,13 +76,11 @@ export class Engine {
     ]
   }
 
-  game = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
+  game = async (ctx: CanvasRenderingContext2D, deltaTime: number) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     this.background.draw(ctx)
     this.background.update()
-
-    this.handleEnemy(ctx, deltaTime)
 
     this.checkCollisions()
 
@@ -85,6 +88,14 @@ export class Engine {
     this.player.update(this.pressedKeyCodes, deltaTime)
 
     this.displayScore(ctx)
+
+    this.displayStartGame(ctx)
+
+    if (!this._isGameStart) {
+      return
+    }
+
+    this.handleEnemy(ctx, deltaTime)
 
     if (this.gameOver) {
       this.displayGameOver(ctx)
@@ -118,6 +129,32 @@ export class Engine {
       font: 'Helvetica',
       fontSize: 40,
     })
+  }
+
+  private displayStartGame = async (ctx: CanvasRenderingContext2D) => {
+    if (this._isGameStartIteration >= this._isGameStartWords.length) {
+      this._isGameStart = true
+      return
+    }
+
+    if (!this._isGameStartTimeStamp) {
+      this._isGameStartTimeStamp = Date.now()
+    }
+
+    GameText.displayText({
+      ctx,
+      x: this.gameWidth / 2 - 100,
+      y: this.gameHeight / 2 - 20,
+      text: `${this._isGameStartWords[this._isGameStartIteration]}`,
+      font: 'Helvetica',
+      fontSize: 40,
+    })
+
+    if (Date.now() - this._isGameStartTimeStamp > this._isGameStartDelayWord) {
+      this._isGameStartIteration++
+      this._isGameStartTimeStamp = Date.now()
+    }
+
   }
 
   private displayGameOver = (ctx: CanvasRenderingContext2D) => {

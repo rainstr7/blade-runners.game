@@ -27,13 +27,14 @@ const engine = new Engine(1024, 768)
       throw new Error('Error getting context')
     }
 
-    let animationFrameId = 0
 
     const gameOver = (): void => {
       changeScore(engine.getScore)
       
       navigate('/gameover')
     }
+
+    let animationFrameId = 0
 
     const render = (timeStamp: number) => {
       const deltaTime = timeStamp - lastTime.current
