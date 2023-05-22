@@ -7,7 +7,7 @@ export interface GameObject {
 
 export type EnemyType = 0 | 1 | 2
 
-export type KeyConfiguration = Record<'Space', 'up' | 'down'>
+export type KeyConfiguration = Record<'Space' | 'Enter', 'up' | 'down'>
 
 export interface EnemyParams {
   x: number

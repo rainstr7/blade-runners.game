@@ -16,6 +16,15 @@ import heroImage from '../assets/hero_run.png'
 import { calcPosition, randomFromInterval } from './utils'
 import { EnemyType, KeyConfiguration } from './types'
 
+// FIXME этому тут не место
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+}
+
 export class Engine {
   get gameOver(): boolean {
     return this._gameOver
@@ -36,7 +45,7 @@ export class Engine {
   private score = 0
   private enemies: Enemy[] = []
   private enemyTimer = 0
-  private keyConfig: KeyConfiguration = { Space: 'up' }
+  private keyConfig: KeyConfiguration = { Space: 'up', Enter: 'up' }
 
   private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
   private readonly _isGameStartDelayWord = 1000
@@ -106,6 +115,9 @@ export class Engine {
     const { code } = e as KeyboardEvent
     if (code === 'Space') {
       this.keyConfig.Space = 'down'
+    } else if (code === 'Enter') {
+      this.keyConfig.Enter = 'down'
+      toggleFullScreen()
     }
   }
 
@@ -113,6 +125,9 @@ export class Engine {
     const { code } = e as KeyboardEvent
     if (code === 'Space') {
       this.keyConfig.Space = 'up'
+    } else if (code === 'Enter') {
+      this.keyConfig.Enter = 'up'
+      this.keyConfig.Enter = 'up'
     }
   }
 
