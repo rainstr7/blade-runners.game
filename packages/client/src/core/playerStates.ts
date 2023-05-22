@@ -4,7 +4,7 @@ import { KeyConfiguration } from './types'
 export enum PlayerStates {
   RUNNING,
   JUMPING,
-  FALLING
+  FALLING,
 }
 
 export abstract class State {
@@ -72,7 +72,10 @@ export class JumpingState extends State {
   handleState(keyConfiguration: KeyConfiguration): void {
     console.log('JumpingState')
 
-    if (keyConfiguration.Space === 'up' || this.player.yV > this.player.weight) {
+    if (
+      keyConfiguration.Space === 'up' ||
+      this.player.yV > this.player.weight
+    ) {
       this.player.setState(PlayerStates.FALLING)
     }
   }
@@ -80,7 +83,7 @@ export class JumpingState extends State {
   update(deltaTime: number) {
     if (this.player.yV < -this.player.jumpForce / 2) {
       this.player.frameX = 0
-    } else  {
+    } else {
       this.player.frameX = 1
     }
   }
@@ -100,7 +103,7 @@ export class FallingState extends State {
 
   handleState(keyConfiguration: KeyConfiguration): void {
     console.log('FallingState')
-    if(this.player.onGround()) {
+    if (this.player.onGround()) {
       this.player.setState(PlayerStates.RUNNING)
     }
   }

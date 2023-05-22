@@ -17,7 +17,6 @@ const GameLayout = () => {
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
   useEvent('keydown', engine.handleKeyDown)
   useEvent('keyup', engine.handleKeyUp)
 
@@ -26,7 +25,7 @@ const GameLayout = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if(canvas) {
+    if (canvas) {
       canvas.width = gameWidth
       canvas.height = gameHeight
     }
@@ -65,7 +64,7 @@ const GameLayout = () => {
 
   return (
     <div className={cn.Container}>
-      <canvas ref={canvasRef} className={cn.Canvas}/>
+      <canvas ref={canvasRef} className={cn.Canvas} />
     </div>
   )
 }

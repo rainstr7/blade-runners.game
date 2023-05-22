@@ -1,5 +1,11 @@
 import { GameObject, KeyConfiguration, PlayerParams } from './types'
-import { FallingState, JumpingState, PlayerStates, RunningState, State } from './playerStates'
+import {
+  FallingState,
+  JumpingState,
+  PlayerStates,
+  RunningState,
+  State,
+} from './playerStates'
 
 class Player implements GameObject {
   x: number
@@ -65,7 +71,11 @@ class Player implements GameObject {
     this.runImage.src = imageSrc
 
     // В данный момент зависит от порядка enum PlayerStates, в обьект?
-    this.states = [new RunningState(this), new JumpingState(this), new FallingState(this)]
+    this.states = [
+      new RunningState(this),
+      new JumpingState(this),
+      new FallingState(this),
+    ]
     this.currentState = this.states[PlayerStates.RUNNING]
     this.currentState.init()
   }
@@ -106,6 +116,6 @@ class Player implements GameObject {
   onGround(): boolean {
     return this.y >= this.gameHeight - this.height
   }
- }
+}
 
 export default Player

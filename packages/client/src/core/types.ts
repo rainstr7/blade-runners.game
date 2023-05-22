@@ -15,12 +15,12 @@ export interface EnemySpriteParams {
 }
 
 export interface EnemyParams {
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-  gameSpeed: number,
-  speedModifier: number,
+  x: number
+  y: number
+  width: number
+  height: number
+  gameSpeed: number
+  speedModifier: number
   imageSrc: string
 }
 

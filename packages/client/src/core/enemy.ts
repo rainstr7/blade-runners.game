@@ -1,7 +1,7 @@
 import { EnemyParams, GameObject } from './types'
 import { randomFromInterval } from './utils'
 
-export class Enemy implements GameObject{
+export class Enemy implements GameObject {
   private frameX: number
   private frameY: number
   private readonly fps: number
@@ -47,7 +47,7 @@ export class Enemy implements GameObject{
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    if(!this.sprite) {
+    if (!this.sprite) {
       throw new Error('Sprite is not loaded')
     }
 
@@ -85,9 +85,9 @@ export class FlyingEnemy extends Enemy {
   private angle: number
 
   constructor(params: EnemyParams) {
-    const {x, y, width, height, gameSpeed, speedModifier, imageSrc} = params
+    const { x, y, width, height, gameSpeed, speedModifier, imageSrc } = params
     super(x, y, width, height)
-    this.speedX = - (gameSpeed * speedModifier)
+    this.speedX = -(gameSpeed * speedModifier)
 
     this.sprite = new Image()
     this.sprite.src = imageSrc
@@ -105,10 +105,10 @@ export class FlyingEnemy extends Enemy {
 }
 
 export class GroundEnemy extends Enemy {
-  constructor(params: EnemyParams)  {
-    const {x, y, width, height, gameSpeed, speedModifier, imageSrc} = params
+  constructor(params: EnemyParams) {
+    const { x, y, width, height, gameSpeed, speedModifier, imageSrc } = params
     super(x, y, width, height)
-    this.speedX = - (gameSpeed + speedModifier)
+    this.speedX = -(gameSpeed + speedModifier)
 
     this.sprite = new Image()
     this.sprite.src = imageSrc

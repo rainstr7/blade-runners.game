@@ -10,7 +10,8 @@ class Layer {
   private y = 0
 
   constructor(layerParams: LayerParams) {
-    const { gameSpeed, gameWidth, gameHeight, speedModifier, image } = layerParams
+    const { gameSpeed, gameWidth, gameHeight, speedModifier, image } =
+      layerParams
 
     this.gameSpeed = gameSpeed
     this.gameWidth = gameWidth
@@ -63,7 +64,13 @@ class Background {
 
       speedModifier += 0.2
 
-      return new Layer({ gameSpeed, gameWidth, gameHeight, speedModifier, image })
+      return new Layer({
+        gameSpeed,
+        gameWidth,
+        gameHeight,
+        speedModifier,
+        image,
+      })
     })
   }
 
