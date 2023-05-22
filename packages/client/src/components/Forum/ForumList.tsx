@@ -30,9 +30,9 @@ const ForumList: FC = () => {
           {forums.map(({ id, title, topicsCount, messagesCount }) => (
             <li className={cn.ListElement} key={id}>
               <Link className={cn.LinkElement} to={`/forum/${id}`}>
-                <div className={cn.Title}>{title}</div>
-                <div className={cn.TopicCount}>{topicsCount}</div>
-                <div className={cn.MsgCount}>{messagesCount}</div>
+                <p className={cn.Title}>{title}</p>
+                <p className={cn.TopicCount}>{topicsCount}</p>
+                <p className={cn.MsgCount}>{messagesCount}</p>
               </Link>
             </li>
           ))}

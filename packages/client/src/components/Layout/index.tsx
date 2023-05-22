@@ -2,14 +2,14 @@ import { ReactElement, useMemo } from 'react'
 import cn from './style.module.scss'
 import Header from '../UI/Header'
 import { useSelector } from 'react-redux'
-import { IRootStore, LayoutView } from '../../store/reduces/interfaces'
+import { IRootStore } from '../../store/reduces/interfaces'
 
 interface Props {
   children: ReactElement
 }
 
 const Layout = ({ children }: Props) => {
-  const type = useSelector<IRootStore>(state => state.layout.type)
+  const type = useSelector((state: IRootStore) => state.layout.type)
 
   const header = useMemo(() => {
     switch (type) {
@@ -18,7 +18,7 @@ const Layout = ({ children }: Props) => {
       case 'GameOver':
         return 'GAME OVER'
       default:
-        return type as LayoutView
+        return type
     }
   }, [type])
 
@@ -26,7 +26,7 @@ const Layout = ({ children }: Props) => {
     return <div className={cn.Layout}>{children}</div>
   }
 
-  const background = cn[type as LayoutView] || cn.Error
+  const background = cn[type] || cn.Error
 
   return (
     <div className={`${cn.Layout} ${background}`}>
