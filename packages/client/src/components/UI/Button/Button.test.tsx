@@ -7,27 +7,27 @@ import Button from '.'
 const user = userEvent.setup()
 
 describe('Button', () => {
-  test('renders correctly', () => {
+  test('Дэфолтный рендеринг', () => {
     render(<Button>Click me</Button>)
 
     expect(screen.getByRole('button')).toMatchSnapshot('default-button')
   })
-  test('renders correctly large', () => {
+  test('Большой размер', () => {
     render(<Button size="large">Click me</Button>)
 
     expect(screen.getByRole('button')).toMatchSnapshot('large-button')
   })
 
-  test('size', async () => {
+  test('Маленький размер', () => {
     render(
       <Button data-testid="small-button" size="small">
         Click me
       </Button>
     )
-    await screen.getByTestId('small-button')
+
     expect(screen.getByTestId('small-button')).toMatchSnapshot('small-button')
   })
-  test('click', async () => {
+  test('Клик по кнопке', async () => {
     const onClickMock = jest.fn()
     render(<Button onClick={onClickMock}>Click me</Button>)
     const button = screen.getByText('Click me')
@@ -35,20 +35,9 @@ describe('Button', () => {
     expect(onClickMock).toHaveBeenCalledTimes(1)
   })
 
-  test('text button', () => {
+  test('Текст на кнопке', () => {
     render(<Button data-testid="text-button">Text button</Button>)
     const button = screen.getByTestId('text-button')
     expect(button).toHaveTextContent('Text button')
   })
-
-  // test('class', async () => {
-  //   const { container } = render(
-  //     <Button data-testid="small-button" size="small">
-  //       Small button
-  //     </Button>
-  //   )
-  //   await screen.getByTestId('small-button')
-  //   const btn = container.getElementsByClassName('button')
-  //   expect(btn).toBeInTheDocument()
-  // })
 })
