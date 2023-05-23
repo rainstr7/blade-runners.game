@@ -31,8 +31,6 @@ export class RunningState extends State {
   }
 
   handleState(keyConfiguration: KeyConfiguration): void {
-    console.log('RunningState')
-
     if (keyConfiguration.Space === 'down') {
       this.player.setState(PlayerStates.JUMPING)
     }
@@ -70,8 +68,6 @@ export class JumpingState extends State {
   }
 
   handleState(keyConfiguration: KeyConfiguration): void {
-    console.log('JumpingState')
-
     if (
       keyConfiguration.Space === 'up' ||
       this.player.yV > this.player.weight
@@ -102,14 +98,12 @@ export class FallingState extends State {
   }
 
   handleState(keyConfiguration: KeyConfiguration): void {
-    console.log('FallingState')
     if (this.player.onGround()) {
       this.player.setState(PlayerStates.RUNNING)
     }
   }
 
   update(deltaTime: number) {
-    console.log(this.player.yV)
     if (this.player.yV > 0 && this.player.yV < this.player.jumpForce / 2) {
       this.player.frameX = 0
     } else {
