@@ -76,7 +76,7 @@ export class Engine {
     ]
   }
 
-  game = async (ctx: CanvasRenderingContext2D, deltaTime: number) => {
+  game = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     this.background.draw(ctx)
