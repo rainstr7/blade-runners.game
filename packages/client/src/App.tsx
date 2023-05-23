@@ -10,11 +10,11 @@ import Game from './views/Game'
 import Profile from './views/Profile'
 import Main from './views/Main'
 import Forum from './views/Forum'
-import { changeLayout } from './store/actions/changeLayout'
 import ErrorBoundary from './components/ErrorBoundary'
-import Error from './views/Error'
+import Errors from './views/Errors'
+import GameOver from './views/GameOver'
 
-function App() {
+const App = () => {
   useEffect(() => {
     const fetchServerData = async () => {
       const url = `http://localhost:${__SERVER_PORT__}`
@@ -22,7 +22,6 @@ function App() {
       const data = await response.json()
       console.log(data)
     }
-
     fetchServerData()
   }, [])
 
@@ -30,26 +29,17 @@ function App() {
     <Layout>
       <ErrorBoundary>
         <Routes>
-          <Route path="/" element={<Main changeLayout={changeLayout} />} />
+          <Route path="/" element={<Main />} />
           <Route path="/start" element={<Start />} />
+          <Route path="/gameover" element={<GameOver />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<Auth />} />
           <Route path="/game" element={<Game />} />
           <Route path="/settings" element={<Profile />} />
           <Route path="/rating" element={<LeaderBoard />} />
           <Route path="/forum/*" element={<Forum />} />
-          <Route
-            path="/500"
-            element={
-              <Error errorCode={'500'} changeLayout={changeLayout} />
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <Error errorCode={'404'} changeLayout={changeLayout} />
-            }
-          />
+          <Route path="/500" element={<Errors errorCode="500" />} />
+          <Route path="*" element={<Errors errorCode="404" />} />
         </Routes>
       </ErrorBoundary>
     </Layout>

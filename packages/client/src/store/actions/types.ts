@@ -1,1 +1,3 @@
 export const CHANGE_LAYOUT_VIEW = 'CHANGE_LAYOUT_VIEW'
+export const AUTH_SUCCESS = 'AUTH_SUCCESS'
+export const AUTH_LOGOUT = 'AUTH_LOGOUT'
