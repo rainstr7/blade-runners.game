@@ -5,9 +5,38 @@ import { Engine } from '../engine'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeScore } from '../../store/actions/changeScore'
+import { KeyConfiguration } from '../types'
 
 const GAME_WIDTH = 1024
 const GAME_HEIGHT = 768
+
+// FIXME этому тут не место
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else if (document.exitFullscreen) {
+    document.exitFullscreen();
+  }
+}
+
+const handleKeyDown = (e: Event, keyConfig: KeyConfiguration) => {
+  const { code } = e as KeyboardEvent
+  if (code === 'Space') {
+    keyConfig.Space = 'down'
+  } else if (code === 'Enter') {
+    keyConfig.Enter = 'down'
+    toggleFullScreen()
+  }
+}
+
+const handleKeyUp = (e: Event, keyConfig: KeyConfiguration) => {
+  const { code } = e as KeyboardEvent
+  if (code === 'Space') {
+    keyConfig.Space = 'up'
+  } else if (code === 'Enter') {
+    keyConfig.Enter = 'up'
+  }
+}
 
 const GameLayout = () => {
   const engine = new Engine(GAME_WIDTH, GAME_HEIGHT)
@@ -17,6 +46,8 @@ const GameLayout = () => {
 
   useEvent('keydown', engine.handleKeyDown)
   useEvent('keyup', engine.handleKeyUp)
+
+  const keyConfig: KeyConfiguration = {Space: 'up', Enter: 'up'}
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const lastTime = useRef(0)
@@ -47,7 +78,7 @@ const GameLayout = () => {
       const deltaTime = timeStamp - lastTime.current
       lastTime.current = timeStamp
 
-      engine.game(context, deltaTime)
+      engine.game(context, deltaTime, keyConfig)
       if (engine.gameOver) {
         gameOver()
         return

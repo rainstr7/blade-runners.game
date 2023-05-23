@@ -31,7 +31,7 @@ export class RunningState extends State {
   }
 
   handleState(keyConfiguration: KeyConfiguration): void {
-    if (keyConfiguration.Space === 'down') {
+     if (keyConfiguration.Space === 'down') {
       this.player.setState(PlayerStates.JUMPING)
     }
   }
