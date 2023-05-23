@@ -1,34 +1,31 @@
-import { useEffect } from 'react'
 import cn from './style.module.scss'
 import Button from '../../components/UI/Button'
 import ButtonLink from '../../components/UI/ButtonLink'
 import { useNavigate } from 'react-router-dom'
-import { Dispatch } from 'redux'
-import { LayoutView } from '../../store/reduces/interfaces'
 import { changeLayout } from '../../store/actions/changeLayout'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
 
-interface MainProps {
-  changeLayout: (type: LayoutView) => void
-}
-
-const Main = ({ changeLayout }: MainProps) => {
+const Main = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
-    changeLayout('Landing')
+    dispatch(changeLayout('Landing'))
     return () => {
-      changeLayout('Default')
+      dispatch(changeLayout('Default'))
     }
   }, [])
 
-  const goToGameHandler = () => navigate('/start')
+  const goToGameHandler = () => {
+    navigate('/start')
+  }
 
   return (
     <main className={cn.Container}>
       <header className={cn.Header}>
         <p>By Blade Runners</p>
-        <ButtonLink to={'/start'}>start to play</ButtonLink>
+        <ButtonLink to="/signin">sign in</ButtonLink>
       </header>
 
       <div className={cn.Main}>
@@ -70,12 +67,4 @@ const Main = ({ changeLayout }: MainProps) => {
   )
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    changeLayout: (type: LayoutView) => dispatch(changeLayout(type)),
-  }
-}
-
-type DispatchProps = typeof mapDispatchToProps
-
-export default connect<null, DispatchProps>(null, mapDispatchToProps)(Main)
+export default Main

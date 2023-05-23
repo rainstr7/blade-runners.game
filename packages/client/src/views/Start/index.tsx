@@ -1,35 +1,24 @@
 import Button from '../../components/UI/Button'
 import { useNavigate } from 'react-router-dom'
 import cn from './style.module.scss'
+import { useCallback } from 'react'
 
 const Start = () => {
   const navigate = useNavigate()
 
-  const leaderBoardButton = () => {
-    navigate('/rating')
-  }
-  const forumButton = () => {
-    navigate('/forum')
-  }
-  const settingsButton = () => {
-    navigate('/settings')
-  }
-
-  const startButton = () => {
-    navigate('/game')
-  }
+  const handleClick = useCallback((path: string) => () => navigate(path), [])
 
   return (
     <main className={cn.Block}>
       <div className={cn.MainButtonGroup}>
-        <Button onClick={startButton}>Start Game</Button>
-        <Button onClick={settingsButton}>Settings</Button>
+        <Button onClick={handleClick('/game')}>Start Game</Button>
+        <Button onClick={handleClick('/settings')}>Settings</Button>
       </div>
       <div className={cn.AdditionalButtonGroup}>
-        <Button size="small" onClick={leaderBoardButton}>
+        <Button size="small" onClick={handleClick('/rating')}>
           Leaderboard
         </Button>
-        <Button size="small" onClick={forumButton}>
+        <Button size="small" onClick={handleClick('/forum')}>
           Forum
         </Button>
       </div>
