@@ -2,23 +2,19 @@ import React, { FC, useEffect, useRef } from 'react'
 import styles from './style.module.css'
 import useEvent from '../../hooks/useEvent'
 import { Engine } from '../engine'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeScore } from '../../store/actions/changeScore'
 
-interface GameLayoutProps {
-  changeScore: (score: number) => void
-}
-
-const GameLayout = ({changeScore}: GameLayoutProps) => {
+const GameLayout = () => {
   // TODO Необходимо сделать адаптивно
-const engine = new Engine(1024, 768)
+  const engine = new Engine(1024, 768)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   useEvent('keydown', engine.handleKeyDown)
-  useEvent('keyup', engine.handleKeyUp)
-
-  const navigate = useNavigate() 
+  useEvent('keyup', engine.handleKeyUp)   
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const lastTime = useRef(0)
@@ -33,7 +29,7 @@ const engine = new Engine(1024, 768)
 
 
     const gameOver = (): void => {
-      changeScore(engine.getScore)
+      dispatch(changeScore(engine.getScore))
       
       navigate('/gameover')
     }
@@ -65,12 +61,4 @@ const engine = new Engine(1024, 768)
   )
 }
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    changeScore: (score: number) => dispatch(changeScore(score))
-  }
-}
-
-type DispatchProps = typeof mapDispatchToProps
-
-export default connect<null, DispatchProps>(null, mapDispatchToProps)(GameLayout)
+export default GameLayout
