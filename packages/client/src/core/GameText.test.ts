@@ -1,4 +1,5 @@
-import GameText, { GameTextParams } from './gameText'
+import GameText from './gameText'
+import { GameTextParams } from './types'
 
 describe('GameText', () => {
   const ctx: any = {

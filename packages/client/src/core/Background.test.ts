@@ -1,4 +1,5 @@
-import Background, { BackgroundParams } from './background'
+import Background from './background'
+import { BackgroundParams } from './types'
 
 describe('Background', () => {
   const gameWidth = 800

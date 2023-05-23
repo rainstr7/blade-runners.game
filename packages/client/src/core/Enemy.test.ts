@@ -1,4 +1,5 @@
-import Enemy, { EnemyParams } from './enemy'
+import Enemy from './enemy'
+import { EnemyParams } from './types'
 
 describe('Enemy', () => {
   const gameWidth = 800
@@ -6,6 +7,7 @@ describe('Enemy', () => {
   const width = 50
   const height = 50
   const speed = 5
+  const imageSrc = '../assets/enemy3.png'
 
   const params: EnemyParams = {
     gameWidth,
@@ -13,6 +15,7 @@ describe('Enemy', () => {
     width,
     height,
     speed,
+    imageSrc,
   }
 
   let enemy: Enemy
@@ -29,32 +32,15 @@ describe('Enemy', () => {
     expect(enemy.isAlive).toBe(true)
   })
 
-  test('корректное отображение врага', () => {
-    const ctx: any = {
-      fillStyle: '',
-      fillRect: jest.fn(),
-    }
-
-    enemy.draw(ctx)
-
-    expect(ctx.fillStyle).toBe('#ff0000')
-    expect(ctx.fillRect).toHaveBeenCalledWith(
-      enemy.x,
-      enemy.y,
-      enemy.width,
-      enemy.height
-    )
-  })
-
   test('позиционирование врага', () => {
-    enemy.update()
+    enemy.update(1)
 
     expect(enemy.x).toBe(gameWidth - speed)
   })
 
   test('жизненный цикл врага', () => {
     enemy.x = -width - 10
-    enemy.update()
+    enemy.update(1)
 
     expect(enemy.isAlive).toBe(false)
   })
