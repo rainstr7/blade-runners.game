@@ -1,9 +1,9 @@
 
 import { PLAYER_SCORE } from './types'
 
-export const changeScore = (score: number) => {
+export const changeScore = (payload: number) => {
   return {
     type: PLAYER_SCORE,
-    score
+    payload
   }
 }
