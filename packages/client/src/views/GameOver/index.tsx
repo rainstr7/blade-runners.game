@@ -5,7 +5,8 @@ import { changeLayout } from '../../store/actions/changeLayout'
 import { useDispatch } from 'react-redux'
 import Card from '../../components/Card'
 import { useNavigate } from 'react-router-dom'
-import { template } from './settings'
+import { useSelector } from 'react-redux'
+import { IRootStore } from '../../store/reduces/interfaces'
 
 const GameOver = () => {
   const dispatch = useDispatch()
@@ -18,6 +19,10 @@ const GameOver = () => {
     }
   }, [])
 
+  const score = useSelector((state: IRootStore) => {
+    return state.score.value
+  })
+
   const restartButton = () => {
     navigate('/game')
   }
@@ -27,7 +32,7 @@ const GameOver = () => {
   return (
     <main className={cn.Block}>
       <div className={''}>
-        <Card info={template} />
+        <Card info={[{label: 'score', value: score}]} />
         <div className={cn.ButtonsGroup}>
           <Button onClick={restartButton}>Restart</Button>
           <Button size="small" onClick={startButton}>
