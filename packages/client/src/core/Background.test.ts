@@ -1,6 +1,16 @@
 import Background from './background'
 import { BackgroundParams } from './types'
 
+enum bgParams {
+  x = 'x',
+  y = 'y',
+  width = 'width',
+  height = 'height',
+  speed = 'speed',
+  image = 'image',
+}
+
+
 describe('Background', () => {
   const gameWidth = 800
   const gameHeight = 600
@@ -21,11 +31,11 @@ describe('Background', () => {
   })
 
   test('инициализация с корректными свойствами', () => {
-    expect(background['x']).toBe(0)
-    expect(background['y']).toBe(0)
-    expect(background['width']).toBe(gameWidth)
-    expect(background['height']).toBe(gameHeight)
-    expect(background['speed']).toBe(speed)
+    expect(background[bgParams.x]).toBe(0)
+    expect(background[bgParams.y]).toBe(0)
+    expect(background[bgParams.width]).toBe(gameWidth)
+    expect(background[bgParams.height]).toBe(gameHeight)
+    expect(background[bgParams.speed]).toBe(speed)
   })
 
   test('корректная отрисовка', () => {
@@ -37,31 +47,31 @@ describe('Background', () => {
 
     expect(ctx.drawImage).toHaveBeenCalledTimes(2)
     expect(ctx.drawImage).toHaveBeenCalledWith(
-      background['image'],
-      background['x'],
-      background['y'],
-      background['width'],
-      background['height']
+      background[bgParams.image],
+      background[bgParams.x],
+      background[bgParams.y],
+      background[bgParams.width],
+      background[bgParams.height]
     )
     expect(ctx.drawImage).toHaveBeenCalledWith(
-      background['image'],
-      background['x'] + background['width'],
-      background['y'],
-      background['width'],
-      background['height']
+      background[bgParams.image],
+      background[bgParams.x] + background[bgParams.width],
+      background[bgParams.y],
+      background[bgParams.width],
+      background[bgParams.height]
     )
   })
 
   test('позиционирование бэкграунда', () => {
     background.update()
 
-    expect(background['x']).toBe(-speed)
+    expect(background[bgParams.x]).toBe(-speed)
   })
 
   test('сброс позиции при оффскрине', () => {
-    background['x'] = -gameWidth - 10
+    background[bgParams.x] = -gameWidth - 10
     background.update()
 
-    expect(background['x']).toBe(0)
+    expect(background[bgParams.x]).toBe(0)
   })
 })
