@@ -253,44 +253,37 @@ export class Engine {
     if (this.enemyTimer > this.enemyInterval + randomFromInterval(100, 1000)) {
       const enemyType = randomFromInterval(0, 2)
 
-      let enemy: Enemy | undefined
-
-      switch (enemyType) {
-        case 0:
-          enemy = new GroundEnemy({
-            x: this.gameWidth,
-            y: this.gameHeight - 50,
-            width: 50,
-            height: 50,
-            gameSpeed: this.gameSpeed,
-            speedModifier: 3,
-            imageSrc: enemy1Image,
-          })
-          break
-        case 1:
-          enemy = new GroundEnemy({
-            x: this.gameWidth,
-            y: this.gameHeight - 100,
-            width: 150,
-            height: 100,
-            gameSpeed: this.gameSpeed,
-            speedModifier: 4,
-            imageSrc: enemy3Image,
-          })
-          break
-        case 2:
-          enemy = new FlyingEnemy({
-            x: this.gameWidth,
-            y: randomFromInterval(this.gameHeight - 100, this.gameHeight - 250),
-            width: 50,
-            height: 50,
-            gameSpeed: this.gameSpeed,
-            speedModifier: 3,
-            imageSrc: enemy2Image,
-          })
+      const enemyByType: Record<number, Enemy> = {
+        0: new GroundEnemy({
+          x: this.gameWidth,
+          y: this.gameHeight - 50,
+          width: 50,
+          height: 50,
+          gameSpeed: this.gameSpeed,
+          speedModifier: 3,
+          imageSrc: enemy1Image,
+        }),
+        1: new GroundEnemy({
+          x: this.gameWidth,
+          y: this.gameHeight - 100,
+          width: 150,
+          height: 100,
+          gameSpeed: this.gameSpeed,
+          speedModifier: 4,
+          imageSrc: enemy3Image,
+        }),
+        2: new FlyingEnemy({
+          x: this.gameWidth,
+          y: randomFromInterval(this.gameHeight - 100, this.gameHeight - 250),
+          width: 50,
+          height: 50,
+          gameSpeed: this.gameSpeed,
+          speedModifier: 3,
+          imageSrc: enemy2Image,
+        })
       }
 
-      this.enemies.push(enemy as Enemy)
+      this.enemies.push(enemyByType[enemyType])
 
       this.enemyTimer = 0
     } else {

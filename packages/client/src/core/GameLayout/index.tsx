@@ -6,10 +6,10 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeScore } from '../../store/actions/changeScore'
 
-const gameWidth = 1024
-const gameHeight = 768
+const GAME_WIDTH = 1024
+const GAME_HEIGHT = 768
 // TODO Необходимо сделать адаптивно
-const engine = new Engine(gameWidth, gameHeight)
+const engine = new Engine(GAME_WIDTH, GAME_HEIGHT)
 
 const GameLayout = () => {
   // TODO Необходимо сделать адаптивно
@@ -26,8 +26,8 @@ const GameLayout = () => {
   useEffect(() => {
     const canvas = canvasRef.current
     if (canvas) {
-      canvas.width = gameWidth
-      canvas.height = gameHeight
+      canvas.width = GAME_WIDTH
+      canvas.height = GAME_HEIGHT
     }
     const context = canvas?.getContext('2d')
 
