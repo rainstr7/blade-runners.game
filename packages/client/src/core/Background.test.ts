@@ -10,6 +10,7 @@ enum bgParams {
   image = 'image',
 }
 
+const anyPositiveNumber = 3
 
 describe('Background', () => {
   const gameWidth = 800
@@ -69,7 +70,7 @@ describe('Background', () => {
   })
 
   test('сброс позиции при оффскрине', () => {
-    background[bgParams.x] = -gameWidth - 10
+    background[bgParams.x] = -gameWidth - anyPositiveNumber
     background.update()
 
     expect(background[bgParams.x]).toBe(0)
