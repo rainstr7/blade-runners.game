@@ -251,9 +251,9 @@ export class Engine {
 
   private handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
     if (this.enemyTimer > this.enemyInterval + randomFromInterval(100, 1000)) {
-      const enemyType = randomFromInterval(0, 2)
+      const enemyType = randomFromInterval(0, 2) as 0 | 1 | 2
 
-      const enemyByType: Record<number, Enemy> = {
+      const enemyByType: Record<0 | 1 | 2, Enemy> = {
         0: new GroundEnemy({
           x: this.gameWidth,
           y: this.gameHeight - 50,
