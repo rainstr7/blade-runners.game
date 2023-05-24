@@ -19,13 +19,9 @@ describe('Button', () => {
   })
 
   test('Маленький размер', () => {
-    render(
-      <Button data-testid="small-button" size="small">
-        Click me
-      </Button>
-    )
+    render(<Button size="small">Click me</Button>)
 
-    expect(screen.getByTestId('small-button')).toMatchSnapshot('small-button')
+    expect(screen.getByRole('button')).toMatchSnapshot('small-button')
   })
   test('Клик по кнопке', async () => {
     const onClickMock = jest.fn()

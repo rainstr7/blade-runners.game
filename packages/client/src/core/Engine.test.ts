@@ -1,20 +1,20 @@
 import { Engine } from './engine'
 
+function simulateKeyUp(engine: Engine) {
+  const event = new KeyboardEvent('keyup', {
+    code: 'Space',
+  })
+  engine.handleKeyUp(event)
+}
+
+function simulateKeyDown(engine: Engine) {
+  const event = new KeyboardEvent('keydown', {
+    code: 'Space',
+  })
+  engine.handleKeyDown(event)
+}
+
 describe('Engine', () => {
-  function simulateKeyUp(engine: Engine) {
-    const event = new KeyboardEvent('keyup', {
-      code: 'Space',
-    })
-    engine.handleKeyUp(event)
-  }
-
-  function simulateKeyDown(engine: Engine) {
-    const event = new KeyboardEvent('keydown', {
-      code: 'Space',
-    })
-    engine.handleKeyDown(event)
-  }
-
   let engine: Engine
 
   beforeEach(() => {
