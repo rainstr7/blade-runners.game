@@ -4,3 +4,12 @@
   width: 1024px;
   height: 768px;
 }
+
+.Canvas {
+  -webkit-box-shadow: 0px 0px 20px 23px rgba(0,0,0,1);
+  -moz-box-shadow: 0px 0px 20px 23px rgba(0,0,0,1);
+  box-shadow: 0px 0px 20px 23px rgba(0,0,0,1);
+  /*-webkit-box-shadow: inset 0px 0px 12px 6px rgba(0,0,0,1);*/
+  /*-moz-box-shadow: inset 0px 0px 12px 6px rgba(0,0,0,1);*/
+  /*box-shadow: inset 0px 0px 12px 6px rgba(0,0,0,1);*/
+}

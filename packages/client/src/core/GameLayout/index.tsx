@@ -94,7 +94,7 @@ const GameLayout = () => {
 
   return (
     <div className={cn.Container}>
-      <canvas ref={canvasRef} />
+      <canvas ref={canvasRef} className={cn.Canvas} />
     </div>
   )
 }
