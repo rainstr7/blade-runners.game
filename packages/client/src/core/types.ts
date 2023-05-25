@@ -5,14 +5,9 @@ export interface GameObject {
   width: number
 }
 
-export type KeyConfiguration = Record<'Space', 'up' | 'down'>
+export type EnemyType = 0 | 1 | 2
 
-export interface EnemySpriteParams {
-  imageSrc: string
-  width: number
-  height: number
-  y?: () => number | undefined
-}
+export type KeyConfiguration = Record<'Space', 'up' | 'down'>
 
 export interface EnemyParams {
   x: number

@@ -14,7 +14,7 @@ import enemy3Image from '../assets/enemy3.png'
 import heroImage from '../assets/hero_run.png'
 
 import { calcPosition, randomFromInterval } from './utils'
-import { KeyConfiguration } from './types'
+import { EnemyType, KeyConfiguration } from './types'
 
 export class Engine {
   get gameOver(): boolean {
@@ -40,7 +40,7 @@ export class Engine {
 
   private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
   private readonly _isGameStartDelayWord = 1000
-  private readonly enemyInterval = 2000
+  private enemyInterval = 2000
   private readonly gameHeight: number
   private readonly gameWidth: number
 
@@ -96,8 +96,6 @@ export class Engine {
     this.handleEnemy(ctx, deltaTime)
 
     this.checkSpeed(ctx)
-    // this.checkSpeed(ctx)
-    this.checkSpeed(ctx)
 
     if (this.gameOver) {
       this.displayGameOver(ctx)
@@ -129,7 +127,7 @@ export class Engine {
     })
   }
 
-  private displayStartGame = async (ctx: CanvasRenderingContext2D) => {
+  private displayStartGame = (ctx: CanvasRenderingContext2D) => {
     if (this._isGameStartIteration >= this._isGameStartWords.length) {
       this._isGameStart = true
       return
@@ -250,10 +248,10 @@ export class Engine {
   }
 
   private handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
-    if (this.enemyTimer > this.enemyInterval + randomFromInterval(100, 1000)) {
-      const enemyType = randomFromInterval(0, 2) as 0 | 1 | 2
+    if (this.enemyTimer > this. enemyInterval + randomFromInterval(100, 1000)) {
+      const enemyType: EnemyType = randomFromInterval(0, 2) as EnemyType
 
-      const enemyByType: Record<0 | 1 | 2, Enemy> = {
+      const enemyByType: Record<EnemyType, Enemy> = {
         0: new GroundEnemy({
           x: this.gameWidth,
           y: this.gameHeight - 50,
