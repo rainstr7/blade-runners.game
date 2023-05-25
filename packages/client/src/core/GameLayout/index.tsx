@@ -44,8 +44,8 @@ const GameLayout = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  useEvent('keydown', engine.handleKeyDown)
-  useEvent('keyup', engine.handleKeyUp)
+  useEvent('keydown', (e) => handleKeyDown(e, keyConfig))
+  useEvent('keyup', (e) => handleKeyUp(e, keyConfig))
 
   const keyConfig: KeyConfiguration = {Space: 'up', Enter: 'up'}
 
