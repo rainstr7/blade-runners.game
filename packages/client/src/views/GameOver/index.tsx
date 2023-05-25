@@ -32,7 +32,7 @@ const GameOver = () => {
   return (
     <main className={cn.Block}>
       <div className={''}>
-        <Card info={[{label: 'score', value: score}]} />
+        <Card info={[{ label: 'score', value: score }]} />
         <div className={cn.ButtonsGroup}>
           <Button onClick={restartButton}>Restart</Button>
           <Button size="small" onClick={startButton}>

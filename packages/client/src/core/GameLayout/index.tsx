@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import cn from './style.module.css'
 import useEvent from '../../hooks/useEvent'
 import { Engine } from '../engine'
@@ -8,15 +8,13 @@ import { changeScore } from '../../store/actions/changeScore'
 
 const GAME_WIDTH = 1024
 const GAME_HEIGHT = 768
-// TODO Необходимо сделать адаптивно
-const engine = new Engine(GAME_WIDTH, GAME_HEIGHT)
 
 const GameLayout = () => {
-  // TODO Необходимо сделать адаптивно
-  const engine = new Engine(1024, 768)
+  const engine = new Engine(GAME_WIDTH, GAME_HEIGHT)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   useEvent('keydown', engine.handleKeyDown)
   useEvent('keyup', engine.handleKeyUp)
 
@@ -25,16 +23,17 @@ const GameLayout = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current
-    if (canvas) {
-      canvas.width = GAME_WIDTH
-      canvas.height = GAME_HEIGHT
+    if (!canvas) {
+      throw new Error('Canvas error')
     }
-    const context = canvas?.getContext('2d')
+
+    canvas.width = GAME_WIDTH
+    canvas.height = GAME_HEIGHT
+    const context = canvas.getContext('2d')
 
     if (!context) {
       throw new Error('Error getting context')
     }
-
 
     const gameOver = (): void => {
       dispatch(changeScore(engine.getScore))

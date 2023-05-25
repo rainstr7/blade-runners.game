@@ -137,9 +137,9 @@ export class Engine {
       this._isGameStartTimeStamp = Date.now()
     }
 
-    ctx.rect(0, 0, this.gameWidth, this.gameHeight);
-    ctx.fillStyle = "#00000070";
-    ctx.fill();
+    ctx.rect(0, 0, this.gameWidth, this.gameHeight)
+    ctx.fillStyle = '#00000070'
+    ctx.fill()
 
     GameText.displayText({
       ctx,
@@ -148,14 +148,13 @@ export class Engine {
       text: `${this._isGameStartWords[this._isGameStartIteration]}`,
       font: 'Helvetica',
       fontSize: 100,
-      fillStyle: '#00fffe'
+      fillStyle: '#00fffe',
     })
 
     if (Date.now() - this._isGameStartTimeStamp > this._isGameStartDelayWord) {
       this._isGameStartIteration++
       this._isGameStartTimeStamp = Date.now()
     }
-
   }
 
   private displayGameOver = (ctx: CanvasRenderingContext2D) => {
@@ -248,7 +247,7 @@ export class Engine {
   }
 
   private handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
-    if (this.enemyTimer > this. enemyInterval + randomFromInterval(100, 1000)) {
+    if (this.enemyTimer > this.enemyInterval + randomFromInterval(100, 1000)) {
       const enemyType: EnemyType = randomFromInterval(0, 2) as EnemyType
 
       const enemyByType: Record<EnemyType, Enemy> = {
@@ -278,7 +277,7 @@ export class Engine {
           gameSpeed: this.gameSpeed,
           speedModifier: 3,
           imageSrc: enemy2Image,
-        })
+        }),
       }
 
       this.enemies.push(enemyByType[enemyType])
