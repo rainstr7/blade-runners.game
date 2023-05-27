@@ -13,9 +13,9 @@ const GAME_HEIGHT = 768
 // FIXME этому тут не место
 function toggleFullScreen() {
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
+    document.documentElement.requestFullscreen()
   } else if (document.exitFullscreen) {
-    document.exitFullscreen();
+    document.exitFullscreen()
   }
 }
 
@@ -44,10 +44,10 @@ const GameLayout = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  useEvent('keydown', (e) => handleKeyDown(e, keyConfig))
-  useEvent('keyup', (e) => handleKeyUp(e, keyConfig))
+  useEvent('keydown', e => handleKeyDown(e, keyConfig))
+  useEvent('keyup', e => handleKeyUp(e, keyConfig))
 
-  const keyConfig: KeyConfiguration = {Space: 'up', Enter: 'up'}
+  const keyConfig: KeyConfiguration = { Space: 'up', Enter: 'up' }
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const lastTime = useRef(0)

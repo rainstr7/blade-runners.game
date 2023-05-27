@@ -16,8 +16,6 @@ import heroImage from '../assets/hero_run.png'
 import { calcPosition, randomFromInterval } from './utils'
 import { EnemyType, KeyConfiguration } from './types'
 
-
-
 export class Engine {
   get gameOver(): boolean {
     return this._gameOver
@@ -75,7 +73,11 @@ export class Engine {
     })
   }
 
-  game = (ctx: CanvasRenderingContext2D, deltaTime: number, keyConfig: KeyConfiguration) => {
+  game = (
+    ctx: CanvasRenderingContext2D,
+    deltaTime: number,
+    keyConfig: KeyConfiguration
+  ) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     this.background.draw(ctx)
