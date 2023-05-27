@@ -1,36 +1,43 @@
-import React, { FC, useEffect, useRef } from 'react'
-import styles from './style.module.css'
+import React, { useEffect, useRef } from 'react'
+import cn from './style.module.css'
 import useEvent from '../../hooks/useEvent'
 import { Engine } from '../engine'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeScore } from '../../store/actions/changeScore'
 
+const GAME_WIDTH = 1024
+const GAME_HEIGHT = 768
+
 const GameLayout = () => {
-  // TODO Необходимо сделать адаптивно
-  const engine = new Engine(1024, 768)
+  const engine = new Engine(GAME_WIDTH, GAME_HEIGHT)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEvent('keydown', engine.handleKeyDown)
-  useEvent('keyup', engine.handleKeyUp)   
+  useEvent('keyup', engine.handleKeyUp)
 
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const lastTime = useRef(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
-    const context = canvas?.getContext('2d')
+    if (!canvas) {
+      throw new Error('Canvas error')
+    }
+
+    canvas.width = GAME_WIDTH
+    canvas.height = GAME_HEIGHT
+    const context = canvas.getContext('2d')
 
     if (!context) {
       throw new Error('Error getting context')
     }
 
-
     const gameOver = (): void => {
       dispatch(changeScore(engine.getScore))
-      
+
       navigate('/gameover')
     }
 
@@ -55,8 +62,8 @@ const GameLayout = () => {
   }, [engine.game])
 
   return (
-    <div className={styles.container}>
-      <canvas ref={canvasRef} width={1024} height={768} />
+    <div className={cn.Container}>
+      <canvas ref={canvasRef} />
     </div>
   )
 }

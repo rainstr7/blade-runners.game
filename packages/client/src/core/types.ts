@@ -5,21 +5,18 @@ export interface GameObject {
   width: number
 }
 
-export interface EnemySpriteParams {
-  imageSrc: string
-  width: number
-  height: number
-  y?: () => number | undefined
-}
+export type EnemyType = 0 | 1 | 2
+
+export type KeyConfiguration = Record<'Space', 'up' | 'down'>
 
 export interface EnemyParams {
-  gameWidth: number
-  gameHeight: number
+  x: number
+  y: number
   width: number
   height: number
-  speed: number
+  gameSpeed: number
+  speedModifier: number
   imageSrc: string
-  y?: number
 }
 
 export interface PlayerParams {
@@ -34,8 +31,8 @@ export interface PlayerParams {
 export interface BackgroundParams {
   gameWidth: number
   gameHeight: number
-  source: string
-  speed: number
+  gameSpeed: number
+  sources: string[]
 }
 
 export interface GameTextParams {
@@ -44,6 +41,14 @@ export interface GameTextParams {
   y: number
   text: string
   font: string
-  fontSize: number,
+  fontSize: number
   fillStyle?: string
+}
+
+export interface LayerParams {
+  gameSpeed: number
+  gameWidth: number
+  gameHeight: number
+  speedModifier: number
+  image: HTMLImageElement
 }

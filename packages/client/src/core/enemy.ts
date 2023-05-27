@@ -1,47 +1,56 @@
 import { EnemyParams, GameObject } from './types'
+import { randomFromInterval } from './utils'
 
-class Enemy implements GameObject {
+export class Enemy implements GameObject {
+  private frameX: number
+  private frameY: number
+  private readonly fps: number
+  private readonly frameInterval: number
+  private frameTimer: number
+  speedX: number
+  speedY: number
   x: number
   y: number
   height: number
   width: number
+  maxFrame: number
+  sprite?: HTMLImageElement
   isAlive: boolean
 
-  private readonly gameWidth: number
-  private readonly gameHeight: number
-  private readonly speed: number
-  private readonly sprite: HTMLImageElement
-  private readonly fps: number
-  private readonly maxFrame: number
-  private readonly frameInterval: number
-
-  private frameX: number
-  private frameTimer: number
-
-  constructor(params: EnemyParams) {
-    const { gameWidth, gameHeight, width, height, speed, imageSrc, y } = params
-
-    this.gameWidth = gameWidth
-    this.gameHeight = gameHeight
-    this.width = width
-    this.height = height
-    this.x = this.gameWidth
-    this.y = y ?? this.gameHeight - this.height
-    this.speed = speed
-    this.isAlive = true
-
+  constructor(x: number, y: number, width: number, height: number) {
     this.frameX = 0
-    this.maxFrame = 3
-    //Скорость обновления анимации
+    this.frameY = 0
     this.fps = 15
     this.frameTimer = 0
     this.frameInterval = 1000 / this.fps
 
-    this.sprite = new Image()
-    this.sprite.src = imageSrc
+    this.speedX = 0
+    this.speedY = 0
+    this.x = x
+    this.y = y
+    this.height = height
+    this.width = width
+
+    this.maxFrame = 3
+    this.isAlive = true
   }
 
-  draw(ctx: CanvasRenderingContext2D): void {
+  update(deltaTime: number) {
+    this.x += this.speedX
+    this.y += this.speedY
+
+    if (this.x < 0 - this.width) {
+      this.isAlive = false
+    }
+
+    this.updateAnimation(deltaTime)
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    if (!this.sprite) {
+      throw new Error('Sprite is not loaded')
+    }
+
     ctx.drawImage(
       this.sprite,
       this.frameX * this.width,
@@ -53,16 +62,6 @@ class Enemy implements GameObject {
       this.width,
       this.height
     )
-  }
-
-  update(deltaTime: number): void {
-    this.x -= this.speed
-
-    if (this.x < 0 - this.width) {
-      this.isAlive = false
-    }
-
-    this.updateAnimation(deltaTime)
   }
 
   private updateAnimation(deltaTime: number): void {
@@ -81,4 +80,41 @@ class Enemy implements GameObject {
   }
 }
 
-export default Enemy
+export class FlyingEnemy extends Enemy {
+  private readonly vAngle: number
+  private angle: number
+
+  constructor(params: EnemyParams) {
+    const { x, y, width, height, gameSpeed, speedModifier, imageSrc } = params
+    super(x, y, width, height)
+    this.speedX = -(gameSpeed * speedModifier)
+
+    this.sprite = new Image()
+    this.sprite.src = imageSrc
+
+    this.angle = 0
+    this.vAngle = randomFromInterval(0, 1) * 0.1 + 0.1
+  }
+
+  update(deltaTime: number) {
+    super.update(deltaTime)
+
+    this.angle += this.vAngle
+    this.y += Math.sin(this.angle)
+  }
+}
+
+export class GroundEnemy extends Enemy {
+  constructor(params: EnemyParams) {
+    const { x, y, width, height, gameSpeed, speedModifier, imageSrc } = params
+    super(x, y, width, height)
+    this.speedX = -(gameSpeed + speedModifier)
+
+    this.sprite = new Image()
+    this.sprite.src = imageSrc
+  }
+
+  update(deltaTime: number) {
+    super.update(deltaTime)
+  }
+}

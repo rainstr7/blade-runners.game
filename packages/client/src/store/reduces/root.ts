@@ -6,7 +6,7 @@ import scoreReducer from './scoreReducer'
 const rootStore = combineReducers({
   layout: layoutReducer,
   score: scoreReducer,
-  auth: authReducer
+  auth: authReducer,
 })
 
 export default rootStore

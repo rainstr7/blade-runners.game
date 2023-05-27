@@ -1,16 +1,20 @@
 import Background from './background'
+import Player from './player'
+import { Enemy, FlyingEnemy, GroundEnemy } from './enemy'
+import GameText from './gameText'
 
-import bg from '../assets/game_bg.png'
+import bgLayer1 from '../assets/bg/layer1.png'
+import bgLayer2 from '../assets/bg/layer2.png'
+import bgLayer3 from '../assets/bg/layer3.png'
+import bgLayer4 from '../assets/bg/layer4.png'
+import bgLayer5 from '../assets/bg/layer5.png'
 import enemy1Image from '../assets/enemy1.png'
 import enemy2Image from '../assets/enemy2.png'
 import enemy3Image from '../assets/enemy3.png'
 import heroImage from '../assets/hero_run.png'
 
-import Player from './player'
-import Enemy from './enemy'
-import GameText from './gameText'
 import { calcPosition, randomFromInterval } from './utils'
-import { EnemySpriteParams } from './types'
+import { EnemyType, KeyConfiguration } from './types'
 
 export class Engine {
   get gameOver(): boolean {
@@ -32,28 +36,34 @@ export class Engine {
   private score = 0
   private enemies: Enemy[] = []
   private enemyTimer = 0
-  private randomEnemyInterval = Math.random() * 1000 + 500
-  private pressedKeyCodes: string[] = []
+  private keyConfig: KeyConfiguration = { Space: 'up' }
 
   private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
   private readonly _isGameStartDelayWord = 1000
-  private readonly enemyInterval = 2000
+  private enemyInterval = 2000
   private readonly gameHeight: number
   private readonly gameWidth: number
+
+  // погрешность при коллизиях, по хорошему надо поправить спрайтмап и
+  // задать подходяшие размеры. Либо просто переписать collisionDetection
+  private readonly collisionOffset = 20
+
   private readonly background: Background
   private readonly player: Player
 
-  private readonly enemiesParams: EnemySpriteParams[] = []
+  private gameSpeed = 1
 
   constructor(gameWidth: number, gameHeight: number) {
     this.gameHeight = gameHeight
     this.gameWidth = gameWidth
+
     this.background = new Background({
-      gameWidth: this.gameWidth,
-      gameHeight: this.gameHeight,
-      source: bg,
-      speed: 3,
+      gameSpeed: this.gameSpeed,
+      gameWidth: gameWidth,
+      gameHeight: gameHeight,
+      sources: [bgLayer1, bgLayer2, bgLayer3, bgLayer4, bgLayer5],
     })
+
     this.player = new Player({
       gameWidth: this.gameWidth,
       gameHeight: this.gameHeight,
@@ -62,18 +72,6 @@ export class Engine {
       imageSrc: heroImage,
       weight: 0.5,
     })
-
-    this.enemiesParams = [
-      { imageSrc: enemy1Image, width: 50, height: 50 },
-      {
-        imageSrc: enemy2Image,
-        width: 50,
-        height: 50,
-        y: () =>
-          randomFromInterval(this.gameHeight - 100, this.gameHeight - 250),
-      },
-      { imageSrc: enemy3Image, width: 150, height: 100 },
-    ]
   }
 
   game = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
@@ -85,7 +83,7 @@ export class Engine {
     this.checkCollisions()
 
     this.player.draw(ctx)
-    this.player.update(this.pressedKeyCodes, deltaTime)
+    this.player.update(this.keyConfig, deltaTime)
 
     this.displayScore(ctx)
 
@@ -97,26 +95,24 @@ export class Engine {
 
     this.handleEnemy(ctx, deltaTime)
 
+    this.checkSpeed(ctx)
+
     if (this.gameOver) {
       this.displayGameOver(ctx)
     }
   }
 
   handleKeyDown = (e: Event) => {
-    const keyCode = (e as KeyboardEvent)?.code
-    if (
-      keyCode &&
-      keyCode === 'Space' &&
-      !this.pressedKeyCodes.includes(keyCode)
-    ) {
-      this.pressedKeyCodes.push(keyCode)
+    const { code } = e as KeyboardEvent
+    if (code === 'Space') {
+      this.keyConfig.Space = 'down'
     }
   }
 
   handleKeyUp = (e: Event) => {
-    const keyCode = (e as KeyboardEvent)?.code
-    if (keyCode && keyCode === 'Space') {
-      this.pressedKeyCodes.splice(this.pressedKeyCodes.indexOf(keyCode), 1)
+    const { code } = e as KeyboardEvent
+    if (code === 'Space') {
+      this.keyConfig.Space = 'up'
     }
   }
 
@@ -131,7 +127,7 @@ export class Engine {
     })
   }
 
-  private displayStartGame = async (ctx: CanvasRenderingContext2D) => {
+  private displayStartGame = (ctx: CanvasRenderingContext2D) => {
     if (this._isGameStartIteration >= this._isGameStartWords.length) {
       this._isGameStart = true
       return
@@ -141,9 +137,9 @@ export class Engine {
       this._isGameStartTimeStamp = Date.now()
     }
 
-    ctx.rect(0, 0, this.gameWidth, this.gameHeight);
-    ctx.fillStyle = "#00000070";
-    ctx.fill();
+    ctx.rect(0, 0, this.gameWidth, this.gameHeight)
+    ctx.fillStyle = '#00000070'
+    ctx.fill()
 
     GameText.displayText({
       ctx,
@@ -152,14 +148,13 @@ export class Engine {
       text: `${this._isGameStartWords[this._isGameStartIteration]}`,
       font: 'Helvetica',
       fontSize: 100,
-      fillStyle: '#00fffe'
+      fillStyle: '#00fffe',
     })
 
     if (Date.now() - this._isGameStartTimeStamp > this._isGameStartDelayWord) {
       this._isGameStartIteration++
       this._isGameStartTimeStamp = Date.now()
     }
-
   }
 
   private displayGameOver = (ctx: CanvasRenderingContext2D) => {
@@ -171,6 +166,51 @@ export class Engine {
       font: 'Helvetica',
       fontSize: 40,
     })
+  }
+
+  private showMessage = (ctx: CanvasRenderingContext2D, message: string) => {
+    GameText.displayText({
+      ctx,
+      x: this.gameWidth / 2 - 100,
+      y: this.gameHeight / 2 - 20,
+      text: message,
+      font: 'Helvetica',
+      fontSize: 40,
+    })
+  }
+
+  // FIXME както потупому
+  private checkSpeed(ctx: CanvasRenderingContext2D): void {
+    switch (this.score) {
+      case 5:
+        this.gameSpeed = 2
+        this.showMessage(ctx, 'Hurry up!')
+        this.enemyInterval = 1600
+        break
+      case 10:
+        this.enemyInterval = 1300
+        break
+      case 15:
+        this.gameSpeed = 3
+        this.showMessage(ctx, 'Faster!')
+        this.enemyInterval = 1000
+        break
+      case 20:
+        this.gameSpeed = 4
+        this.enemyInterval = 700
+        break
+      case 30:
+        this.gameSpeed = 5
+        this.showMessage(ctx, 'Run!!!')
+        this.enemyInterval = 400
+        break
+      case 40:
+        this.gameSpeed = 6
+        this.enemyInterval = 200
+        break
+      default:
+        break
+    }
   }
 
   // TODO сервис? синглтон?
@@ -196,10 +236,10 @@ export class Engine {
       } = calcPosition(enemy)
 
       if (
-        playerLeft < enemyRight &&
-        playerRight > enemyLeft &&
-        playerTop < enemyBottom &&
-        playerBottom > enemyTop
+        playerLeft + this.collisionOffset < enemyRight &&
+        playerRight - this.collisionOffset > enemyLeft &&
+        playerTop + this.collisionOffset < enemyBottom &&
+        playerBottom - this.collisionOffset > enemyTop
       ) {
         this.gameOver = true
       }
@@ -207,23 +247,41 @@ export class Engine {
   }
 
   private handleEnemy = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
-    if (this.enemyTimer > this.enemyInterval + this.randomEnemyInterval) {
-      const random = randomFromInterval(0, this.enemiesParams.length - 1)
-      const enemyParams = this.enemiesParams[random]
+    if (this.enemyTimer > this.enemyInterval + randomFromInterval(100, 1000)) {
+      const enemyType: EnemyType = randomFromInterval(0, 2) as EnemyType
 
-      this.enemies.push(
-        new Enemy({
-          gameWidth: this.gameWidth,
-          gameHeight: this.gameHeight,
-          width: enemyParams.width,
-          height: enemyParams.height,
-          speed: 5,
-          imageSrc: enemyParams.imageSrc,
-          y: enemyParams.y ? enemyParams.y() : undefined,
-        })
-      )
-      // TODO более разнообразно надо
-      this.randomEnemyInterval = Math.random() * 1000 + 500
+      const enemyByType: Record<EnemyType, Enemy> = {
+        0: new GroundEnemy({
+          x: this.gameWidth,
+          y: this.gameHeight - 50,
+          width: 50,
+          height: 50,
+          gameSpeed: this.gameSpeed,
+          speedModifier: 3,
+          imageSrc: enemy1Image,
+        }),
+        1: new GroundEnemy({
+          x: this.gameWidth,
+          y: this.gameHeight - 100,
+          width: 150,
+          height: 100,
+          gameSpeed: this.gameSpeed,
+          speedModifier: 4,
+          imageSrc: enemy3Image,
+        }),
+        2: new FlyingEnemy({
+          x: this.gameWidth,
+          y: randomFromInterval(this.gameHeight - 100, this.gameHeight - 250),
+          width: 50,
+          height: 50,
+          gameSpeed: this.gameSpeed,
+          speedModifier: 3,
+          imageSrc: enemy2Image,
+        }),
+      }
+
+      this.enemies.push(enemyByType[enemyType])
+
       this.enemyTimer = 0
     } else {
       this.enemyTimer += deltaTime
