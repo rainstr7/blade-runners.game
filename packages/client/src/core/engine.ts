@@ -36,7 +36,6 @@ export class Engine {
   private score = 0
   private enemies: Enemy[] = []
   private enemyTimer = 0
-  private keyConfig: KeyConfiguration = { Space: 'up' }
 
   private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
   private readonly _isGameStartDelayWord = 1000
@@ -74,7 +73,11 @@ export class Engine {
     })
   }
 
-  game = (ctx: CanvasRenderingContext2D, deltaTime: number) => {
+  game = (
+    ctx: CanvasRenderingContext2D,
+    deltaTime: number,
+    keyConfig: KeyConfiguration
+  ) => {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     this.background.draw(ctx)
@@ -83,7 +86,7 @@ export class Engine {
     this.checkCollisions()
 
     this.player.draw(ctx)
-    this.player.update(this.keyConfig, deltaTime)
+    this.player.update(keyConfig, deltaTime)
 
     this.displayScore(ctx)
 
@@ -99,20 +102,6 @@ export class Engine {
 
     if (this.gameOver) {
       this.displayGameOver(ctx)
-    }
-  }
-
-  handleKeyDown = (e: Event) => {
-    const { code } = e as KeyboardEvent
-    if (code === 'Space') {
-      this.keyConfig.Space = 'down'
-    }
-  }
-
-  handleKeyUp = (e: Event) => {
-    const { code } = e as KeyboardEvent
-    if (code === 'Space') {
-      this.keyConfig.Space = 'up'
     }
   }
 
