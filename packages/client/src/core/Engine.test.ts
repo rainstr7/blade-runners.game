@@ -1,42 +1,10 @@
 import { Engine } from './engine'
 
-function simulateKeyUp(engine: Engine) {
-  const event = new KeyboardEvent('keyup', {
-    code: 'Space',
-  })
-  engine.handleKeyUp(event)
-}
-
-function simulateKeyDown(engine: Engine) {
-  const event = new KeyboardEvent('keydown', {
-    code: 'Space',
-  })
-  engine.handleKeyDown(event)
-}
-
 describe('Engine', () => {
   let engine: Engine
 
   beforeEach(() => {
     engine = new Engine(800, 600)
-  })
-
-  test('вызов handleKeyUp', () => {
-    const handleKeyUpSpy = jest.spyOn(engine, 'handleKeyUp')
-
-    simulateKeyUp(engine)
-
-    expect(handleKeyUpSpy).toHaveBeenCalledTimes(1)
-    expect(handleKeyUpSpy).toHaveBeenCalledWith(expect.any(KeyboardEvent))
-  })
-
-  test('вызов handleKeyDown', () => {
-    const handleKeyDownSpy = jest.spyOn(engine, 'handleKeyDown')
-
-    simulateKeyDown(engine)
-
-    expect(handleKeyDownSpy).toHaveBeenCalledTimes(1)
-    expect(handleKeyDownSpy).toHaveBeenCalledWith(expect.any(KeyboardEvent))
   })
 
   test('gameOver начальное значение false', () => {
@@ -47,4 +15,24 @@ describe('Engine', () => {
     engine.gameOver = true
     expect(engine.gameOver).toBe(true)
   })
-})
+
+  test('getScore начальное значение 0', () => {
+    expect(engine.getScore).toBe(0)
+  })
+
+  test('checkSpeed изменяет параметры скорости', () => {
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')!
+
+    engine['score'] = 5
+    engine['checkSpeed'](ctx)
+    expect(engine['gameSpeed']).toBe(2)
+    expect(engine['enemyInterval']).toBe(1600)
+
+    engine['score'] = 10
+    engine['checkSpeed'](ctx)
+    expect(engine['gameSpeed']).toBe(2)
+    expect(engine['enemyInterval']).toBe(1300)
+    })
+  })
+
