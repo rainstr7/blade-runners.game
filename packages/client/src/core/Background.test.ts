@@ -9,7 +9,6 @@ enum bgParams {
   speed = '_speed',
 }
 
-
 describe('Background', () => {
   const gameWidth = 800
   const gameHeight = 600
