@@ -31,12 +31,11 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/start" element={<Start />} />
-          <Route path="/gameover" element={<GameOver />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<Auth />} />
           <Route path="/game" element={<Game />} />
           <Route path="/gameover" element={<GameOver />} />
-          <Route path="/settings" element={<Profile />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/rating" element={<LeaderBoard />} />
           <Route path="/forum/*" element={<Forum />} />
           <Route path="/500" element={<Errors errorCode="500" />} />
