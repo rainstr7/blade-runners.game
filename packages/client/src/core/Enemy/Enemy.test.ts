@@ -1,5 +1,5 @@
 import { Enemy, FlyingEnemy, GroundEnemy } from './enemy';
-import { EnemyParams } from './types';
+import { EnemyParams } from '../types';
 
 enum FlyingEnemyParams {
   vAngle = 'vAngle',

@@ -1,5 +1,5 @@
 import Player from './player'
-import { PlayerParams } from './types'
+import { PlayerParams } from '../types'
 
 describe('Player', () => {
   const gameWidth = 800;

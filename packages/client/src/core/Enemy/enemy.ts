@@ -1,5 +1,5 @@
-import { EnemyParams, GameObject } from './types'
-import { randomFromInterval } from './utils'
+import { EnemyParams, GameObject } from '../types'
+import { randomFromInterval } from '../utils'
 
 export class Enemy implements GameObject {
   private frameX: number

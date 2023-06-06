@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import cn from './style.module.css'
 import useEvent from '../../hooks/useEvent'
-import { Engine } from '../engine'
+import { Engine } from '../Engine/engine'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeScore } from '../../store/actions/changeScore'

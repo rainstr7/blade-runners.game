@@ -1,20 +1,20 @@
-import Background from './background'
-import Player from './player'
-import { Enemy, FlyingEnemy, GroundEnemy } from './enemy'
-import GameText from './gameText'
+import Background from '../Background/background'
+import Player from '../Player/player'
+import { Enemy, FlyingEnemy, GroundEnemy } from '../Enemy/enemy'
+import GameText from '../GameText/gameText'
 
-import bgLayer1 from '../assets/bg/layer1.png'
-import bgLayer2 from '../assets/bg/layer2.png'
-import bgLayer3 from '../assets/bg/layer3.png'
-import bgLayer4 from '../assets/bg/layer4.png'
-import bgLayer5 from '../assets/bg/layer5.png'
-import enemy1Image from '../assets/enemy1.png'
-import enemy2Image from '../assets/enemy2.png'
-import enemy3Image from '../assets/enemy3.png'
-import heroImage from '../assets/hero_run.png'
+import bgLayer1 from '../../assets/bg/layer1.png'
+import bgLayer2 from '../../assets/bg/layer2.png'
+import bgLayer3 from '../../assets/bg/layer3.png'
+import bgLayer4 from '../../assets/bg/layer4.png'
+import bgLayer5 from '../../assets/bg/layer5.png'
+import enemy1Image from '../../assets/enemy1.png'
+import enemy2Image from '../../assets/enemy2.png'
+import enemy3Image from '../../assets/enemy3.png'
+import heroImage from '../../assets/hero_run.png'
 
-import { calcPosition, randomFromInterval } from './utils'
-import { EnemyType, KeyConfiguration } from './types'
+import { calcPosition, randomFromInterval } from '../utils'
+import { EnemyType, KeyConfiguration } from '../types'
 
 export class Engine {
   get gameOver(): boolean {
@@ -99,20 +99,15 @@ export class Engine {
     this.handleEnemy(ctx, deltaTime)
 
     this.checkSpeed(ctx)
-
-    if (this.gameOver) {
-      this.displayGameOver(ctx)
-    }
   }
 
   private displayScore = (ctx: CanvasRenderingContext2D) => {
     GameText.displayText({
       ctx,
-      x: 50,
-      y: 50,
+      x: 70,
+      y: 100,
       text: `Score: ${this.score}`,
-      font: 'Helvetica',
-      fontSize: 40,
+      fontSize: 50,
     })
   }
 
@@ -132,12 +127,12 @@ export class Engine {
 
     GameText.displayText({
       ctx,
-      x: this.gameWidth / 2 - 100,
-      y: this.gameHeight / 2 - 20,
+      x: this.gameWidth / 2 - 50,
+      y: this.gameHeight / 2,
       text: `${this._isGameStartWords[this._isGameStartIteration]}`,
-      font: 'Helvetica',
       fontSize: 100,
       fillStyle: '#00fffe',
+      shadowColor: '#000'
     })
 
     if (Date.now() - this._isGameStartTimeStamp > this._isGameStartDelayWord) {
@@ -146,25 +141,13 @@ export class Engine {
     }
   }
 
-  private displayGameOver = (ctx: CanvasRenderingContext2D) => {
-    GameText.displayText({
-      ctx,
-      x: this.gameWidth / 2 - 100,
-      y: this.gameHeight / 2 - 20,
-      text: `Game Over`,
-      font: 'Helvetica',
-      fontSize: 40,
-    })
-  }
-
   private showMessage = (ctx: CanvasRenderingContext2D, message: string) => {
     GameText.displayText({
       ctx,
-      x: this.gameWidth / 2 - 100,
-      y: this.gameHeight / 2 - 20,
+      x: this.gameWidth / 2 - 150,
+      y: this.gameHeight / 2,
       text: message,
-      font: 'Helvetica',
-      fontSize: 40,
+      fontSize: 60,
     })
   }
 
