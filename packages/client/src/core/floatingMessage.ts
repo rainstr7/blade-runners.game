@@ -44,7 +44,9 @@ export class FloatingMessage {
       y: this.y,
       text: this.message,
       ctx,
-      fontSize: 20,
+      fontSize: 30,
+      fillStyle: '#fff',
+      shadowColor: '#000'
     })
   }
 }

@@ -64,7 +64,7 @@ export class Engine {
       gameSpeed: this.gameSpeed,
       gameWidth: gameWidth,
       gameHeight: gameHeight,
-      sources: [bgLayer1, bgLayer2, bgLayer3, bgLayer4, bgLayer5],
+      sources: [bgLayer1, bgLayer2, bgLayer3, bgLayer4, bgLayer5]
     })
 
     this.player = new Player({
@@ -73,7 +73,7 @@ export class Engine {
       height: 100,
       width: 100,
       imageSrc: heroImage,
-      weight: 0.5,
+      weight: 0.5
     })
   }
 
@@ -102,6 +102,8 @@ export class Engine {
 
     this.handleEnemy(ctx, deltaTime)
 
+    this.handleScore()
+
     this.floatingMessages.forEach(message => {
       message.update()
       message.draw(ctx)
@@ -120,7 +122,7 @@ export class Engine {
       x: 70,
       y: 100,
       text: `Score: ${this.score}`,
-      fontSize: 50,
+      fontSize: 50
     })
   }
 
@@ -145,7 +147,7 @@ export class Engine {
       text: `${this._isGameStartWords[this._isGameStartIteration]}`,
       fontSize: 100,
       fillStyle: '#00fffe',
-      shadowColor: '#000',
+      shadowColor: '#000'
     })
 
     if (Date.now() - this._isGameStartTimeStamp > this._isGameStartDelayWord) {
@@ -160,7 +162,7 @@ export class Engine {
       x: this.gameWidth / 2 - 150,
       y: this.gameHeight / 2,
       text: message,
-      fontSize: 60,
+      fontSize: 60
     })
   }
 
@@ -205,7 +207,7 @@ export class Engine {
       top: playerTop,
       left: playerLeft,
       right: playerRight,
-      bottom: playerBottom,
+      bottom: playerBottom
     } = calcPosition(this.player)
 
     if (playerBottom > this.gameHeight) {
@@ -217,7 +219,7 @@ export class Engine {
         top: enemyTop,
         left: enemyLeft,
         right: enemyRight,
-        bottom: enemyBottom,
+        bottom: enemyBottom
       } = calcPosition(enemy)
 
       if (
@@ -227,6 +229,25 @@ export class Engine {
         playerBottom - this.collisionOffset > enemyTop
       ) {
         this.gameOver = true
+      }
+    })
+  }
+
+  private handleScore = () => {
+    this.enemies.forEach(enemy => {
+      if (enemy.isActive && this.player.x > enemy.x + enemy.width) {
+        enemy.isActive = false
+        this.score++
+
+        this.floatingMessages.push(
+          new FloatingMessage(
+            '+1',
+            this.player.x + 40,
+            this.player.y,
+            270,
+            100
+          )
+        )
       }
     })
   }
@@ -243,7 +264,7 @@ export class Engine {
           height: 50,
           gameSpeed: this.gameSpeed,
           speedModifier: 3,
-          imageSrc: enemy1Image,
+          imageSrc: enemy1Image
         }),
         1: new GroundEnemy({
           x: this.gameWidth,
@@ -252,7 +273,7 @@ export class Engine {
           height: 100,
           gameSpeed: this.gameSpeed,
           speedModifier: 4,
-          imageSrc: enemy3Image,
+          imageSrc: enemy3Image
         }),
         2: new FlyingEnemy({
           x: this.gameWidth,
@@ -261,8 +282,8 @@ export class Engine {
           height: 50,
           gameSpeed: this.gameSpeed,
           speedModifier: 3,
-          imageSrc: enemy2Image,
-        }),
+          imageSrc: enemy2Image
+        })
       }
 
       this.enemies.push(enemyByType[enemyType])
@@ -277,21 +298,6 @@ export class Engine {
       enemy.update(deltaTime)
     })
 
-    const oldLength = this.enemies.length
     this.enemies = this.enemies.filter(enemy => enemy.isAlive)
-    const enemiesDiesCount = oldLength - this.enemies.length
-    this.score += enemiesDiesCount
-
-    if (enemiesDiesCount > 0) {
-      this.floatingMessages.push(
-        new FloatingMessage(
-          '+' + enemiesDiesCount,
-          this.player.x + 40,
-          this.player.y,
-          270,
-          100
-        )
-      )
-    }
   }
 }

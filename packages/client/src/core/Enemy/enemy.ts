@@ -16,6 +16,7 @@ export class Enemy implements GameObject {
   maxFrame: number
   sprite?: HTMLImageElement
   isAlive: boolean
+  isActive: boolean
 
   constructor(x: number, y: number, width: number, height: number) {
     this.frameX = 0
@@ -33,6 +34,7 @@ export class Enemy implements GameObject {
 
     this.maxFrame = 3
     this.isAlive = true
+    this.isActive = true
   }
 
   update(deltaTime: number) {
