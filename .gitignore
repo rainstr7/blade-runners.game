@@ -9,3 +9,4 @@ tmp
 .yarn/install-state.gz
 .yarnrc.yml
 *.lock
+ssr-dist
