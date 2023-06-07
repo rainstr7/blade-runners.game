@@ -1,5 +1,5 @@
-import { Enemy, FlyingEnemy, GroundEnemy } from './enemy';
-import { EnemyParams } from '../types';
+import { Enemy, FlyingEnemy, GroundEnemy } from './enemy'
+import { EnemyParams } from '../types'
 
 enum FlyingEnemyParams {
   vAngle = 'vAngle',
@@ -7,12 +7,12 @@ enum FlyingEnemyParams {
 }
 
 describe('Enemy', () => {
-  const gameWidth = 800;
-  const gameHeight = 600;
-  const width = 50;
-  const height = 50;
-  const speed = 5;
-  const imageSrc = '../assets/enemy3.png';
+  const gameWidth = 800
+  const gameHeight = 600
+  const width = 50
+  const height = 50
+  const speed = 5
+  const imageSrc = '../assets/enemy3.png'
 
   const params: EnemyParams = {
     x: gameWidth,
@@ -22,38 +22,38 @@ describe('Enemy', () => {
     gameSpeed: speed,
     speedModifier: 0,
     imageSrc,
-  };
+  }
 
-  let enemy: Enemy;
+  let enemy: Enemy
 
   beforeEach(() => {
-    enemy = new Enemy(params.x,params.y, params.width, params.height);
-  });
+    enemy = new Enemy(params.x, params.y, params.width, params.height)
+  })
 
   test('инициализация параметров врага', () => {
-    expect(enemy.x).toBe(gameWidth);
-    expect(enemy.y).toBe(gameHeight - height);
-    expect(enemy.width).toBe(width);
-    expect(enemy.height).toBe(height);
-    expect(enemy.isAlive).toBe(true);
-  });
+    expect(enemy.x).toBe(gameWidth)
+    expect(enemy.y).toBe(gameHeight - height)
+    expect(enemy.width).toBe(width)
+    expect(enemy.height).toBe(height)
+    expect(enemy.isAlive).toBe(true)
+  })
 
   test('жизненный цикл врага', () => {
-    enemy.x = -width - 10;
-    enemy.update(1);
+    enemy.x = -width - 10
+    enemy.update(1)
 
-    expect(enemy.isAlive).toBe(false);
-  });
-});
+    expect(enemy.isAlive).toBe(false)
+  })
+})
 
 describe('FlyingEnemy', () => {
-  const gameWidth = 800;
-  const gameHeight = 600;
-  const width = 50;
-  const height = 50;
-  const gameSpeed = 5;
-  const speedModifier = 2;
-  const imageSrc = '../assets/flyingEnemy.png';
+  const gameWidth = 800
+  const gameHeight = 600
+  const width = 50
+  const height = 50
+  const gameSpeed = 5
+  const speedModifier = 2
+  const imageSrc = '../assets/flyingEnemy.png'
 
   const params: EnemyParams = {
     x: gameWidth,
@@ -63,45 +63,47 @@ describe('FlyingEnemy', () => {
     gameSpeed,
     speedModifier,
     imageSrc,
-  };
+  }
 
-  let enemy: FlyingEnemy;
+  let enemy: FlyingEnemy
 
   beforeEach(() => {
-    enemy = new FlyingEnemy(params);
-  });
+    enemy = new FlyingEnemy(params)
+  })
 
   test('инициализация параметров врага', () => {
-    expect(enemy.x).toBe(gameWidth);
-    expect(enemy.y).toBe(gameHeight - height);
-    expect(enemy.width).toBe(width);
-    expect(enemy.height).toBe(height);
-    expect(enemy.isAlive).toBe(true);
-  });
+    expect(enemy.x).toBe(gameWidth)
+    expect(enemy.y).toBe(gameHeight - height)
+    expect(enemy.width).toBe(width)
+    expect(enemy.height).toBe(height)
+    expect(enemy.isAlive).toBe(true)
+  })
 
   test('позиционирование врага', () => {
-    enemy.update(1);
+    enemy.update(1)
 
-    expect(enemy.x).toBe(gameWidth - gameSpeed * speedModifier);
-  });
+    expect(enemy.x).toBe(gameWidth - gameSpeed * speedModifier)
+  })
 
   test('обновление угла полета врага', () => {
-    const initialAngle = enemy[FlyingEnemyParams.angle];
+    const initialAngle = enemy[FlyingEnemyParams.angle]
 
-    enemy.update(1);
+    enemy.update(1)
 
-    expect(enemy[FlyingEnemyParams.angle]).toBe(initialAngle + enemy[FlyingEnemyParams.vAngle]);
-  });
-});
+    expect(enemy[FlyingEnemyParams.angle]).toBe(
+      initialAngle + enemy[FlyingEnemyParams.vAngle]
+    )
+  })
+})
 
 describe('GroundEnemy', () => {
-  const gameWidth = 800;
-  const gameHeight = 600;
-  const width = 50;
-  const height = 50;
-  const gameSpeed = 5;
-  const speedModifier = 2;
-  const imageSrc = '../assets/groundEnemy.png';
+  const gameWidth = 800
+  const gameHeight = 600
+  const width = 50
+  const height = 50
+  const gameSpeed = 5
+  const speedModifier = 2
+  const imageSrc = '../assets/groundEnemy.png'
 
   const params: EnemyParams = {
     x: gameWidth,
@@ -111,25 +113,25 @@ describe('GroundEnemy', () => {
     gameSpeed,
     speedModifier,
     imageSrc,
-  };
+  }
 
-  let enemy: GroundEnemy;
+  let enemy: GroundEnemy
 
   beforeEach(() => {
-    enemy = new GroundEnemy(params);
-  });
+    enemy = new GroundEnemy(params)
+  })
 
   test('инициализация параметров врага', () => {
-    expect(enemy.x).toBe(gameWidth);
-    expect(enemy.y).toBe(gameHeight - height);
-    expect(enemy.width).toBe(width);
-    expect(enemy.height).toBe(height);
-    expect(enemy.isAlive).toBe(true);
-  });
+    expect(enemy.x).toBe(gameWidth)
+    expect(enemy.y).toBe(gameHeight - height)
+    expect(enemy.width).toBe(width)
+    expect(enemy.height).toBe(height)
+    expect(enemy.isAlive).toBe(true)
+  })
 
   test('позиционирование врага', () => {
-    enemy.update(1);
+    enemy.update(1)
 
-    expect(enemy.x).toBe(gameWidth - (gameSpeed + speedModifier));
-  });
-});
+    expect(enemy.x).toBe(gameWidth - (gameSpeed + speedModifier))
+  })
+})

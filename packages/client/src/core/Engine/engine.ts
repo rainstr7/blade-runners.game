@@ -16,6 +16,8 @@ import heroImage from '../../assets/hero_run.png'
 import { calcPosition, randomFromInterval } from '../utils'
 import { EnemyType, KeyConfiguration } from '../types'
 
+import { FloatingMessage } from '../floatingMessage'
+
 export class Engine {
   get gameOver(): boolean {
     return this._gameOver
@@ -36,6 +38,8 @@ export class Engine {
   private score = 0
   private enemies: Enemy[] = []
   private enemyTimer = 0
+
+  private floatingMessages: FloatingMessage[] = []
 
   private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
   private readonly _isGameStartDelayWord = 1000
@@ -98,6 +102,15 @@ export class Engine {
 
     this.handleEnemy(ctx, deltaTime)
 
+    this.floatingMessages.forEach(message => {
+      message.update()
+      message.draw(ctx)
+    })
+
+    this.floatingMessages = this.floatingMessages.filter(
+      message => message.isAlive
+    )
+
     this.checkSpeed(ctx)
   }
 
@@ -132,7 +145,7 @@ export class Engine {
       text: `${this._isGameStartWords[this._isGameStartIteration]}`,
       fontSize: 100,
       fillStyle: '#00fffe',
-      shadowColor: '#000'
+      shadowColor: '#000',
     })
 
     if (Date.now() - this._isGameStartTimeStamp > this._isGameStartDelayWord) {
@@ -266,6 +279,19 @@ export class Engine {
 
     const oldLength = this.enemies.length
     this.enemies = this.enemies.filter(enemy => enemy.isAlive)
-    this.score += oldLength - this.enemies.length
+    const enemiesDiesCount = oldLength - this.enemies.length
+    this.score += enemiesDiesCount
+
+    if (enemiesDiesCount > 0) {
+      this.floatingMessages.push(
+        new FloatingMessage(
+          '+' + enemiesDiesCount,
+          this.player.x + 40,
+          this.player.y,
+          270,
+          100
+        )
+      )
+    }
   }
 }
