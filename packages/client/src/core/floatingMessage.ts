@@ -38,7 +38,6 @@ export class FloatingMessage {
     this.y += (this.targetY - this.y) * this.speedModifier
 
     this.opacity = this.opacity > 0 ? this.opacity - this.opacityModifier : 0
-    console.log(this.opacity)
 
     this.timer++
     if (this.timer > 150) {
