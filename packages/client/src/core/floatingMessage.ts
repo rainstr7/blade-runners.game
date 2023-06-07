@@ -9,6 +9,9 @@ export class FloatingMessage {
   private timer: number
   private readonly speedModifier: number
 
+  opacity: number
+  opacityModifier: number
+
   isAlive: boolean
 
   constructor(
@@ -26,11 +29,16 @@ export class FloatingMessage {
     this.timer = 0
     this.isAlive = true
     this.speedModifier = 0.01
+    this.opacity = 1
+    this.opacityModifier = 0.008
   }
 
   update(): void {
     this.x += (this.targetX - this.x) * this.speedModifier
     this.y += (this.targetY - this.y) * this.speedModifier
+
+    this.opacity = this.opacity > 0 ? this.opacity - this.opacityModifier : 0
+    console.log(this.opacity)
 
     this.timer++
     if (this.timer > 150) {
@@ -39,14 +47,15 @@ export class FloatingMessage {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
+
     GameText.displayText({
       x: this.x,
       y: this.y,
       text: this.message,
       ctx,
       fontSize: 30,
-      fillStyle: '#fff',
-      shadowColor: '#000'
+      fillStyle: `rgba(255,255,255,${this.opacity})`,
+      shadowColor: `rgba(0,0,0,${this.opacity})`
     })
   }
 }
