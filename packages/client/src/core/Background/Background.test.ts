@@ -1,5 +1,5 @@
 import Background from './background'
-import { BackgroundParams } from './types'
+import { BackgroundParams } from '../types'
 
 enum bgParams {
   x = 'x',

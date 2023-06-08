@@ -1,4 +1,5 @@
-import { BackgroundParams, LayerParams } from './types'
+import { BackgroundParams, LayerParams } from '../types'
+import { randomFromInterval } from '../utils'
 
 class Layer {
   private readonly gameSpeed: number
@@ -62,7 +63,7 @@ class Background {
       const image = new Image()
       image.src = source
 
-      speedModifier += 0.2
+      speedModifier += randomFromInterval(1, 8) * 0.1 + 0.1
 
       return new Layer({
         gameSpeed,

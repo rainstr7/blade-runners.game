@@ -1,20 +1,22 @@
-import Background from './background'
-import Player from './player'
-import { Enemy, FlyingEnemy, GroundEnemy } from './enemy'
-import GameText from './gameText'
+import Background from '../Background/background'
+import Player from '../Player/player'
+import { Enemy, FlyingEnemy, GroundEnemy } from '../Enemy/enemy'
+import GameText from '../GameText/gameText'
 
-import bgLayer1 from '../assets/bg/layer1.png'
-import bgLayer2 from '../assets/bg/layer2.png'
-import bgLayer3 from '../assets/bg/layer3.png'
-import bgLayer4 from '../assets/bg/layer4.png'
-import bgLayer5 from '../assets/bg/layer5.png'
-import enemy1Image from '../assets/enemy1.png'
-import enemy2Image from '../assets/enemy2.png'
-import enemy3Image from '../assets/enemy3.png'
-import heroImage from '../assets/hero_run.png'
+import bgLayer1 from '../../assets/bg/layer1.png'
+import bgLayer2 from '../../assets/bg/layer2.png'
+import bgLayer3 from '../../assets/bg/layer3.png'
+import bgLayer4 from '../../assets/bg/layer4.png'
+import bgLayer5 from '../../assets/bg/layer5.png'
+import enemy1Image from '../../assets/enemy1.png'
+import enemy2Image from '../../assets/enemy2.png'
+import enemy3Image from '../../assets/enemy3.png'
+import heroImage from '../../assets/hero_run.png'
 
-import { calcPosition, randomFromInterval } from './utils'
-import { EnemyType, KeyConfiguration } from './types'
+import { calcPosition, randomFromInterval } from '../utils'
+import { EnemyType, KeyConfiguration } from '../types'
+
+import { FloatingMessage } from '../floatingMessage'
 
 export class Engine {
   get gameOver(): boolean {
@@ -36,6 +38,8 @@ export class Engine {
   private score = 0
   private enemies: Enemy[] = []
   private enemyTimer = 0
+
+  private floatingMessages: FloatingMessage[] = []
 
   private readonly _isGameStartWords = ['3...', '2...', '1...', 'Go']
   private readonly _isGameStartDelayWord = 1000
@@ -60,7 +64,7 @@ export class Engine {
       gameSpeed: this.gameSpeed,
       gameWidth: gameWidth,
       gameHeight: gameHeight,
-      sources: [bgLayer1, bgLayer2, bgLayer3, bgLayer4, bgLayer5],
+      sources: [bgLayer1, bgLayer2, bgLayer3, bgLayer4, bgLayer5]
     })
 
     this.player = new Player({
@@ -69,7 +73,7 @@ export class Engine {
       height: 100,
       width: 100,
       imageSrc: heroImage,
-      weight: 0.5,
+      weight: 0.5
     })
   }
 
@@ -98,21 +102,27 @@ export class Engine {
 
     this.handleEnemy(ctx, deltaTime)
 
-    this.checkSpeed(ctx)
+    this.handleScore()
 
-    if (this.gameOver) {
-      this.displayGameOver(ctx)
-    }
+    this.floatingMessages.forEach(message => {
+      message.update()
+      message.draw(ctx)
+    })
+
+    this.floatingMessages = this.floatingMessages.filter(
+      message => message.isAlive
+    )
+
+    this.checkSpeed(ctx)
   }
 
   private displayScore = (ctx: CanvasRenderingContext2D) => {
     GameText.displayText({
       ctx,
-      x: 50,
-      y: 50,
+      x: 70,
+      y: 100,
       text: `Score: ${this.score}`,
-      font: 'Helvetica',
-      fontSize: 40,
+      fontSize: 50
     })
   }
 
@@ -132,12 +142,12 @@ export class Engine {
 
     GameText.displayText({
       ctx,
-      x: this.gameWidth / 2 - 100,
-      y: this.gameHeight / 2 - 20,
+      x: this.gameWidth / 2 - 50,
+      y: this.gameHeight / 2,
       text: `${this._isGameStartWords[this._isGameStartIteration]}`,
-      font: 'Helvetica',
       fontSize: 100,
       fillStyle: '#00fffe',
+      shadowColor: '#000'
     })
 
     if (Date.now() - this._isGameStartTimeStamp > this._isGameStartDelayWord) {
@@ -146,25 +156,13 @@ export class Engine {
     }
   }
 
-  private displayGameOver = (ctx: CanvasRenderingContext2D) => {
-    GameText.displayText({
-      ctx,
-      x: this.gameWidth / 2 - 100,
-      y: this.gameHeight / 2 - 20,
-      text: `Game Over`,
-      font: 'Helvetica',
-      fontSize: 40,
-    })
-  }
-
   private showMessage = (ctx: CanvasRenderingContext2D, message: string) => {
     GameText.displayText({
       ctx,
-      x: this.gameWidth / 2 - 100,
-      y: this.gameHeight / 2 - 20,
+      x: this.gameWidth / 2 - 150,
+      y: this.gameHeight / 2,
       text: message,
-      font: 'Helvetica',
-      fontSize: 40,
+      fontSize: 60
     })
   }
 
@@ -209,7 +207,7 @@ export class Engine {
       top: playerTop,
       left: playerLeft,
       right: playerRight,
-      bottom: playerBottom,
+      bottom: playerBottom
     } = calcPosition(this.player)
 
     if (playerBottom > this.gameHeight) {
@@ -221,7 +219,7 @@ export class Engine {
         top: enemyTop,
         left: enemyLeft,
         right: enemyRight,
-        bottom: enemyBottom,
+        bottom: enemyBottom
       } = calcPosition(enemy)
 
       if (
@@ -231,6 +229,25 @@ export class Engine {
         playerBottom - this.collisionOffset > enemyTop
       ) {
         this.gameOver = true
+      }
+    })
+  }
+
+  private handleScore = () => {
+    this.enemies.forEach(enemy => {
+      if (enemy.isActive && this.player.x > enemy.x + enemy.width) {
+        enemy.isActive = false
+        this.score++
+
+        this.floatingMessages.push(
+          new FloatingMessage(
+            '+1',
+            this.player.x + 40,
+            this.player.y,
+            270,
+            100
+          )
+        )
       }
     })
   }
@@ -247,7 +264,7 @@ export class Engine {
           height: 50,
           gameSpeed: this.gameSpeed,
           speedModifier: 3,
-          imageSrc: enemy1Image,
+          imageSrc: enemy1Image
         }),
         1: new GroundEnemy({
           x: this.gameWidth,
@@ -256,7 +273,7 @@ export class Engine {
           height: 100,
           gameSpeed: this.gameSpeed,
           speedModifier: 4,
-          imageSrc: enemy3Image,
+          imageSrc: enemy3Image
         }),
         2: new FlyingEnemy({
           x: this.gameWidth,
@@ -265,8 +282,8 @@ export class Engine {
           height: 50,
           gameSpeed: this.gameSpeed,
           speedModifier: 3,
-          imageSrc: enemy2Image,
-        }),
+          imageSrc: enemy2Image
+        })
       }
 
       this.enemies.push(enemyByType[enemyType])
@@ -281,8 +298,6 @@ export class Engine {
       enemy.update(deltaTime)
     })
 
-    const oldLength = this.enemies.length
     this.enemies = this.enemies.filter(enemy => enemy.isAlive)
-    this.score += oldLength - this.enemies.length
   }
 }
