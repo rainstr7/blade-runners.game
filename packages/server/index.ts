@@ -13,12 +13,12 @@ import * as path from 'path'
 async function startServer() {
   const app = express()
   app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3001
+  const port = Number(process.env.SERVER_PORT) || 3005
 
   // createClientAndConnect()
 
   let vite: ViteDevServer | undefined
-  const distPath = path.dirname(require.resolve('client/dist/index.html'))
+  const distPath = path.dirname(require.resolve('client/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
   const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
 
