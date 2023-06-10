@@ -40,9 +40,10 @@ export interface GameTextParams {
   x: number
   y: number
   text: string
-  font: string
   fontSize: number
   fillStyle?: string
+  shadowColor?: string
+  font?: string
 }
 
 export interface LayerParams {

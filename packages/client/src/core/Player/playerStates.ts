@@ -1,5 +1,5 @@
 import Player from './player'
-import { KeyConfiguration } from './types'
+import { KeyConfiguration } from '../types'
 
 export enum PlayerStates {
   RUNNING,

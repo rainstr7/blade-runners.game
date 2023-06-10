@@ -1,4 +1,4 @@
-import { GameObject, KeyConfiguration, PlayerParams } from './types'
+import { GameObject, KeyConfiguration, PlayerParams } from '../types'
 import {
   FallingState,
   JumpingState,

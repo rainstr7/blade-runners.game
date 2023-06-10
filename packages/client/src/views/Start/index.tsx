@@ -12,7 +12,7 @@ const Start = () => {
     <main className={cn.Block}>
       <div className={cn.MainButtonGroup}>
         <Button onClick={handleClick('/game')}>Start Game</Button>
-        <Button onClick={handleClick('/settings')}>Settings</Button>
+        <Button onClick={handleClick('/profile')}>Profile</Button>
       </div>
       <div className={cn.AdditionalButtonGroup}>
         <Button size="small" onClick={handleClick('/rating')}>
