@@ -12,8 +12,8 @@ const R3 = '40'
 const R4 = '10'
 
 const Loader = () => {
-  const { show } = useSelector((state: IRootStore) => state.loading)
-  if (show) {
+  const { loading } = useSelector((state: IRootStore) => state.loading)
+  if (loading) {
     return (
       <div className={cn.Loader}>
         <svg className={cn.CircleFW} viewBox={VIEW_BOX}>

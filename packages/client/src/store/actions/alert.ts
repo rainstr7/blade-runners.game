@@ -1,7 +1,7 @@
-import { AlertInterface } from '../reduces/interfaces'
 import { HIDE_ALERT, SHOW_ALERT } from './types'
+import { AlertPayloadInterface } from '../reduces/interfaces'
 
-export const showAlert = (payload: AlertInterface) => {
+export const showAlert = (payload: AlertPayloadInterface) => {
   return {
     type: SHOW_ALERT,
     payload,

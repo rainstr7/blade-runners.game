@@ -40,7 +40,8 @@ export const useHttp = () => {
         const isJSON = Boolean(
           response?.headers?.get('Content-Type')?.includes('json')
         )
-        const data = await response[isJSON ? 'json' : 'text']()
+        const parser = isJSON ? 'json' : 'text'
+        const data = await response[parser]()
         dispatch(hideLoader())
         if (!checkData(response) && isJSON) {
           setError(data.reason)
