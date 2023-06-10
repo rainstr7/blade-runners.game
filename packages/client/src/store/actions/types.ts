@@ -1,5 +1,8 @@
-export const CHANGE_LAYOUT_VIEW = 'CHANGE_LAYOUT_VIEW'
-
 export const PLAYER_SCORE = 'PLAYER_SCORE'
-export const AUTH_SUCCESS = 'AUTH_SUCCESS'
-export const AUTH_LOGOUT = 'AUTH_LOGOUT'
+export const CREATE_PROFILE = 'CREATE_PROFILE'
+export const UPDATE_PROFILE = 'UPDATE_PROFILE'
+export const CLEAN_PROFILE = 'CLEAN_PROFILE'
+export const SHOW_ALERT = 'SHOW_ALERT'
+export const HIDE_ALERT = 'HIDE_ALERT'
+export const SHOW_LOADER = 'SHOW_LOADER'
+export const HIDE_LOADER = 'HIDE_LOADER'

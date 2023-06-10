@@ -2,57 +2,156 @@ import cn from './style.module.scss'
 import Button from '../../components/UI/Button'
 import Input from '../../components/UI/Input'
 import CardLink from '../../components/UI/CardLink'
-import { validationProfileSchema } from '../../services/validation/validationProfile'
+import schema from '../../services/validation/validationProfile'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
-import { ProfileFormData } from './settings'
+import { ButtonName, FormField } from './settings'
+import useAuth from '../../hooks/useAuth'
+import Avatar from '../../components/Avatar'
+import { useSelector } from 'react-redux'
+import { IRootStore } from '../../store/reduces/interfaces'
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
+import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
+import useAlert from '../../hooks/useAlert'
 
 const Profile = () => {
+  const [view, setView] = useState<'changeProfile' | 'changePassword'>(
+    'changeProfile'
+  )
+  const resolver = useMemo(() => {
+    return yupResolver(schema[view])
+  }, [view])
+
+  const { handleShowAlert } = useAlert()
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
-    resolver: yupResolver(validationProfileSchema),
+    resolver,
   })
+  const {
+    handleLogout,
+    handleUpdateData,
+    handleChangePassword,
+    handleChangeAvatar,
+    error,
+  } = useAuth()
+  const user = useSelector((state: IRootStore) => state.user)
 
-  const handleExit = () => {
-    console.log('exit')
-  }
+  useEffect(() => {
+    if (error) {
+      handleShowAlert('error', error)
+    }
+  }, [error])
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log('body', JSON.stringify(data))
+  const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
+    const {
+      login,
+      display_name,
+      email,
+      first_name,
+      phone,
+      second_name,
+      newPassword,
+      oldPassword,
+    } = data
+    console.log('DATA', data)
+    switch (view) {
+      case 'changeProfile':
+        if (
+          await handleUpdateData({
+            login: login || user.login,
+            display_name: display_name || user.display_name,
+            email: email || user.email,
+            first_name: first_name || user.first_name,
+            phone: phone || user.phone,
+            second_name: second_name || user.second_name,
+          })
+        ) {
+          reset()
+          handleShowAlert('success', 'profile has been successfully changed')
+        }
+        return
+      case 'changePassword':
+        if (
+          await handleChangePassword({
+            oldPassword: oldPassword,
+            newPassword: newPassword,
+          })
+        ) {
+          reset()
+          handleShowAlert('success', 'password has been successfully changed')
+        }
+        return
+      default:
+        handleShowAlert('error')
+    }
   }
+  const handleChangeView = useCallback(
+    () =>
+      setView(prev =>
+        prev === 'changeProfile' ? 'changePassword' : 'changeProfile'
+      ),
+    []
+  )
+
+  const form = useMemo(() => {
+    return (
+      <form className={cn.form} onSubmit={handleSubmit(onSubmit)}>
+        {FormField[view].map(
+          ({ placeholder, name, autoComplete, required }) => (
+            <Input
+              placeholder={String(
+                user[name as keyof typeof user] || placeholder
+              )}
+              name={name}
+              autoComplete={autoComplete}
+              key={name}
+              register={register}
+              options={{ required }}
+              error={errors[name]}
+            />
+          )
+        )}
+        <div className={cn.formSubmit}>
+          <Button type="button" onClick={handleChangeView}>
+            {ButtonName[view]}
+          </Button>
+          <Button type="submit">Save</Button>
+        </div>
+      </form>
+    )
+  }, [view, onSubmit, register, errors])
+
+  const onChangeAvatar = useCallback(
+    async (event: ChangeEvent<HTMLInputElement>) => {
+      event.preventDefault()
+      const { files } = event.target
+      if (files) {
+        const formData = new FormData()
+        formData.append('avatar', files[0])
+        await handleChangeAvatar(formData)
+      }
+    },
+    []
+  )
 
   return (
     <main className={cn.profile}>
       <div className={cn.title}>
         <CardLink to="/start">Back</CardLink>
-        <Button size="small" onClick={handleExit}>
+        <Avatar
+          image={getAvatarFullUrl(user.avatar)}
+          size="large"
+          onChangeAvatar={onChangeAvatar}
+        />
+        <Button size="small" onClick={handleLogout}>
           Exit
         </Button>
       </div>
-      <div className={cn.formWrapper}>
-        <form className={cn.form} onSubmit={handleSubmit(onSubmit)}>
-          {ProfileFormData.map(
-            ({ placeholder, name, autoComplete, required }) => (
-              <Input
-                placeholder={placeholder}
-                name={name}
-                autoComplete={autoComplete}
-                key={name}
-                register={register}
-                options={{ required }}
-                error={errors[name]}
-              />
-            )
-          )}
-          <div className={cn.formSubmit}>
-            <Button type="submit">Save</Button>
-          </div>
-          {errors.login && <span>This field is required</span>}
-        </form>
-      </div>
+      <div className={cn.formWrapper}>{form}</div>
     </main>
   )
 }

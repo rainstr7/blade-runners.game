@@ -33,6 +33,5 @@ describe('Engine', () => {
     engine['checkSpeed'](ctx)
     expect(engine['gameSpeed']).toBe(2)
     expect(engine['enemyInterval']).toBe(1300)
-    })
   })
-
+})

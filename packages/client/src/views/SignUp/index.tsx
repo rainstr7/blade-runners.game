@@ -5,8 +5,11 @@ import ButtonLink from '../../components/UI/ButtonLink'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { regFormData, schema } from './settings'
+import useAuth from '../../hooks/useAuth'
+import { useCallback } from 'react'
 
 const SignUp = () => {
+  const { handleRegistration } = useAuth()
   const {
     register,
     handleSubmit,
@@ -14,10 +17,9 @@ const SignUp = () => {
   } = useForm<FieldValues>({
     resolver: yupResolver(schema),
   })
-
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log('body', JSON.stringify(data))
-  }
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(async data => {
+    await handleRegistration(data)
+  }, [])
 
   return (
     <main className={cn.Block}>
