@@ -4,7 +4,6 @@ import Header from '../UI/Header'
 import Alert from '../Alert'
 import Loader from '../Loader'
 import { useLocation } from 'react-router-dom'
-import { getLayout } from './settings'
 import { routerList } from '../RouterList/settings'
 
 interface Props {
@@ -15,7 +14,7 @@ const Layout = ({ children }: Props) => {
   const { pathname } = useLocation()
 
   const { type, header } = useMemo(() => {
-    return routerList[pathname as keyof typeof pathname]
+    return routerList[pathname as keyof typeof routerList]
   }, [pathname])
 
   if (type === 'Landing') {
