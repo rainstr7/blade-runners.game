@@ -37,7 +37,7 @@ export const routerListBeforeAuth = {
     header: 'BLADE RUNNERS',
     type: 'Default',
   },
-  '/settings': {
+  '/profile': {
     component: <Navigate to="/signin" replace />,
     header: 'BLADE RUNNERS',
     type: 'Default',
@@ -88,7 +88,7 @@ export const routerListForGame = {
     header: 'BLADE RUNNERS',
     type: 'Default',
   },
-  '/settings': {
+  '/profile': {
     component: <Profile />,
     header: 'BLADE RUNNERS',
     type: 'Default',
