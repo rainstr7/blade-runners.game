@@ -5,8 +5,12 @@ import ButtonLink from '../../components/UI/ButtonLink'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { authFormData, schema } from './settings'
+import useAuth from '../../hooks/useAuth'
+import OAuthButton from '../../components/UI/OAuthButton'
+import { REDIRECT_URI } from '../../config/oAuth.config'
 
 const Auth = () => {
+  const { getAuthenticate, getOAuthServiceId } = useAuth()
   const {
     register,
     handleSubmit,
@@ -15,8 +19,15 @@ const Auth = () => {
     resolver: yupResolver(schema),
   })
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log('body', JSON.stringify(data))
+  const onSubmit: SubmitHandler<FieldValues> = async data => {
+    await getAuthenticate(data)
+  }
+
+  const OAuth = async () => {
+    const service_id = await getOAuthServiceId()
+    if (service_id) {
+      window.location.href = `https://oauth.yandex.ru/authorize?response_type=code&client_id=${service_id}&redirect_uri=${REDIRECT_URI}`
+    }
   }
 
   return (
@@ -34,11 +45,11 @@ const Auth = () => {
           />
         ))}
         <Button type="submit">SIGN IN</Button>
+        <OAuthButton onClick={OAuth} />
         <p className={cn.Message}>
           Don’t you have an account?
           <ButtonLink to="/signup">SIGN UP</ButtonLink>
         </p>
-        {errors.login && <span>This field is required</span>}
       </form>
     </main>
   )

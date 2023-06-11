@@ -1,24 +1,46 @@
 import {
-  AUTH_LOGOUT,
-  AUTH_SUCCESS,
-  CHANGE_LAYOUT_VIEW,
+  CLEAN_PROFILE,
+  CREATE_PROFILE,
+  HIDE_ALERT,
+  HIDE_LOADER,
   PLAYER_SCORE,
-  PLAYER_LEADERBOARD
+  PLAYER_LEADERBOARD,
+  SHOW_ALERT,
+  SHOW_LOADER,
+  UPDATE_PROFILE,
 } from '../actions/types'
-import { ErrorType } from '../../views/Errors/errors'
 
-export type LayoutView = 'Default' | 'GameOver' | 'Landing' | ErrorType
+type responseInfo = string | undefined
+export type AlertType = 'success' | 'error' | 'warning' | 'info'
+export interface AlertPayloadInterface {
+  show: boolean
+  type: AlertType
+  text?: string
+}
+export interface LoadingPayloadInterface {
+  loading: boolean
+}
+
+export interface ScorePayloadInterface {
+  value: number
+}
+
+export interface UserPayloadInterface {
+  id?: number
+  first_name: responseInfo
+  second_name: responseInfo
+  display_name: responseInfo
+  login: responseInfo
+  email: responseInfo
+  phone: responseInfo
+  avatar: responseInfo
+}
 
 export interface IRootStore {
-  layout: {
-    type: LayoutView
-  }
-  score: {
-    value: number
-  }
-  auth: {
-    token: string
-  }
+  score: ScorePayloadInterface
+  user: UserPayloadInterface
+  alert: AlertPayloadInterface
+  loading: LoadingPayloadInterface
 }
 
 export interface ActionInterface {
@@ -27,9 +49,13 @@ export interface ActionInterface {
 }
 
 const actions = {
-  CHANGE_LAYOUT_VIEW,
-  AUTH_SUCCESS,
-  AUTH_LOGOUT,
   PLAYER_SCORE,
-  PLAYER_LEADERBOARD
+  PLAYER_LEADERBOARD,
+  UPDATE_PROFILE,
+  CREATE_PROFILE,
+  CLEAN_PROFILE,
+  SHOW_ALERT,
+  HIDE_ALERT,
+  SHOW_LOADER,
+  HIDE_LOADER,
 }

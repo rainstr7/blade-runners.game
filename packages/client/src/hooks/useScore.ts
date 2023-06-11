@@ -3,13 +3,11 @@ import { useDispatch } from 'react-redux'
 import { addScoreResult, leaderboardData } from '../api'
 import useHttp from './useHttp'
 import { FieldValues } from 'react-hook-form'
-import { changeScore } from '../store/actions/changeScore'
-import { useNavigate } from 'react-router-dom'
+import { changeScore, changeLeaderboardData } from '../store/actions/changeScore'
 
 const useAuth = () => {
   const { request, error } = useHttp()
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   useEffect(() => {
     if (error) {
       // handleShowAlert('error', error)
@@ -19,7 +17,7 @@ const useAuth = () => {
   const getLeaderboardData = useCallback(async () => {
     const { status, data } = await request(leaderboardData)
     if (status === 200) {
-      dispatch(changeProfile(data))
+      dispatch(changeLeaderboardData(data))
     }
   }, [])
 
@@ -37,10 +35,16 @@ const useAuth = () => {
   //   }
   // }, [])
 
-  const handleSetScore = useCallback(async (body: FieldValues) => {
-    const { status, data } = await request(addScoreResult, 'POST', body)
+  const handleSetScore = useCallback(async (score: number) => {
+    const newScore = {
+      data: {},
+      ratingFieldName: "string",
+      teamName: "BladeRunner"
+    }
+
+    const { status, data } = await request(addScoreResult, 'POST', newScore)
     if (status === 200) {
-      navigate('/')
+      dispatch(changeScore(score))
       // dispatch(cleanProfile())
       return true
     }

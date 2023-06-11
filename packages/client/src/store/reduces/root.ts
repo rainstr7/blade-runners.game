@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux'
-import authReducer from './authReducer'
-import layoutReducer from './layoutReducer'
+import userReducer from './userReducer'
 import scoreReducer from './scoreReducer'
+import alertReducer from './alertReducer'
+import loaderReducer from './loaderReducer'
 
 const rootStore = combineReducers({
-  layout: layoutReducer,
   score: scoreReducer,
-  auth: authReducer,
+  user: userReducer,
+  alert: alertReducer,
+  loading: loaderReducer,
 })
 
 export default rootStore

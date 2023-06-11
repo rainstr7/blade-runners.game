@@ -46,7 +46,6 @@ export class FloatingMessage {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-
     GameText.displayText({
       x: this.x,
       y: this.y,
@@ -54,7 +53,7 @@ export class FloatingMessage {
       ctx,
       fontSize: 30,
       fillStyle: `rgba(255,255,255,${this.opacity})`,
-      shadowColor: `rgba(0,0,0,${this.opacity})`
+      shadowColor: `rgba(0,0,0,${this.opacity})`,
     })
   }
 }

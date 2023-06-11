@@ -1,33 +1,50 @@
 import cn from './style.module.scss'
 import Button from '../../components/UI/Button'
 import ButtonLink from '../../components/UI/ButtonLink'
-import { useNavigate } from 'react-router-dom'
-import { changeLayout } from '../../store/actions/changeLayout'
-import { useDispatch } from 'react-redux'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
+import { IRootStore } from '../../store/reduces/interfaces'
+import Avatar from '../../components/Avatar'
+import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
+import useAuth from '../../hooks/useAuth'
+import { REDIRECT_URI } from '../../config/oAuth.config'
 
 const Main = () => {
-  const dispatch = useDispatch()
+  const { id } = useSelector((state: IRootStore) => state.user)
+  const { avatar } = useSelector((state: IRootStore) => state.user)
   const navigate = useNavigate()
+  const { search } = useLocation()
+  const { handleOAuthRegistration } = useAuth()
 
   useEffect(() => {
-    dispatch(changeLayout('Landing'))
-    return () => {
-      dispatch(changeLayout('Default'))
+    const query = new URLSearchParams(search)
+    const code = query.get('code')
+    if (code) {
+      ;(async () => {
+        await handleOAuthRegistration({
+          code: code,
+          redirect_uri: REDIRECT_URI,
+        })
+      })()
+      navigate('/')
     }
-  }, [])
+  }, [search])
 
   const goToGameHandler = () => {
-    navigate('/start')
+    navigate(id ? '/start' : '/signin')
   }
 
   return (
     <main className={cn.Container}>
       <header className={cn.Header}>
         <p>By Blade Runners</p>
-        <ButtonLink to="/signin">sign in</ButtonLink>
+        {id ? (
+          <Avatar image={getAvatarFullUrl(avatar)} />
+        ) : (
+          <ButtonLink to="/signin">sign in</ButtonLink>
+        )}
       </header>
-
       <div className={cn.Main}>
         <div>
           <h2 className={cn.Title}>Blade Runner</h2>
