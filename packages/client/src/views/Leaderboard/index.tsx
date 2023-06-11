@@ -5,7 +5,7 @@ import CardLink from '../../components/UI/CardLink'
 import { data, LeaderBoardInterface } from './settings'
 
 const LeaderBoard = () => {
-  const [playersData] = useState<LeaderBoardInterface[]>(data)
+  const [playersData, setPlayersData] = useState<LeaderBoardInterface[]>(data)
 
   return (
     <main className={cn.leaderboard}>

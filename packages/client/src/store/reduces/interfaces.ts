@@ -3,6 +3,7 @@ import {
   AUTH_SUCCESS,
   CHANGE_LAYOUT_VIEW,
   PLAYER_SCORE,
+  PLAYER_LEADERBOARD
 } from '../actions/types'
 import { ErrorType } from '../../views/Errors/errors'
 
@@ -30,4 +31,5 @@ const actions = {
   AUTH_SUCCESS,
   AUTH_LOGOUT,
   PLAYER_SCORE,
+  PLAYER_LEADERBOARD
 }
