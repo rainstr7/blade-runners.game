@@ -8,6 +8,7 @@ dotenv.config()
 import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
+import create from 'client/src/utils/createStore'
 // import { createClientAndConnect } from './db'
 
 async function startServer() {
@@ -57,7 +58,7 @@ async function startServer() {
         template = await vite!.transformIndexHtml(url, template)
       }
 
-      let render: () => Promise<string>
+      let render: (store: any) => Promise<string>
 
       if (!isDev()) {
         render = (await import(ssrClientPath)).render
@@ -66,9 +67,17 @@ async function startServer() {
           .render
       }
 
-      const appHtml = await render()
+      const store = create({
+        scoreReducer: {
+          value: 5
+        }
+      });
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml)
+      const appHtml = await render(store)
+
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml +       `<script> 
+                    window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(/</g, '\\u003c')}
+                </script>`)
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {
