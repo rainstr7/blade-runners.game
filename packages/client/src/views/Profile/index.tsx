@@ -57,7 +57,6 @@ const Profile = () => {
       newPassword,
       oldPassword,
     } = data
-    console.log('DATA', data)
     switch (view) {
       case 'changeProfile':
         if (

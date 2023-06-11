@@ -12,7 +12,6 @@ const RoutersList = () => {
   const { getUserData } = useAuth()
 
   useEffect(() => {
-    console.log('render RoutersList')
     if (!id) {
       ;(async () => {
         await getUserData()

@@ -16,7 +16,6 @@ const CreateTheme: React.FC = () => {
 
   //form logic
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    console.log('DATA', data)
     const topic: Topic = {
       title: data.title,
       id: Math.random(), //TODO generic ID
