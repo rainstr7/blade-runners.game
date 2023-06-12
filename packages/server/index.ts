@@ -75,7 +75,7 @@ async function startServer() {
 
       const appHtml = await render(store, '/start')
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml +       `<script> 
+      const html = template.replace(`<!--ssr-outlet-->`, appHtml + `<script> 
                     window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(/</g, '\\u003c')}
                 </script>`)
 
