@@ -69,11 +69,11 @@ async function startServer() {
 
       const store = create({
         layout: {type: 'Default'},
-        score: {},
+        score: {value: 5},
         auth: {},
       });
 
-      const appHtml = await render(store, '/start')
+      const appHtml = await render(store, url)
 
       const html = template.replace(`<!--ssr-outlet-->`, appHtml + `<script> 
                     window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(/</g, '\\u003c')}
