@@ -2,14 +2,13 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
+import isDev from './utils/IsDev'
 dotenv.config()
 
 import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 // import { createClientAndConnect } from './db'
-
-const isDev = () => process.env.NODE_ENV === 'development'
 
 async function startServer() {
   const app = express()
