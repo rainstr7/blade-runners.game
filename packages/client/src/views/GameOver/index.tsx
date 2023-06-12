@@ -6,9 +6,15 @@ import useScore from '../../hooks/useScore'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../store/reduces/interfaces'
 
-const GameOver = () => {
-  let isSavingResult = false
+interface newRatingData {
+  player: {
+    display_name: string | undefined,
+    avatar: string | undefined
+  },
+  rating: number
+}
 
+const GameOver = () => {
   const { avatar, display_name } = useSelector(
     (state: IRootStore) => state.user
   )
@@ -16,7 +22,7 @@ const GameOver = () => {
     (state: IRootStore) => state.score.value
   )
 
-  const newRating = {
+  const newRating: newRatingData = {
     player: {
       display_name,
       avatar
@@ -29,7 +35,6 @@ const GameOver = () => {
 
   const saveScore = () => {
     handleSetScore(newRating)
-    isSavingResult = true
   }
 
   const restartButton = () => {
@@ -43,7 +48,7 @@ const GameOver = () => {
       <div>
         <Card />
         <div className={cn.ButtonsGroup}>
-          {!isSavingResult && <Button onClick={saveScore}>Save Result</Button>}
+          <Button onClick={saveScore}>Save Result</Button>
           <Button  onClick={restartButton}>Restart</Button>
           <Button size="small" onClick={startButton}>
             To main

@@ -3,7 +3,7 @@ import { ActionInterface } from './interfaces'
 
 const initialState = {
   value: 0,
-  leaderboardPlayers: [],
+  leaderboard: [],
 }
 
 export default function scoreReducer(
@@ -19,7 +19,7 @@ export default function scoreReducer(
     case PLAYER_LEADERBOARD:
       return {
         ...state,
-        leaderboardPlayer: action.payload
+        leaderboard: action.payload
       }
     default:
       return state

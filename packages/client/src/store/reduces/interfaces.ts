@@ -22,7 +22,8 @@ export interface LoadingPayloadInterface {
 }
 
 export interface ScorePayloadInterface {
-  value: number
+  value: number,
+  leaderboard: Array<any>
 }
 
 export interface UserPayloadInterface {
