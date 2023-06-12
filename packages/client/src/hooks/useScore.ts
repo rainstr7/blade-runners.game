@@ -1,16 +1,47 @@
 import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { addScoreResult, leaderboardData } from '../api'
-import useHttp from './useHttp'
 import { FieldValues } from 'react-hook-form'
+import useHttp from './useHttp'
 import { changeScore, changeLeaderboardData } from '../store/actions/changeScore'
+import useAlert from './useAlert'
+interface ratingData {
+  data: {
+    player: {
+      display_name: string | undefined,
+      avatar: string | undefined
+    },
+    rating: number
+  },
+  ratingFieldName: string,
+  teamName: string
+}
 
-const useAuth = () => {
+const newRating: ratingData = {
+  data: {
+    player: {
+      display_name: '',
+      avatar: ''
+    },
+    rating: 0
+  },
+  ratingFieldName: "rating",
+  teamName: "BladeRunner"
+}
+
+// FIXME: Ето ломает хук
+// const { avatar, display_name } = useSelector(
+//   (state: IRootStore) => state.user
+// )
+
+
+const useScore = () => {
   const { request, error } = useHttp()
   const dispatch = useDispatch()
+  const { handleShowAlert } = useAlert()
   useEffect(() => {
     if (error) {
-      // handleShowAlert('error', error)
+      handleShowAlert('error', error)
     }
   }, [error])
 
@@ -35,21 +66,40 @@ const useAuth = () => {
   //   }
   // }, [])
 
-  const handleSetScore = useCallback(async (score: number) => {
-    const newScore = {
-      data: {},
-      ratingFieldName: "string",
-      teamName: "BladeRunner"
+  // const handleSetScore = useCallback(async (score: number) => {
+    
+  //   newRating.data = {
+  //     player: { display_name, avatar },
+  //     rating: score
+  //   }
+
+  //   console.log(newRating)
+
+  //   // const { status, data } = await request(addScoreResult, 'POST', newRating)
+  //   // if (status === 200) {
+  //   //   dispatch(changeScore(score))
+  //   //   // dispatch(cleanProfile())
+  //   //   return true
+  //   // }
+  //   return false
+  // }, [])
+  const handleSetScore = async (data: FieldValues) => {
+    
+    newRating.data = {
+      player: {
+        display_name: data.player.display_name,
+        avatar: data.player.avatar
+      },
+      rating: data.rating
     }
 
-    const { status, data } = await request(addScoreResult, 'POST', newScore)
+    const { status } = await request(addScoreResult, 'POST', newRating)
     if (status === 200) {
-      dispatch(changeScore(score))
-      // dispatch(cleanProfile())
+      handleShowAlert('success', 'Rating added successfully')
       return true
     }
     return false
-  }, [])
+  }
 
   // const handleUpdateData = useCallback(async (body: FieldValues) => {
   //   const { status, data } = await request(changeUserProfile, 'PUT', body)
@@ -121,4 +171,4 @@ const useAuth = () => {
   }
 }
 
-export default useAuth
+export default useScore

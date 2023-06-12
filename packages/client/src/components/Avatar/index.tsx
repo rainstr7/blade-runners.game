@@ -19,7 +19,7 @@ const Avatar = ({
     <form
       className={cn.User}
       style={{ cursor: onChangeAvatar ? 'pointer' : 'default' }}>
-      <label>
+      <label className=''>
         {image ? (
           <div
             className={`${cn.Avatar} ${cn[size]}`}
