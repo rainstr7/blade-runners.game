@@ -1,11 +1,14 @@
 import { renderToString } from 'react-dom/server'
-import App from './src/App-ssr'
 import { Provider } from 'react-redux'
+import { StaticRouter } from 'react-router-dom/server'
+import App from './src/App'
 
-export function render(store) {
+export function render(store, url) {
   return renderToString(
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <StaticRouter location={url}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </StaticRouter>
   )
 }

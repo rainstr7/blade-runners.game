@@ -58,7 +58,7 @@ async function startServer() {
         template = await vite!.transformIndexHtml(url, template)
       }
 
-      let render: (store: any) => Promise<string>
+      let render: (store: any, url: string) => Promise<string>
 
       if (!isDev()) {
         render = (await import(ssrClientPath)).render
@@ -68,12 +68,12 @@ async function startServer() {
       }
 
       const store = create({
-        scoreReducer: {
-          value: 5
-        }
+        layout: {type: 'Default'},
+        score: {},
+        auth: {},
       });
 
-      const appHtml = await render(store)
+      const appHtml = await render(store, '/start')
 
       const html = template.replace(`<!--ssr-outlet-->`, appHtml +       `<script> 
                     window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(/</g, '\\u003c')}

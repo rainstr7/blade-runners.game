@@ -1,7 +1,7 @@
-import { combineReducers, createStore } from 'redux'
-import scoreReducer from '../store/reduces/scoreReducer'
+import { createStore } from 'redux'
+import rootStore from '../store/reduces/root'
 
-const reducer = combineReducers({ scoreReducer })
+const reducer = rootStore
 
 function create(initialState?: any) {
   return createStore(reducer, initialState)

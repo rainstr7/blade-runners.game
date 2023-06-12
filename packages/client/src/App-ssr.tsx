@@ -11,7 +11,7 @@ const App = () => {
   //   // fetchServerData()
   // })
 
-  return <div>SSR APP</div>
+  return <div>SSR APP1</div>
 }
 
 export default App

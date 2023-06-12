@@ -8,7 +8,18 @@ import { initialServiceWorker } from '../sw/initialServiceWorker'
 
 initialServiceWorker()
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+// ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+//   <StrictMode>
+//     <Provider store={store}>
+//       <BrowserRouter>
+//         <App />
+//       </BrowserRouter>
+//     </Provider>
+//   </StrictMode>
+// )
+
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
