@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import cn from './style.module.scss'
-import Avatar from '../../components/Avatar'
+import Avatar from '../../components/UI/Avatar'
 import CardLink from '../../components/UI/CardLink'
 import useScore from '../../hooks/useScore'
 import { useSelector } from 'react-redux'
@@ -43,7 +43,7 @@ const LeaderBoard = () => {
         {leaderboard.map((item: Item) => (
           <div className={cn.item} key={item.rating}>
             <div className={cn.name}>
-              <Avatar name={item.player.display_name} image={getAvatarFullUrl(item.player.avatar)} />
+              <Avatar name={item.player.display_name} src={getAvatarFullUrl(item.player.avatar)} />
             </div>
             {item.rating}
           </div>
