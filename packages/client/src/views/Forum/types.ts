@@ -1,4 +1,4 @@
-export type Forum = {
+export type ForumType = {
   id: number
   title: string
   topics: Topic[]

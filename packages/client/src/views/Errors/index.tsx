@@ -1,28 +1,28 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { ErrorType } from './errors'
-import { changeLayout } from '../../store/actions/changeLayout'
-import Error from './Error'
+import { useLocation, useNavigate } from 'react-router-dom'
+import cn from './style.module.scss'
+import Button from '../../components/UI/Button'
+import { routerList } from '../../components/RouterList/settings'
+import { errors } from './errors'
 
-interface Props {
-  errorCode: ErrorType
-}
-
-const Errors = ({ errorCode }: Props) => {
-  const dispatch = useDispatch()
+const Errors = () => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
 
-  useEffect(() => {
-    dispatch(changeLayout(errorCode))
-    return () => {
-      dispatch(changeLayout('Default'))
-    }
-  }, [])
+  const goToMainHandler = () => navigate('/')
 
-  const goToMainHandler = () => navigate('/start')
-
-  return <Error onClick={goToMainHandler} errorCode={errorCode} />
+  return (
+    <main className={cn.Container}>
+      <h2 className={cn.Message}>
+        {errors[
+          routerList[pathname as keyof typeof routerList]
+            ?.header as keyof typeof errors
+        ] || '404'}
+      </h2>
+      <Button type="button" size="small" onClick={goToMainHandler}>
+        TO MAIN
+      </Button>
+    </main>
+  )
 }
 
 export default Errors

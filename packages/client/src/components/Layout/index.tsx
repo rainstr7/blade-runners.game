@@ -1,35 +1,31 @@
 import { ReactElement, useMemo } from 'react'
 import cn from './style.module.scss'
 import Header from '../UI/Header'
-import { useSelector } from 'react-redux'
-import { IRootStore } from '../../store/reduces/interfaces'
+import Alert from '../UI/Alert'
+import Loader from '../Loader'
+import { useLocation } from 'react-router-dom'
+import { routerList } from '../RouterList/settings'
 
 interface Props {
   children: ReactElement
 }
 
 const Layout = ({ children }: Props) => {
-  const type = useSelector((state: IRootStore) => state.layout.type)
+  const { pathname } = useLocation()
 
-  const header = useMemo(() => {
-    switch (type) {
-      case 'Default':
-        return 'BLADE RUNNER'
-      case 'GameOver':
-        return 'GAME OVER'
-      default:
-        return type
+  const { type, header } = useMemo(() => {
+    if (Object.hasOwn(routerList, pathname)) {
+      return routerList[pathname as keyof typeof routerList]
     }
-  }, [type])
+    return { type: undefined, header: undefined }
+  }, [pathname])
 
   if (type === 'Landing') {
     return <div className={cn.Layout}>{children}</div>
   }
 
-  const background = cn[type] || cn.Error
-
   return (
-    <div className={`${cn.Layout} ${background}`}>
+    <div className={`${cn.Layout} ${cn[type ?? 'Default']}`}>
       <div className={`${cn.Container}`}>
         <div className={cn.Wrapper}>
           <Header>{header}</Header>
@@ -37,6 +33,8 @@ const Layout = ({ children }: Props) => {
           <p className={cn.Authors}>BY blade runners</p>
         </div>
       </div>
+      <Alert />
+      <Loader />
     </div>
   )
 }
