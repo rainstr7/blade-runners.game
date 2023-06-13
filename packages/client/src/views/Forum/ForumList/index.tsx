@@ -1,8 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
-import cn from './ForumList.module.scss'
-import { forums } from '../../views/Forum/forumData'
-import Button from '../UI/Button'
+import cn from './style.module.scss'
+import { forums } from '../forumData'
+import Button from '../../../components/UI/Button'
 import { FC } from 'react'
+import Forum from '../index'
 
 const ForumList: FC = () => {
   const navigate = useNavigate()
@@ -12,7 +13,7 @@ const ForumList: FC = () => {
   }
 
   return (
-    <>
+    <Forum>
       <nav>
         <Button size="small" onClick={handleGoBack}>
           Back
@@ -38,7 +39,7 @@ const ForumList: FC = () => {
           ))}
         </ul>
       </div>
-    </>
+    </Forum>
   )
 }
 

@@ -1,14 +1,15 @@
 import React, { useEffect, useRef } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
-import cn from './ThemePage.module.scss'
-import { Message } from '../../views/Forum/types'
-import { messages, topics } from '../../views/Forum/forumData'
-import Button from '../UI/Button'
-import Input from '../UI/Input'
-import removePathSuffix from '../../utils/removePathSuffix'
+import cn from './style.module.scss'
+import { Message } from '../types'
+import { messages, topics } from '../forumData'
+import Button from '../../../components/UI/Button'
+import Input from '../../../components/UI/Input'
+import removePathSuffix from '../../../utils/removePathSuffix'
+import Forum from '../index'
 
-const ThemePage: React.FC = () => {
+const Index: React.FC = () => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { id } = useParams<{ id: string }>()
@@ -52,7 +53,7 @@ const ThemePage: React.FC = () => {
   }
 
   return (
-    <>
+    <Forum>
       <nav className={cn.ThemeHeader}>
         <Button size="small" onClick={handleGoBack}>
           Back
@@ -64,7 +65,7 @@ const ThemePage: React.FC = () => {
         {state.map(message => (
           <div className={cn.Msg} key={message.id}>
             <div className={cn.MsgHeader}>
-              <img className={cn.Ava} />
+              <img className={cn.Ava} alt="avatar" />
               <span className={cn.Author}>{message.author} </span>
               <span className={cn.Time}>{message.time}</span>
             </div>
@@ -86,8 +87,8 @@ const ThemePage: React.FC = () => {
           SEND
         </Button>
       </form>
-    </>
+    </Forum>
   )
 }
 
-export default ThemePage
+export default Index

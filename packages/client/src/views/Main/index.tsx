@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { IRootStore } from '../../store/reduces/interfaces'
-import Avatar from '../../components/Avatar'
+import Avatar from '../../components/UI/Avatar'
 import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
 import useAuth from '../../hooks/useAuth'
 import { REDIRECT_URI } from '../../config/oAuth.config'
@@ -40,7 +40,7 @@ const Main = () => {
       <header className={cn.Header}>
         <p>By Blade Runners</p>
         {id ? (
-          <Avatar image={getAvatarFullUrl(avatar)} />
+          <Avatar src={getAvatarFullUrl(avatar)} />
         ) : (
           <ButtonLink to="/signin">sign in</ButtonLink>
         )}

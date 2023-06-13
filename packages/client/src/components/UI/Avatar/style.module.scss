@@ -1,17 +1,55 @@
 @import 'src/styles/mixins';
 
-.avatar {
+.User {
+  display: flex;
+  align-items: center;
+  position: relative;
+  &:hover {
+    .edit {
+      visibility: visible;
+    }
+  }
+}
+
+.Avatar {
+  overflow: hidden;
+  border-radius: 50%;
+  @include background-styles;
+  margin: 0;
+}
+
+.Name {
+  font-size: 24px;
+  padding: 0.5rem 0;
+  margin: 0;
+}
+
+.small {
+  width: 3rem;
+  height: 3rem;
+}
+
+.medium {
+  width: 4rem;
+  height: 4rem;
+}
+
+.large {
+  width: 5rem;
+  height: 5rem;
+}
+
+.edit {
+  position: absolute;
+  background-color: $scroll-color;
+  color: $background-lite-color;
+  width: 30%;
+  height: 30%;
+  display: flex;
   @include flex-center;
   border-radius: 50%;
-  overflow: hidden;
-  @include background-styles;
-
-  &.small {
-    width: 3rem;
-    height: 3rem;
-  }
-  &.medium {
-    width: 4rem;
-    height: 4rem;
-  }
+  visibility: hidden;
+  opacity: 0.8;
+  bottom: 10%;
+  right: 0;
 }

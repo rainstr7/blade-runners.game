@@ -1,30 +1,31 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import cn from './ForumPage.module.scss'
-import Button from '../UI/Button'
-import { forums, topics } from '../../views/Forum/forumData'
-import { Topic, Forum } from '../../views/Forum/types'
-import { PathList } from '../../views/Forum'
+import cn from './style.module.scss'
+import Button from '../../../components/UI/Button'
+import { forums, topics } from '../forumData'
+import { Topic, ForumType } from '../types'
+import Forum from '../index'
+import { FC } from 'react'
 
-const ForumPage: React.FC = () => {
+const ForumPage: FC = () => {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
 
   function handleGoBack() {
-    navigate(PathList.forum)
+    navigate(-1)
   }
 
   function handleGoCreate() {
-    navigate(PathList.createTheme)
+    navigate('/forum/newtheme')
   }
 
-  const forum: Forum | undefined = forums.find(f => f.id === Number(id))
+  const forum: ForumType | undefined = forums.find(f => f.id === Number(id))
 
   if (!forum) {
     return <div>Forum not found</div>
   }
 
   return (
-    <>
+    <Forum>
       <nav className={cn.TopicHeader}>
         <Button size="small" onClick={handleGoBack}>
           Back
@@ -52,7 +53,7 @@ const ForumPage: React.FC = () => {
           </li>
         ))}
       </ul>
-    </>
+    </Forum>
   )
 }
 
