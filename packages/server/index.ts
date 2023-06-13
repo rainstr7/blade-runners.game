@@ -8,7 +8,7 @@ dotenv.config()
 import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
-import create from 'client/src/utils/createStore'
+import { create } from 'client/src/utils/createStore'
 // import { createClientAndConnect } from './db'
 
 async function startServer() {
@@ -21,7 +21,7 @@ async function startServer() {
   let vite: ViteDevServer | undefined
   const distPath = path.dirname(require.resolve('client/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
-  const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
+  const ssrClientPath = require.resolve('client/ssr-dist/client.js')
 
   if (isDev()) {
     vite = await createViteServer({
@@ -37,8 +37,9 @@ async function startServer() {
     res.json('👋 Howdy from the server :)')
   })
 
+  console.log((path.resolve(distPath, 'src/assets')))
   if (!isDev()) {
-    app.use('/assets', express.static(path.resolve(distPath, 'assets')))
+    app.use('/assets', express.static(path.resolve(distPath, 'src/assets')))
   }
 
   app.use('*', async (req, res, next) => {

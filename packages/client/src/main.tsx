@@ -8,19 +8,7 @@ import create from './utils/createStore'
 
 initialServiceWorker()
 
-// ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-//   <StrictMode>
-//     <Provider store={store}>
-//       <BrowserRouter>
-//         <App />
-//       </BrowserRouter>
-//     </Provider>
-//   </StrictMode>
-// )
-
 const store = create(window.__PRELOADED_STATE__);
-
-// @ts-ignore
 delete window.__PRELOADED_STATE__;
 
 ReactDOM.hydrateRoot(
