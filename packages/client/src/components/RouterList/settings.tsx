@@ -9,7 +9,10 @@ import GameOver from '../../views/GameOver'
 import Game from '../../views/Game'
 import Profile from '../../views/Profile'
 import LeaderBoard from '../../views/Leaderboard'
-import Forum from '../../views/Forum'
+import ForumList from '../../views/Forum/ForumList'
+import CreateTheme from '../../views/Forum/CreateTheme'
+import ForumPage from '../../views/Forum/ForumPage'
+import Index from '../../views/Forum/ThemePage'
 
 export const routerListBeforeAuth = {
   '/signup': {
@@ -65,6 +68,9 @@ export const forError = {
     header: '404',
     type: 'Error',
   },
+}
+
+export const redirectRoute = {
   '*': {
     component: <Navigate to="/404" replace />,
     header: '',
@@ -99,7 +105,22 @@ export const routerListForGame = {
     type: 'Default',
   },
   '/forum': {
-    component: <Forum />,
+    component: <ForumList />,
+    header: 'BLADE RUNNERS',
+    type: 'Default',
+  },
+  '/forum/newtheme': {
+    component: <CreateTheme />,
+    header: 'BLADE RUNNERS',
+    type: 'Default',
+  },
+  '/forum/:id': {
+    component: <ForumPage />,
+    header: 'BLADE RUNNERS',
+    type: 'Default',
+  },
+  '/forum/:id/:id': {
+    component: <Index />,
     header: 'BLADE RUNNERS',
     type: 'Default',
   },
@@ -126,4 +147,5 @@ export const routerList = {
   },
   ...routerListBeforeAuth,
   ...forError,
+  ...redirectRoute,
 }

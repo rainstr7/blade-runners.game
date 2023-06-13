@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { ButtonName, FormField } from './settings'
 import useAuth from '../../hooks/useAuth'
-import Avatar from '../../components/Avatar'
+import Avatar from '../../components/UI/Avatar'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../store/reduces/interfaces'
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
@@ -142,7 +142,7 @@ const Profile = () => {
       <div className={cn.title}>
         <CardLink to="/start">Back</CardLink>
         <Avatar
-          image={getAvatarFullUrl(user.avatar)}
+          src={getAvatarFullUrl(user.avatar)}
           size="large"
           onChangeAvatar={onChangeAvatar}
         />

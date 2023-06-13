@@ -1,5 +1,5 @@
 import cn from './style.module.scss'
-import Avatar from '../Avatar'
+import Avatar from '../UI/Avatar'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../store/reduces/interfaces'
 import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
@@ -14,7 +14,7 @@ const Card = () => {
 
   return (
     <div className={cn.Card}>
-      <Avatar name={display_name} image={getAvatarFullUrl(avatar)} />
+      <Avatar name={display_name} src={getAvatarFullUrl(avatar)} />
       <p>{`score: ${score}`}</p>
     </div>
   )
