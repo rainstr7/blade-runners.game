@@ -3,18 +3,20 @@ import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
 import isDev from './utils/IsDev'
+
 dotenv.config()
 
 import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 import { create } from 'client/src/utils/createStore'
+
 // import { createClientAndConnect } from './db'
 
 async function startServer() {
   const app = express()
   app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3005
+  const port = Number(process.env.SERVER_PORT) || 3100
 
   // createClientAndConnect()
 
@@ -37,10 +39,11 @@ async function startServer() {
     res.json('👋 Howdy from the server :)')
   })
 
-  console.log((path.resolve(distPath, 'src/assets')))
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'src/assets')))
   }
+
+  console.log(path.dirname(ssrClientPath) + '/style.css')
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
@@ -69,16 +72,23 @@ async function startServer() {
       }
 
       const store = create({
-        layout: {type: 'Default'},
-        score: {value: 5},
-        auth: {},
-      });
+        layout: { type: 'Default' },
+        score: { value: 5 },
+        auth: { token: null },
+      })
 
       const appHtml = await render(store, url)
 
-      const html = template.replace(`<!--ssr-outlet-->`, appHtml + `<script> 
-                    window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(/</g, '\\u003c')}
-                </script>`)
+      const html = template.replace(
+        `<!--ssr-outlet-->`,
+        appHtml +
+          `<script> 
+          window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(
+            /</g,
+            '\\u003c'
+          )}
+        </script>`
+      )
 
       res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
     } catch (e) {

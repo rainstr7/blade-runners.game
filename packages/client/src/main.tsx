@@ -8,8 +8,8 @@ import create from './utils/createStore'
 
 initialServiceWorker()
 
-const store = create(window.__PRELOADED_STATE__);
-delete window.__PRELOADED_STATE__;
+const store = create(window.__PRELOADED_STATE__)
+delete window.__PRELOADED_STATE__
 
 ReactDOM.hydrateRoot(
   document.getElementById('root') as HTMLElement,

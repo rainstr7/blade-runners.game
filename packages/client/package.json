@@ -1,7 +1,6 @@
 {
   "name": "client",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "dev:sw": "tsc --watch --project sw/ts.sw.config.json",
