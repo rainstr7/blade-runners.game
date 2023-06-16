@@ -6,7 +6,7 @@ import useScore from '../../hooks/useScore'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../store/reduces/interfaces'
 
-interface newRatingData {
+interface NewRatingData {
   player: {
     display_name: string | undefined,
     avatar: string | undefined
@@ -22,7 +22,7 @@ const GameOver = () => {
     (state: IRootStore) => state.score.value
   )
 
-  const newRating: newRatingData = {
+  const newRating: NewRatingData = {
     player: {
       display_name,
       avatar

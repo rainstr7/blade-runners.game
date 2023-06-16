@@ -1,3 +1,4 @@
+import { Player } from '../actions/changeScore'
 import {
   CLEAN_PROFILE,
   CREATE_PROFILE,
@@ -23,7 +24,7 @@ export interface LoadingPayloadInterface {
 
 export interface ScorePayloadInterface {
   value: number,
-  leaderboard: Array<any>
+  leaderboard: Array<Player>
 }
 
 export interface UserPayloadInterface {

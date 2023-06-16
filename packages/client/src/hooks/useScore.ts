@@ -5,24 +5,18 @@ import { FieldValues } from 'react-hook-form'
 import useHttp from './useHttp'
 import { changeScore, changeLeaderboardData } from '../store/actions/changeScore'
 import useAlert from './useAlert'
-interface playerRatingData {
+interface PlayerRatingData {
   data: {
-    player: {
-      display_name: string | undefined,
-      avatar: string | undefined
-    },
+    player: object,
     rating: number
   },
   ratingFieldName?: string,
   teamName?: string
 }
 
-const newRating: playerRatingData = {
+const newRating: PlayerRatingData = {
   data: {
-    player: {
-      display_name: '',
-      avatar: ''
-    },
+    player: {},
     rating: 0
   },
   ratingFieldName: "rating",
@@ -51,7 +45,7 @@ const useScore = () => {
 
     const { status, data } = await request(leaderboardData + teamName, 'POST', requestData)
     if (status === 200) {
-      const leaderboardData = data.map((item: playerRatingData) => {
+      const leaderboardData = data.map((item: PlayerRatingData) => {
         return {...item.data}
       })
 
