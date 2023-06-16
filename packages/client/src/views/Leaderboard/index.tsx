@@ -6,7 +6,7 @@ import useScore from '../../hooks/useScore'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../store/reduces/interfaces'
 import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
-interface Item {
+export interface Player {
   player: {
     display_name: string | undefined,
     avatar: string | undefined
@@ -17,7 +17,7 @@ interface Item {
 const LeaderBoard = () => {
   const {getLeaderboardData} = useScore()
 
-  const leaderboard: Array<Item> = useSelector(
+  const leaderboard: Array<Player> = useSelector(
     (state: IRootStore) => state.score.leaderboard
   )
 
@@ -40,7 +40,7 @@ const LeaderBoard = () => {
           <span>Player</span>
           <span>Score</span>
         </div>
-        {leaderboard.map((item: Item) => (
+        {leaderboard.map((item: Player) => (
           <div className={cn.item} key={item.rating}>
             <div className={cn.name}>
               <Avatar name={item.player.display_name} src={getAvatarFullUrl(item.player.avatar)} />

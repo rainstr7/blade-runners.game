@@ -1,4 +1,4 @@
-import { Player } from '../actions/changeScore'
+import { Player } from '../../views/Leaderboard'
 import {
   CLEAN_PROFILE,
   CREATE_PROFILE,

@@ -1,9 +1,5 @@
+import { Player } from '../../views/Leaderboard'
 import { PLAYER_SCORE, PLAYER_LEADERBOARD } from './types'
-
-export interface Player {
-  player: object,
-  rating: number
-}
 
 export const changeScore = (payload: number) => {
   return {
