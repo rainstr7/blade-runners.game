@@ -1,11 +1,32 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
 import cn from './style.module.scss'
 import Avatar from '../../components/UI/Avatar'
 import CardLink from '../../components/UI/CardLink'
-import { data, LeaderBoardInterface } from './settings'
+import useScore from '../../hooks/useScore'
+import { useSelector } from 'react-redux'
+import { IRootStore } from '../../store/reduces/interfaces'
+import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
+export interface Player {
+  player: {
+    display_name: string | undefined,
+    avatar: string | undefined
+  }
+  rating: number
+}
 
 const LeaderBoard = () => {
-  const [playersData] = useState<LeaderBoardInterface[]>(data)
+  const {getLeaderboardData} = useScore()
+
+  const leaderboard: Array<Player> = useSelector(
+    (state: IRootStore) => state.score.leaderboard
+  )
+
+  useEffect(() => {
+    if (leaderboard && leaderboard.length > 0) {
+      return
+    }
+    getLeaderboardData()
+  })
 
   return (
     <main className={cn.leaderboard}>
@@ -19,13 +40,12 @@ const LeaderBoard = () => {
           <span>Player</span>
           <span>Score</span>
         </div>
-        {playersData.map(item => (
-          <div className={cn.item} key={item.id}>
+        {leaderboard.map((item: Player) => (
+          <div className={cn.item} key={item.rating}>
             <div className={cn.name}>
-              <Avatar src={item.image} />
-              <span style={{ marginLeft: 10 }}>{item.name}</span>
+              <Avatar name={item.player.display_name} src={getAvatarFullUrl(item.player.avatar)} />
             </div>
-            {item.score}
+            {item.rating}
           </div>
         ))}
       </div>

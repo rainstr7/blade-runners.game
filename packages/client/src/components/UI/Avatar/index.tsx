@@ -44,7 +44,7 @@ const Avatar = ({
   }, [onChangeAvatar])
   return (
     <form className={cn.User}>
-      <label>
+      <label className={cn.inner}>
         <div
           className={`${cn.Avatar} ${cn[size]}`}
           style={{
