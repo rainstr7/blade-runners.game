@@ -39,11 +39,10 @@ export const regFormData = [
   },
 ]
 export const phoneRegExp = /^([+]?\d{1,2}[-\s]?|)\d{3}[-\s]?\d{3}[-\s]?\d{4}$/
-
 export const schema = yup
   .object({
-    firstName: yup.string().required(),
-    secondName: yup.string().required(),
+    first_name: yup.string().required(),
+    second_name: yup.string().required(),
     email: yup.string().email().required(),
     phone: yup
       .string()
