@@ -1,4 +1,4 @@
-import { ActionInterface, AlertPayloadInterface } from './interfaces'
+import type { ActionInterface, AlertPayloadInterface } from './interfaces'
 import { HIDE_ALERT, SHOW_ALERT } from '../actions/types'
 
 const initialState: AlertPayloadInterface = {

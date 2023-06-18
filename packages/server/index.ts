@@ -29,7 +29,7 @@ async function startServer() {
     vite = await createViteServer({
       server: { middlewareMode: true },
       root: srcPath,
-      appType: 'custom',
+      appType: 'custom'
     })
 
     app.use(vite.middlewares)
@@ -42,8 +42,6 @@ async function startServer() {
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'src/assets')))
   }
-
-  console.log(path.dirname(ssrClientPath) + '/style.css')
 
   app.use('*', async (req, res, next) => {
     const url = req.originalUrl
@@ -72,9 +70,26 @@ async function startServer() {
       }
 
       const store = create({
-        layout: { type: 'Default' },
-        score: { value: 5 },
-        auth: { token: null },
+        score: {
+          value: 0,
+          leaderboard: []
+        },
+        user: {
+          id: undefined,
+          first_name: undefined,
+          second_name: undefined,
+          display_name: undefined,
+          login: undefined,
+          email: undefined,
+          phone: undefined,
+          avatar: undefined
+        },
+        alert: {
+          show: false,
+          type: 'success',
+          text: ''
+        },
+        loading: { loading: false }
       })
 
       const appHtml = await render(store, url)
@@ -82,11 +97,11 @@ async function startServer() {
       const html = template.replace(
         `<!--ssr-outlet-->`,
         appHtml +
-          `<script> 
+        `<script> 
           window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(
-            /</g,
-            '\\u003c'
-          )}
+          /</g,
+          '\\u003c'
+        )}
         </script>`
       )
 
