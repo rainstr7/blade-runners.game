@@ -1,9 +1,11 @@
+import { Player } from '../../views/Leaderboard'
 import {
   CLEAN_PROFILE,
   CREATE_PROFILE,
   HIDE_ALERT,
   HIDE_LOADER,
   PLAYER_SCORE,
+  PLAYER_LEADERBOARD,
   SHOW_ALERT,
   SHOW_LOADER,
   UPDATE_PROFILE,
@@ -21,7 +23,8 @@ export interface LoadingPayloadInterface {
 }
 
 export interface ScorePayloadInterface {
-  value: number
+  value: number,
+  leaderboard: Array<Player>
 }
 
 export interface UserPayloadInterface {
@@ -49,6 +52,7 @@ export interface ActionInterface {
 
 const actions = {
   PLAYER_SCORE,
+  PLAYER_LEADERBOARD,
   UPDATE_PROFILE,
   CREATE_PROFILE,
   CLEAN_PROFILE,

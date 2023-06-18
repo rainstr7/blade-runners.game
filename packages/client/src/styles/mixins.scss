@@ -18,8 +18,8 @@
 }
 
 @mixin flex-vertical-center {
+  display: flex;
   align-items: center;
-  justify-content: center;
   flex-grow: 1;
 }
 
