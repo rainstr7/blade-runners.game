@@ -1,0 +1,18 @@
+@import './src/styles/vars';
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.online {
+  background-color: $success;
+}
+
+.offline {
+  background-color: $error-color;
+}
