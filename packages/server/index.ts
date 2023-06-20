@@ -9,7 +9,6 @@ dotenv.config()
 import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
-import { create } from 'client/src/utils/createStore'
 
 // import { createClientAndConnect } from './db'
 
@@ -25,13 +24,17 @@ async function startServer() {
   let vite: ViteDevServer | undefined
   const distPath = path.dirname(require.resolve('client/index.html'))
   const srcPath = path.dirname(require.resolve('client'))
-  const ssrClientPath = require.resolve('client/ssr-dist/client.js')
+  const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
+  const createStorePath = path.dirname(
+    require.resolve('client/src/utils/createStore')
+  )
+  const createStoreFilePath = require.resolve('client/src/utils/createStore')
 
   if (isDev()) {
     vite = await createViteServer({
       server: { middlewareMode: true },
       root: srcPath,
-      appType: 'custom'
+      appType: 'custom',
     })
 
     app.use(vite.middlewares)
@@ -71,10 +74,22 @@ async function startServer() {
           .render
       }
 
+      let create: (initialState: any) => any
+
+      if (!isDev()) {
+        create = (await import(createStoreFilePath)).create
+      } else {
+        create = (
+          await vite!.ssrLoadModule(
+            path.resolve(createStorePath, 'createStore.ts')
+          )
+        ).create
+      }
+
       const store = create({
         score: {
           value: 0,
-          leaderboard: []
+          leaderboard: [],
         },
         user: {
           id: undefined,
@@ -84,14 +99,14 @@ async function startServer() {
           login: undefined,
           email: undefined,
           phone: undefined,
-          avatar: undefined
+          avatar: undefined,
         },
         alert: {
           show: false,
           type: 'success',
-          text: ''
+          text: '',
         },
-        loading: { loading: false }
+        loading: { loading: false },
       })
 
       let renderUrl = '/'
@@ -105,11 +120,11 @@ async function startServer() {
       const html = template.replace(
         `<!--ssr-outlet-->`,
         appHtml +
-        `<script> 
+          `<script> 
           window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(
-          /</g,
-          '\\u003c'
-        )}
+            /</g,
+            '\\u003c'
+          )}
         </script>`
       )
 

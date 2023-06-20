@@ -19,7 +19,7 @@ export default function scoreReducer(
     case PLAYER_LEADERBOARD:
       return {
         ...state,
-        leaderboard: action.payload
+        leaderboard: action.payload,
       }
     default:
       return state

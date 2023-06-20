@@ -10,4 +10,3 @@ const NetworkIndicator = () => {
 }
 
 export default NetworkIndicator
-

@@ -9,7 +9,7 @@ import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
 import { Player } from '../interfaces'
 
 const LeaderBoard = () => {
-  const {getLeaderboardData} = useScore()
+  const { getLeaderboardData } = useScore()
 
   const leaderboard: Array<Player> = useSelector(
     (state: IRootStore) => state.score.leaderboard
@@ -37,7 +37,10 @@ const LeaderBoard = () => {
         {leaderboard.map((item: Player) => (
           <div className={cn.item} key={item.rating}>
             <div className={cn.name}>
-              <Avatar name={item.player.display_name} src={getAvatarFullUrl(item.player.avatar)} />
+              <Avatar
+                name={item.player.display_name}
+                src={getAvatarFullUrl(item.player.avatar)}
+              />
             </div>
             {item.rating}
           </div>
