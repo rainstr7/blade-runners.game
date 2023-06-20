@@ -13,10 +13,12 @@ import { create } from 'client/src/utils/createStore'
 
 // import { createClientAndConnect } from './db'
 
+const routes = ['/', '/signin', '/signup']
+
 async function startServer() {
   const app = express()
   app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3100
+  const port = Number(process.env.SERVER_PORT) || 3000
 
   // createClientAndConnect()
 
@@ -92,7 +94,13 @@ async function startServer() {
         loading: { loading: false }
       })
 
-      const appHtml = await render(store, url)
+      let renderUrl = '/'
+      const availRoute = routes.find(r => r === url)
+      if (availRoute) {
+        renderUrl = availRoute
+      }
+
+      const appHtml = await render(store, renderUrl)
 
       const html = template.replace(
         `<!--ssr-outlet-->`,
