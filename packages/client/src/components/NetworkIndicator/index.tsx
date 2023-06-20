@@ -1,5 +1,5 @@
 import cn from './styles.module.scss'
-import { useNetworkStatus } from '@src/hooks/useNetworkStatus'
+import { useNetworkStatus } from '../../hooks/useNetworkStatus'
 
 const NetworkIndicator = () => {
   const isOnline = useNetworkStatus()
@@ -10,3 +10,4 @@ const NetworkIndicator = () => {
 }
 
 export default NetworkIndicator
+

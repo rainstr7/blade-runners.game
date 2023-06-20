@@ -16,7 +16,7 @@ const Auth = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver<FieldValues>(schema),
   })
 
   const onSubmit: SubmitHandler<FieldValues> = async data => {
