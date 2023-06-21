@@ -1,10 +1,16 @@
 import cn from './style.module.scss'
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 interface ForumProps {
   children: ReactNode
+  onClick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  id?: string
 }
-const Forum = ({ children }: ForumProps) => {
-  return <div className={cn.ForumContainer}>{children}</div>
+const Forum = ({ children, onClick, id }: ForumProps) => {
+  return (
+    <div className={cn.ForumContainer} onClick={onClick} id={id}>
+      {children}
+    </div>
+  )
 }
 
 export default Forum

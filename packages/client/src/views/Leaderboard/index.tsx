@@ -8,14 +8,14 @@ import { IRootStore } from '../../store/reduces/interfaces'
 import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
 export interface Player {
   player: {
-    display_name: string | undefined,
+    display_name: string | undefined
     avatar: string | undefined
   }
   rating: number
 }
 
 const LeaderBoard = () => {
-  const {getLeaderboardData} = useScore()
+  const { getLeaderboardData } = useScore()
 
   const leaderboard: Array<Player> = useSelector(
     (state: IRootStore) => state.score.leaderboard
@@ -43,7 +43,10 @@ const LeaderBoard = () => {
         {leaderboard.map((item: Player) => (
           <div className={cn.item} key={item.rating}>
             <div className={cn.name}>
-              <Avatar name={item.player.display_name} src={getAvatarFullUrl(item.player.avatar)} />
+              <Avatar
+                name={item.player.display_name}
+                src={getAvatarFullUrl(item.player.avatar)}
+              />
             </div>
             {item.rating}
           </div>

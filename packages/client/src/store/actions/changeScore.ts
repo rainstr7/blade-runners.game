@@ -11,6 +11,6 @@ export const changeScore = (payload: number) => {
 export const changeLeaderboardData = (payload: Array<Player>) => {
   return {
     type: PLAYER_LEADERBOARD,
-    payload
+    payload,
   }
 }

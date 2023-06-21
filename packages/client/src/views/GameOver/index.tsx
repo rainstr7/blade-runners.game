@@ -8,9 +8,9 @@ import { IRootStore } from '../../store/reduces/interfaces'
 
 interface NewRatingData {
   player: {
-    display_name: string | undefined,
+    display_name: string | undefined
     avatar: string | undefined
-  },
+  }
   rating: number
 }
 
@@ -18,16 +18,14 @@ const GameOver = () => {
   const { avatar, display_name } = useSelector(
     (state: IRootStore) => state.user
   )
-  const score = useSelector(
-    (state: IRootStore) => state.score.value
-  )
+  const score = useSelector((state: IRootStore) => state.score.value)
 
   const newRating: NewRatingData = {
     player: {
       display_name,
-      avatar
+      avatar,
     },
-    rating: score
+    rating: score,
   }
 
   const { handleSetScore } = useScore()
@@ -49,7 +47,7 @@ const GameOver = () => {
         <Card />
         <div className={cn.ButtonsGroup}>
           <Button onClick={saveScore}>Save Result</Button>
-          <Button  onClick={restartButton}>Restart</Button>
+          <Button onClick={restartButton}>Restart</Button>
           <Button size="small" onClick={startButton}>
             To main
           </Button>

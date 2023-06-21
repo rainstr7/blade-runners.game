@@ -1,31 +1,30 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import cn from './style.module.scss'
 import Button from '../../../components/UI/Button'
 import Input from '../../../components/UI/Input'
-import { Topic } from '../types'
 import React from 'react'
 import Forum from '../index'
+import useForum from '../../../hooks/useForum'
 
-const CreateTheme: React.FC = () => {
+const CreateTheme = () => {
   const { register, handleSubmit, reset } = useForm<FieldValues>()
   const navigate = useNavigate()
+  const { handleAddTopic } = useForum()
+  const { selectedForum } = useParams()
 
-  //navigation
   function handleGoBack() {
     navigate(-1)
   }
-
+  if (!selectedForum) {
+    navigate('/forums')
+    return null
+  }
   //form logic
   const onSubmit: SubmitHandler<FieldValues> = data => {
-    const topic: Topic = {
-      title: data.title,
-      id: Math.random(), //TODO generic ID
-      messagesCount: 0,
-      messages: [],
-    }
-    console.log('Topic data : ', topic)
+    handleAddTopic(+selectedForum, data.title)
     reset({ title: '' })
+    navigate(`/topics/${selectedForum}`)
   }
 
   return (
