@@ -30,7 +30,7 @@ const Layout = ({ children }: Props) => {
         <div className={cn.Wrapper}>
           <Header>{header}</Header>
           {children}
-          <p className={cn.Authors}>BY blade runners</p>
+          <p className={cn.Authors}>by blade runners</p>
         </div>
       </div>
       <Alert />
