@@ -2,7 +2,7 @@ import cn from './style.module.scss'
 import Avatar from '../../../components/UI/Avatar'
 import getAvatarFullUrl from '../../../utils/getFullAvatarUrl'
 import Time from './Time'
-import React, { forwardRef, LegacyRef, useState } from 'react'
+import React, { forwardRef, LegacyRef } from 'react'
 import EmojiPicker, {
   Categories,
   Emoji,
