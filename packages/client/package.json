@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:sw": "tsc --watch --project sw/ts.sw.config.json",
     "build:spa": "tsc && vite build --config vite.config.ts",
     "build:ssr": "tsc && vite build --config ssr.config.ts",
     "build": "tsc && vite build --config vite.config.ts && vite build --config ssr.config.ts",
@@ -11,12 +12,14 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "jest ./ -u",
-    "commit": "cz"
+    "commit": "cz",
+    "debug": "tsc --sourcemap"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
     "@types/react-redux": "^7.1.25",
     "@types/redux": "^3.6.0",
+    "@types/serviceworker": "^0.0.67",
     "dotenv": "^16.0.2",
     "emoji-picker-react": "^4.4.9",
     "eslint-config-prettier": "^8.5.0",
@@ -31,6 +34,8 @@
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
+    "vite-plugin-pwa": "^0.16.4",
+    "vite-plugin-static-copy": "^0.16.0",
     "yup": "^1.1.1"
   },
   "devDependencies": {
