@@ -22,7 +22,7 @@ import {
 } from '../actions/types'
 import { EmojiClickData } from 'emoji-picker-react'
 
-export const messagesDB: {[id: string]: MessagesPayloadInterface} = {
+export const messagesDB: { [id: string]: MessagesPayloadInterface } = {
   '1': {
     1: {
       author: 'el nina',

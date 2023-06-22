@@ -39,7 +39,7 @@ const ForumPage = () => {
           {Object.entries(forums).map(
             ([id, { title, topicsCount, messagesCount }]) => {
               return (
-                <li className={cn.ListElement} key={id} >
+                <li className={cn.ListElement} key={id}>
                   <Link className={cn.LinkElement} to={`/topics/${id}`}>
                     <p className={cn.Title}>{title}</p>
                     <p className={cn.TopicCount}>{topicsCount}</p>

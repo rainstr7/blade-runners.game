@@ -82,27 +82,28 @@ const DiscussPage = () => {
       </nav>
 
       <section className={cn.MsgContainer}>
-        {Object.keys(messages).length === 0 ?
-          <div>
-            Empty topic
-          </div> : Object.entries(messages).map(
-          ([id, { avatar, content, author, date, emoji }], index, array) => (
-            <Message
-              key={id}
-              id={id}
-              avatar={avatar}
-              content={content}
-              author={author}
-              date={date}
-              ref={index === array.length - 1 ? messagesEndRef : undefined}
-              emoji={emoji}
-              addEmoji={handleAddNewEmoji}
-              delEmoji={handleDelOldEmoji}
-              isOpenEmojiList={isOpenEmoji === +id}
-              handleToggleEmoji={handleToggleEmoji}
-              isOwnMessage={display_name === author}
-              handleDelOwnMessage={handleDelOwnMessage}
-            />
+        {Object.keys(messages).length === 0 ? (
+          <div>Empty topic</div>
+        ) : (
+          Object.entries(messages).map(
+            ([id, { avatar, content, author, date, emoji }], index, array) => (
+              <Message
+                key={id}
+                id={id}
+                avatar={avatar}
+                content={content}
+                author={author}
+                date={date}
+                ref={index === array.length - 1 ? messagesEndRef : undefined}
+                emoji={emoji}
+                addEmoji={handleAddNewEmoji}
+                delEmoji={handleDelOldEmoji}
+                isOpenEmojiList={isOpenEmoji === +id}
+                handleToggleEmoji={handleToggleEmoji}
+                isOwnMessage={display_name === author}
+                handleDelOwnMessage={handleDelOwnMessage}
+              />
+            )
           )
         )}
       </section>

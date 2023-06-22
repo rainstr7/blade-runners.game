@@ -81,11 +81,11 @@ export const forError = {
 }
 
 export const redirectRoute = {
-  // '*': {
-  //   component: <Navigate to="/404" replace />,
-  //   header: '',
-  //   type: '',
-  // },
+  '*': {
+    component: <Navigate to="/404" replace />,
+    header: '',
+    type: '',
+  },
 }
 
 export const routerListForGame = {

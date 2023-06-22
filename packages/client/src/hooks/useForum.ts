@@ -30,7 +30,8 @@ const getData = (data: string, id = 0): Promise<Data> =>
         break
       case 'messages':
         setTimeout(
-          () => resolve({ status: 200, data: { ...messagesDB[`${id}`] } ?? {} }),
+          () =>
+            resolve({ status: 200, data: { ...messagesDB[`${id}`] } ?? {} }),
           500
         )
         break
