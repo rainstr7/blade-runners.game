@@ -60,6 +60,7 @@ const DiscussPage = () => {
   const handleDelOldEmoji = useCallback((emoji: EmojiClickData, id: string) => {
     handleDelEmoji(emoji, +id)
   }, [])
+
   const handleToggleEmoji = (
     events: React.MouseEvent<HTMLDivElement, MouseEvent>
   ) => {

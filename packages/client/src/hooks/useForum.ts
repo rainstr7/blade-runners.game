@@ -21,7 +21,9 @@ import {
   MessagesPayloadInterface,
 } from '../store/reduces/interfaces'
 import { EmojiClickData } from 'emoji-picker-react'
+
 type Data = { data: ForumType | MessagesPayloadInterface; status: number }
+
 const getData = (data: string, id = 0): Promise<Data> =>
   new Promise(resolve => {
     switch (data) {
@@ -37,6 +39,7 @@ const getData = (data: string, id = 0): Promise<Data> =>
         break
     }
   })
+
 const useForum = () => {
   const { /*request,*/ error } = useHttp()
   const { handleShowAlert } = useAlert()
