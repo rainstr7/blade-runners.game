@@ -18,14 +18,12 @@ interface MessageProps {
   content: string
   avatar?: string
   emoji: EmojiClickData[]
-  addEmoji: (emoji: EmojiClickData, id: string) => void
-  delEmoji: (emoji: EmojiClickData, id: string) => void
+  addEmoji(emoji: EmojiClickData, id: string): void
+  delEmoji(emoji: EmojiClickData, id: string): void
   isOpenEmojiList: boolean
-  handleToggleEmoji: (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => void
+  handleToggleEmoji(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void
   isOwnMessage: boolean
-  handleDelOwnMessage: (id: string) => void
+  handleDelOwnMessage(id: string): void
 }
 
 const Message = forwardRef(

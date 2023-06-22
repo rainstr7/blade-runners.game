@@ -22,12 +22,12 @@ const DiscussPage = () => {
   )
   const { messages } = useSelector((state: IRootStore) => state.forum)
   const { handleShowAlert } = useAlert()
-  const { handleAddEmoji, handleDelEmoji, handleAddMessage, handleDelMessage } =
-    useForum()
+  const { handleAddEmoji, handleDelEmoji, handleAddMessage, handleDelMessage } = useForum()
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [])
-  const [isOpenEmoji, setIsOpenEmoji] = useState(0)
+  const [idModalEmoji, setIdModalEmoji] = useState<number>(0)
+
   useEffect(() => {
     scrollToBottom()
   }, [messages])
@@ -53,7 +53,7 @@ const DiscussPage = () => {
   }
 
   const handleAddNewEmoji = useCallback((emoji: EmojiClickData, id: string) => {
-    setIsOpenEmoji(0)
+    setIdModalEmoji(0)
     handleAddEmoji(emoji, +id)
   }, [])
 
@@ -66,7 +66,7 @@ const DiscussPage = () => {
   ) => {
     events.stopPropagation()
     const { id } = events.currentTarget
-    setIsOpenEmoji(prevState => (+prevState === +id ? 0 : +id))
+    setIdModalEmoji(prevState => (prevState === +id ? 0 : +id))
   }
 
   const handleDelOwnMessage = useCallback((id: string) => {
@@ -81,7 +81,6 @@ const DiscussPage = () => {
         </Button>
         <h2>{selectedTopic}</h2>
       </nav>
-
       <section className={cn.MsgContainer}>
         {Object.keys(messages).length === 0 ? (
           <div>Empty topic</div>
@@ -99,7 +98,7 @@ const DiscussPage = () => {
                 emoji={emoji}
                 addEmoji={handleAddNewEmoji}
                 delEmoji={handleDelOldEmoji}
-                isOpenEmojiList={isOpenEmoji === +id}
+                isOpenEmojiList={idModalEmoji === +id}
                 handleToggleEmoji={handleToggleEmoji}
                 isOwnMessage={display_name === author}
                 handleDelOwnMessage={handleDelOwnMessage}
@@ -108,7 +107,6 @@ const DiscussPage = () => {
           )
         )}
       </section>
-
       <form className={cn.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
         <Input
           placeholder="YOUR MESSAGE"

@@ -10,7 +10,7 @@ const Time = ({ date }: TimeInterface) => {
       date.getMinutes()
     ).padStart(2, '0')}`
   }, [date])
-  return <span> {normalizedTime}</span>
+  return <span>{normalizedTime}</span>
 }
 
 export default Time
