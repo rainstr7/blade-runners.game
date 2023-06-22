@@ -22,13 +22,10 @@ async function startServer() {
   // createClientAndConnect()
 
   let vite: ViteDevServer | undefined
-  const distPath = path.dirname(require.resolve('client/index.html'))
-  const srcPath = path.dirname(require.resolve('client'))
-  const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
-  const createStorePath = path.dirname(
-    require.resolve('client/src/utils/createStore')
-  )
-  const createStoreFilePath = require.resolve('client/src/utils/createStore')
+
+  const distPath = path.resolve('../client/dist')
+  const srcPath = path.resolve('../client')
+  const ssrClientPath = path.resolve('../client/ssr-dist/client.cjs')
 
   if (isDev()) {
     vite = await createViteServer({
@@ -54,36 +51,33 @@ async function startServer() {
     try {
       let template: string
 
+
       if (!isDev()) {
         template = fs.readFileSync(
           path.resolve(distPath, 'index.html'),
           'utf-8'
-        )
+        );
       } else {
-        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
+        template = fs.readFileSync(
+          path.resolve(srcPath, 'index.html'),
+          'utf-8'
+        );
 
-        template = await vite!.transformIndexHtml(url, template)
+        template = await vite!.transformIndexHtml(url, template);
       }
 
+      let create: (initialState: any) => any
       let render: (store: any, url: string) => Promise<string>
 
       if (!isDev()) {
         render = (await import(ssrClientPath)).render
+        create = (await import(ssrClientPath)).create
       } else {
         render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
           .render
-      }
 
-      let create: (initialState: any) => any
-
-      if (!isDev()) {
-        create = (await import(createStoreFilePath)).create
-      } else {
-        create = (
-          await vite!.ssrLoadModule(
-            path.resolve(createStorePath, 'createStore.ts')
-          )
-        ).create
+        create = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
+          .create
       }
 
       const store = create({
