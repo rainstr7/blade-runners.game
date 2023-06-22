@@ -1,4 +1,4 @@
-import { Player } from '../../views/Leaderboard'
+import type { Player } from '../../views/interfaces'
 import {
   CLEAN_PROFILE,
   CREATE_PROFILE,
@@ -23,7 +23,7 @@ export interface LoadingPayloadInterface {
 }
 
 export interface ScorePayloadInterface {
-  value: number,
+  value: number
   leaderboard: Array<Player>
 }
 

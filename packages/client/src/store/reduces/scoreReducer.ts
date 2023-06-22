@@ -1,5 +1,5 @@
 import { PLAYER_SCORE, PLAYER_LEADERBOARD } from '../actions/types'
-import { ActionInterface } from './interfaces'
+import type { ActionInterface } from './interfaces'
 
 const initialState = {
   value: 0,
@@ -19,7 +19,7 @@ export default function scoreReducer(
     case PLAYER_LEADERBOARD:
       return {
         ...state,
-        leaderboard: action.payload
+        leaderboard: action.payload,
       }
     default:
       return state

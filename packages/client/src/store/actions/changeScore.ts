@@ -1,4 +1,4 @@
-import { Player } from '../../views/Leaderboard'
+import { Player } from '../../views/interfaces'
 import { PLAYER_SCORE, PLAYER_LEADERBOARD } from './types'
 
 export const changeScore = (payload: number) => {
@@ -11,6 +11,6 @@ export const changeScore = (payload: number) => {
 export const changeLeaderboardData = (payload: Array<Player>) => {
   return {
     type: PLAYER_LEADERBOARD,
-    payload
+    payload,
   }
 }

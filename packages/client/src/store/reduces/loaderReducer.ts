@@ -1,4 +1,4 @@
-import { ActionInterface, LoadingPayloadInterface } from './interfaces'
+import type { ActionInterface, LoadingPayloadInterface } from './interfaces'
 import { HIDE_LOADER, SHOW_LOADER } from '../actions/types'
 
 const initialState: LoadingPayloadInterface = {

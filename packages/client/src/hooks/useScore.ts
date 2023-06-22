@@ -3,26 +3,26 @@ import { useDispatch } from 'react-redux'
 import { addScoreResult, leaderboardData } from '../api'
 import { FieldValues } from 'react-hook-form'
 import useHttp from './useHttp'
-import { changeScore, changeLeaderboardData } from '../store/actions/changeScore'
+import { changeLeaderboardData } from '../store/actions/changeScore'
 import useAlert from './useAlert'
+
 interface PlayerRatingData {
   data: {
-    player: object,
+    player: object
     rating: number
-  },
-  ratingFieldName?: string,
+  }
+  ratingFieldName?: string
   teamName?: string
 }
 
 const newRating: PlayerRatingData = {
   data: {
     player: {},
-    rating: 0
+    rating: 0,
   },
-  ratingFieldName: "rating",
-  teamName: "BladeRunner"
+  ratingFieldName: 'rating',
+  teamName: 'BladeRunner',
 }
-
 
 const useScore = () => {
   const { request, error } = useHttp()
@@ -35,18 +35,21 @@ const useScore = () => {
   }, [error])
 
   const getLeaderboardData = useCallback(async () => {
-
     const teamName = 'BladeRunner'
     const requestData = {
       ratingFieldName: 'rating',
       cursor: 0,
-      limit: 10
+      limit: 10,
     }
 
-    const { status, data } = await request(leaderboardData + teamName, 'POST', requestData)
+    const { status, data } = await request(
+      leaderboardData + teamName,
+      'POST',
+      requestData
+    )
     if (status === 200) {
       const leaderboardData = data.map((item: PlayerRatingData) => {
-        return {...item.data}
+        return { ...item.data }
       })
 
       dispatch(changeLeaderboardData(leaderboardData))
@@ -54,13 +57,12 @@ const useScore = () => {
   }, [])
 
   const handleSetScore = async (data: FieldValues) => {
-    
     newRating.data = {
       player: {
         display_name: data.player.display_name,
-        avatar: data.player.avatar
+        avatar: data.player.avatar,
       },
-      rating: data.rating
+      rating: data.rating,
     }
 
     const { status } = await request(addScoreResult, 'POST', newRating)
