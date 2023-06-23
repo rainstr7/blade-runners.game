@@ -1,58 +1,56 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import cn from './style.module.scss'
 import Button from '../../../components/UI/Button'
-import { forums, topics } from '../forumData'
-import { Topic, ForumType } from '../types'
 import Forum from '../index'
-import { FC } from 'react'
+import { useSelector } from 'react-redux'
+import { IRootStore } from '../../../store/reduces/interfaces'
+import { useEffect } from 'react'
+import useForum from '../../../hooks/useForum'
 
-const ForumPage: FC = () => {
+const ForumPage = () => {
   const navigate = useNavigate()
-  const { id } = useParams<{ id: string }>()
+  const { forums } = useSelector((state: IRootStore) => state.forum)
+  const { getForumsList } = useForum()
 
-  function handleGoBack() {
-    navigate(-1)
-  }
+  useEffect(() => {
+    getForumsList().catch()
+  }, [])
 
-  function handleGoCreate() {
-    navigate('/forum/newtheme')
-  }
-
-  const forum: ForumType | undefined = forums.find(f => f.id === Number(id))
-
-  if (!forum) {
-    return <div>Forum not found</div>
+  const handleGoToStart = () => {
+    navigate('/start')
   }
 
   return (
     <Forum>
-      <nav className={cn.TopicHeader}>
-        <Button size="small" onClick={handleGoBack}>
+      <nav>
+        <Button size="small" onClick={handleGoToStart}>
           Back
         </Button>
-        <h2>{forum.title}</h2>
-        <Button size="small" onClick={handleGoCreate}>
-          CREATE THEME
-        </Button>
       </nav>
-      <ul className={cn.ListContainer}>
-        <li className={cn.ListElement}>
-          <div className={cn.HeaderContainer}>
-            <div className={cn.TitleHeader}>THEME</div>
-            <div className={cn.MsgCountHeader}>COMMENTS</div>
-          </div>
-        </li>
-        {topics.map((topic: Topic) => (
-          <li className={cn.ListElement} key={topic.id}>
-            <Link
-              className={cn.LinkElement}
-              to={`/forum/${forum.id}/${topic.id}`}>
-              <div className={cn.Title}>{topic.title}</div>
-              <div className={cn.MsgCount}>{topic.messagesCount}</div>
-            </Link>
+      <div className={cn.ListContainer}>
+        <ul className={cn.List}>
+          <li className={cn.ListElement}>
+            <div className={cn.HeaderContainer}>
+              <div className={cn.TitleHeader}>FORUMS/SOCIAL</div>
+              <div className={cn.TopicCountHeader}>TRENDS</div>
+              <div className={cn.MsgCountHeader}>COMMENTS</div>
+            </div>
           </li>
-        ))}
-      </ul>
+          {Object.entries(forums).map(
+            ([id, { title, topicsCount, messagesCount }]) => {
+              return (
+                <li className={cn.ListElement} key={id}>
+                  <Link className={cn.LinkElement} to={`/topics/${id}`}>
+                    <p className={cn.Title}>{title}</p>
+                    <p className={cn.TopicCount}>{topicsCount}</p>
+                    <p className={cn.MsgCount}>{messagesCount}</p>
+                  </Link>
+                </li>
+              )
+            }
+          )}
+        </ul>
+      </div>
     </Forum>
   )
 }

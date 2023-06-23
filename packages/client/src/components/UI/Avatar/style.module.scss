@@ -3,7 +3,6 @@
 .User {
   display: flex;
   align-items: center;
-  position: relative;
   &:hover {
     .edit {
       visibility: visible;
