@@ -22,7 +22,8 @@ const DiscussPage = () => {
   )
   const { messages } = useSelector((state: IRootStore) => state.forum)
   const { handleShowAlert } = useAlert()
-  const { handleAddEmoji, handleDelEmoji, handleAddMessage, handleDelMessage } = useForum()
+  const { handleAddEmoji, handleDelEmoji, handleAddMessage, handleDelMessage } =
+    useForum()
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [])
