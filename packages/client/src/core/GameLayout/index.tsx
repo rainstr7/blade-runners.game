@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { changeScore } from '../../store/actions/changeScore'
 import { KeyConfiguration } from '../types'
+import play from './startSound'
 
 const GAME_WIDTH = 1024
 const GAME_HEIGHT = 768
@@ -65,6 +66,8 @@ const GameLayout = () => {
     if (!context) {
       throw new Error('Error getting context')
     }
+
+    play()
 
     const gameOver = (): void => {
       dispatch(changeScore(engine.getScore))

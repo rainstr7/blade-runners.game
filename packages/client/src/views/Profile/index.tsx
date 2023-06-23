@@ -19,7 +19,7 @@ const Profile = () => {
     'changeProfile'
   )
   const resolver = useMemo(() => {
-    return yupResolver(schema[view])
+    return yupResolver<FieldValues>(schema[view])
   }, [view])
 
   const { handleShowAlert } = useAlert()

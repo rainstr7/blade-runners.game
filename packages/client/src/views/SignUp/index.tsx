@@ -15,7 +15,7 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FieldValues>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver<FieldValues>(schema),
   })
   const onSubmit: SubmitHandler<FieldValues> = useCallback(async data => {
     await handleRegistration(data)

@@ -5,7 +5,7 @@ import Alert from '../UI/Alert'
 import Loader from '../Loader'
 import { useLocation } from 'react-router-dom'
 import { routerList } from '../RouterList/settings'
-import NetworkIndicator from '@src/components/NetworkIndicator'
+import NetworkIndicator from '../NetworkIndicator'
 
 interface Props {
   children: ReactElement

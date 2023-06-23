@@ -5,6 +5,7 @@ import { FieldValues } from 'react-hook-form'
 import useHttp from './useHttp'
 import { changeLeaderboardData } from '../store/actions/changeScore'
 import useAlert from './useAlert'
+
 interface PlayerRatingData {
   data: {
     player: object

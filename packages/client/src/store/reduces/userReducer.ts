@@ -1,5 +1,5 @@
 import { CLEAN_PROFILE, CREATE_PROFILE, UPDATE_PROFILE } from '../actions/types'
-import { ActionInterface, UserPayloadInterface } from './interfaces'
+import type { ActionInterface, UserPayloadInterface } from './interfaces'
 
 const initialState: UserPayloadInterface = {
   id: undefined,

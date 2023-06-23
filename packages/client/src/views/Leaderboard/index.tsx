@@ -6,13 +6,7 @@ import useScore from '../../hooks/useScore'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../store/reduces/interfaces'
 import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
-export interface Player {
-  player: {
-    display_name: string | undefined
-    avatar: string | undefined
-  }
-  rating: number
-}
+import { Player } from '../interfaces'
 
 const LeaderBoard = () => {
   const { getLeaderboardData } = useScore()

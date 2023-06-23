@@ -1,5 +1,5 @@
-@import 'src/styles/vars';
-@import 'src/styles/mixins';
+@import '../../styles/vars';
+@import '../../styles/mixins';
 
 .Container {
   @include flex-column;
