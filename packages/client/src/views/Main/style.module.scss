@@ -1,0 +1,58 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.Container {
+  height: 100%;
+  width: 100%;
+  font-family: $font-family;
+
+  .Header {
+    @include flex-between;
+    height: 10%;
+    padding: 0 2rem;
+  }
+
+  .Main {
+    @include flex-column;
+    color: $font-color;
+    background-image: url('../../assets/landing_bg.jpg');
+
+    height: 80%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    justify-content: space-around;
+
+    .Title {
+      font-size: 8rem;
+    }
+
+    .Text {
+      padding: 0.8rem;
+      max-width: 65rem;
+      font-size: 2rem;
+    }
+
+    .Reviews {
+      margin: 0 0 1rem 0.8rem;
+      font-size: 1.6rem;
+    }
+
+    .Controls {
+      @include flex-between;
+
+      .Button {
+        margin: 0 0.8rem 0 0;
+      }
+    }
+  }
+
+  .Footer {
+    @include flex-between;
+
+    height: 10%;
+    padding: 0 2rem;
+  }
+}

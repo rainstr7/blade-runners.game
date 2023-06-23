@@ -10,7 +10,9 @@
     "test": "lerna run test",
     "lint": "lerna run lint",
     "format": "lerna run format",
-    "preview": "lerna run preview"
+    "preview": "lerna run preview",
+    "sleep5s": "node -e \"setTimeout(() => process.exit(0), 5000)\"",
+    "build:all": "yarn lerna run build --scope=client && yarn run sleep5s && yarn lerna run build --scope=server"
   },
   "license": "MIT",
   "workspaces": [
@@ -21,6 +23,12 @@
   },
   "devDependencies": {
     "@evilmartians/lefthook": "^1.1.1",
-    "lerna": "^5.4.3"
+    "git-cz": "^4.9.0",
+    "lerna": "^6.6.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/git-cz"
+    }
   }
 }

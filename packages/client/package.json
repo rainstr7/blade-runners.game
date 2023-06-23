@@ -4,35 +4,70 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "dev:sw": "tsc --watch --project sw/ts.sw.config.json",
+    "build:spa": "tsc && vite build --config vite.config.ts",
+    "build:ssr": "tsc && vite build --config ssr.config.ts",
+    "build": "tsc && vite build --config vite.config.ts && vite build --config ssr.config.ts",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "jest ./"
+    "test": "jest ./ -u",
+    "commit": "cz",
+    "debug": "tsc --sourcemap"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.1.0",
+    "@types/react-redux": "^7.1.25",
+    "@types/redux": "^3.6.0",
+    "@types/serviceworker": "^0.0.67",
     "dotenv": "^16.0.2",
+    "emoji-picker-react": "^4.4.9",
     "eslint-config-prettier": "^8.5.0",
+    "nanoid": "^4.0.2",
+    "node-sass": "^8.0.0",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.9",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.11.1",
+    "redux": "^4.2.1",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.2",
+    "vite-plugin-pwa": "^0.16.4",
+    "vite-plugin-static-copy": "^0.16.0",
+    "yup": "^1.1.1"
   },
   "devDependencies": {
+    "@testing-library/dom": "^9.3.0",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^28.1.8",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
+    "@types/testing-library__jest-dom": "^5.14.5",
     "@typescript-eslint/eslint-plugin": "^5.35.1",
     "@typescript-eslint/parser": "^5.35.1",
     "@vitejs/plugin-react": "^2.0.1",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.23.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^28",
+    "jest-canvas-mock": "^2.5.0",
     "jest-environment-jsdom": "^29.0.1",
     "lefthook": "^1.1.1",
     "prettier": "^2.7.1",
+    "sass": "^1.62.1",
     "ts-jest": "^28.0.8",
     "typescript": "^4.8.2",
     "vite": "^3.0.7"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

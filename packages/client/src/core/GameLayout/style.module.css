@@ -1,0 +1,13 @@
+.Container {
+  position: relative;
+  background-color: #440c77;
+  width: 1024px;
+  height: 768px;
+}
+
+.Canvas {
+  image-rendering: pixelated;
+  -webkit-box-shadow: 0px 0px 20px 23px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0px 0px 20px 23px rgba(0, 0, 0, 1);
+  box-shadow: 0px 0px 20px 23px rgba(0, 0, 0, 1);
+}

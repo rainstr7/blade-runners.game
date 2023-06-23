@@ -1,0 +1,14 @@
+@import '../../styles/vars';
+
+.Card {
+  background-color: $background-lite-color;
+  border: $border;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 1rem 4rem;
+  margin-bottom: 1rem;
+  p {
+    padding: 0;
+    margin: 0.5rem 0;
+  }
+}

@@ -1,0 +1,21 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.Block {
+  @include flex-column;
+  @include flex-vertical-center;
+
+  justify-content: space-between;
+  padding: 2.9rem;
+}
+
+.AuthForm {
+  @include flex-column;
+  gap: 30px;
+}
+
+.Message {
+  color: $font-color;
+  padding: 1rem 0.15rem;
+  text-align: center;
+}

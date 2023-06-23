@@ -1,0 +1,33 @@
+@import '../../styles/vars';
+@import '../../styles/mixins';
+
+.Block {
+  @include flex-column;
+  @include flex-vertical-center;
+
+  justify-content: space-between;
+  padding: 2.9rem;
+}
+.RegForm {
+  @include flex-column;
+}
+.InputsGroup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  input {
+    margin-left: 1.5rem;
+  }
+}
+
+.ButtonBlock {
+  @include flex-column;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.Message {
+  color: $font-color;
+  padding: 1rem 0.15rem;
+  text-align: center;
+}

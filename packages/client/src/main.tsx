@@ -1,10 +1,23 @@
-import React from 'react'
+import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import App from './App'
-import './index.css'
+import { Provider } from 'react-redux'
+import { initialServiceWorker } from '../sw/initialServiceWorker'
+import { create } from '@src/utils/createStore'
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+initialServiceWorker()
+
+const store = create(window.__PRELOADED_STATE__)
+delete window.__PRELOADED_STATE__
+
+ReactDOM.hydrateRoot(
+  document.getElementById('root') as HTMLElement,
+  <StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </StrictMode>
 )

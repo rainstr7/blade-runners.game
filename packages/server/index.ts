@@ -1,20 +1,145 @@
 import dotenv from 'dotenv'
 import cors from 'cors'
+import { createServer as createViteServer } from 'vite'
+import type { ViteDevServer } from 'vite'
+import isDev from './utils/IsDev'
+
 dotenv.config()
 
 import express from 'express'
-import { createClientAndConnect } from './db'
+import * as fs from 'fs'
+import * as path from 'path'
 
-const app = express()
-app.use(cors())
-const port = Number(process.env.SERVER_PORT) || 3001
+// import { createClientAndConnect } from './db'
 
-createClientAndConnect()
+const routes = ['/', '/signin', '/signup']
 
-app.get('/', (_, res) => {
-  res.json('👋 Howdy from the server :)')
-})
+async function startServer() {
+  const app = express()
+  app.use(cors())
+  const port = Number(process.env.SERVER_PORT) || 3000
 
-app.listen(port, () => {
-  console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
-})
+  // createClientAndConnect()
+
+  let vite: ViteDevServer | undefined
+  const distPath = path.dirname(require.resolve('client/index.html'))
+  const srcPath = path.dirname(require.resolve('client'))
+  const ssrClientPath = require.resolve('client/ssr-dist/client.cjs')
+  const createStorePath = path.dirname(
+    require.resolve('client/src/utils/createStore')
+  )
+  const createStoreFilePath = require.resolve('client/src/utils/createStore')
+
+  if (isDev()) {
+    vite = await createViteServer({
+      server: { middlewareMode: true },
+      root: srcPath,
+      appType: 'custom',
+    })
+
+    app.use(vite.middlewares)
+  }
+
+  app.get('/api', (_, res) => {
+    res.json('👋 Howdy from the server :)')
+  })
+
+  if (!isDev()) {
+    app.use('/assets', express.static(path.resolve(distPath, 'src/assets')))
+  }
+
+  app.use('*', async (req, res, next) => {
+    const url = req.originalUrl
+
+    try {
+      let template: string
+
+      if (!isDev()) {
+        template = fs.readFileSync(
+          path.resolve(distPath, 'index.html'),
+          'utf-8'
+        )
+      } else {
+        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
+
+        template = await vite!.transformIndexHtml(url, template)
+      }
+
+      let render: (store: any, url: string) => Promise<string>
+
+      if (!isDev()) {
+        render = (await import(ssrClientPath)).render
+      } else {
+        render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
+          .render
+      }
+
+      let create: (initialState: any) => any
+
+      if (!isDev()) {
+        create = (await import(createStoreFilePath)).create
+      } else {
+        create = (
+          await vite!.ssrLoadModule(
+            path.resolve(createStorePath, 'createStore.ts')
+          )
+        ).create
+      }
+
+      const store = create({
+        score: {
+          value: 0,
+          leaderboard: [],
+        },
+        user: {
+          id: undefined,
+          first_name: undefined,
+          second_name: undefined,
+          display_name: undefined,
+          login: undefined,
+          email: undefined,
+          phone: undefined,
+          avatar: undefined,
+        },
+        alert: {
+          show: false,
+          type: 'success',
+          text: '',
+        },
+        loading: { loading: false },
+      })
+
+      let renderUrl = '/'
+      const availRoute = routes.find(r => r === url)
+      if (availRoute) {
+        renderUrl = availRoute
+      }
+
+      const appHtml = await render(store, renderUrl)
+
+      const html = template.replace(
+        `<!--ssr-outlet-->`,
+        appHtml +
+          `<script> 
+          window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(
+            /</g,
+            '\\u003c'
+          )}
+        </script>`
+      )
+
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+    } catch (e) {
+      if (isDev()) {
+        vite!.ssrFixStacktrace(e as Error)
+      }
+      next(e)
+    }
+  })
+
+  app.listen(port, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  })
+}
+
+startServer()
