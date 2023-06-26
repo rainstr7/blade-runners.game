@@ -1,16 +1,19 @@
 import React, { useState, useEffect, createContext, ReactElement } from 'react'
 import cn from './style.module.scss'
 
+import bgDark from '../../assets/default_bg.jpg'
+import bgLight from '../../assets/light_bg.jpg'
+
 const themeLight = {
   type: 'light',
   defaultColor: '#e5dfffeb',
-  layoutBackground: 'https://nakerosine.ru/images/gallery/8-bit-images/001_8_bit_images.jpg'
+  layoutBackground: bgLight
 }
 
 const themeDark = {
   type: 'dark',
   defaultColor: '#fff',
-  layoutBackground: 'https://avatars.mds.yandex.net/get-images-cbir/2512137/G84Ps9ZeitjXMksZyE7o6Q4778/ocr'
+  layoutBackground: bgDark
 }
 
 
