@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import cn from './style.module.scss'
@@ -11,6 +11,7 @@ import useAlert from '../../../hooks/useAlert'
 import Message from './Message'
 import { EmojiClickData } from 'emoji-picker-react'
 import useForum from '../../../hooks/useForum'
+import { ThemeContext } from '../../../components/Theme'
 
 const DiscussPage = () => {
   const navigate = useNavigate()
@@ -32,6 +33,8 @@ const DiscussPage = () => {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  const theme = useContext(ThemeContext)
 
   const handleGoBack = () => {
     navigate(-1)
@@ -80,11 +83,11 @@ const DiscussPage = () => {
         <Button size="small" onClick={handleGoBack}>
           Back
         </Button>
-        <h2>{selectedTopic}</h2>
+        <h2 style={{color: theme?.defaultColor}}>{selectedTopic}</h2>
       </nav>
-      <section className={cn.MsgContainer}>
+      <section className={cn.MsgContainer} >
         {Object.keys(messages).length === 0 ? (
-          <div>Empty topic</div>
+          <div style={{color: theme?.defaultColor}}>Empty topic</div>
         ) : (
           Object.entries(messages).map(
             ([id, { avatar, content, author, date, emoji }], index, array) => (

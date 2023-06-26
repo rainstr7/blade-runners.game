@@ -2,12 +2,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import cn from './style.module.scss'
 import Button from '../../../components/UI/Button'
 import Forum from '../index'
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../../store/reduces/interfaces'
 import useAlert from '../../../hooks/useAlert'
 import useForum from '../../../hooks/useForum'
 import DeleteButton from '../../../components/UI/DeleteButton'
+import { ThemeContext } from '../../../components/Theme'
 
 const TopicPage = () => {
   const navigate = useNavigate()
@@ -15,6 +16,8 @@ const TopicPage = () => {
   const { selectedForum } = useParams()
   const { handleShowAlert } = useAlert()
   const { getMessagesList, handleDelTopic } = useForum()
+
+  const theme = useContext(ThemeContext)
 
   if (!selectedForum || !forums[selectedForum]) {
     handleShowAlert('error', 'FORUM NOT FOUND')
@@ -43,14 +46,14 @@ const TopicPage = () => {
         <Button size="small" onClick={handleGoToForumList}>
           Back
         </Button>
-        <h2>{forums[selectedForum].title}</h2>
+        <h2 style={{color: theme?.defaultColor}}>{forums[selectedForum].title}</h2>
         <Button size="small" onClick={handleGoCreate}>
           CREATE THEME
         </Button>
       </nav>
       <ul className={cn.ListContainer}>
         <li className={cn.ListElement}>
-          <div className={cn.HeaderContainer}>
+          <div className={cn.HeaderContainer} style={{color: theme?.defaultColor}}>
             <div className={cn.TitleHeader}>THEME</div>
             <div className={cn.MsgCountHeader}>COMMENTS</div>
           </div>
