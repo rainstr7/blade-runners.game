@@ -1,0 +1,33 @@
+@import '../../styles/mixins.scss';
+
+.button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+
+  @include flex-center;
+
+  top: 1rem;
+  left: 1rem;
+  position: absolute;
+  
+  &.light {
+    background: transparent;
+    border: none;
+    backdrop-filter: blur(40px);
+    &::before {
+      content: '\1F315';
+      font-size: 33px;
+    }
+  }
+  
+  &.dark {
+    background: #00000080;
+    border: none;
+    &::before {
+      content: '\1F319';
+      font-size: 33px;
+    }
+  }
+
+}

@@ -6,6 +6,7 @@ import Loader from '../Loader'
 import { useLocation } from 'react-router-dom'
 import { routerList } from '../RouterList/settings'
 import NetworkIndicator from '../NetworkIndicator'
+import ButtonTheme from '../ButtonTheme'
 
 interface Props {
   children: ReactElement
@@ -28,6 +29,7 @@ const Layout = ({ children }: Props) => {
   return (
     <div className={`${cn.Layout} ${cn[type ?? 'Default']}`}>
       <NetworkIndicator />
+      <ButtonTheme/>
       <div className={`${cn.Container}`}>
         <div className={cn.Wrapper}>
           <Header>{header}</Header>
