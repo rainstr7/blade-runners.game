@@ -10,7 +10,7 @@ import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 
-// import { createClientAndConnect } from './db'
+import { createClientAndConnect } from './db'
 
 const routes = ['/', '/signin', '/signup']
 
@@ -19,7 +19,7 @@ async function startServer() {
   app.use(cors())
   const port = Number(process.env.SERVER_PORT) || 3000
 
-  // createClientAndConnect()
+  createClientAndConnect()
 
   let vite: ViteDevServer | undefined
 
