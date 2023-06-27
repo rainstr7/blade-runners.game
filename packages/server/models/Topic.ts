@@ -15,6 +15,7 @@ const Topic = sequelize.define('Topic', {
   messagesCount: {
     type: DataType.INTEGER,
     allowNull: false,
+    defaultValue: 0,
   },
   forumId: {
     type: DataType.INTEGER,

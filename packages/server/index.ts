@@ -12,8 +12,12 @@ import * as path from 'path'
 
 // import { createClientAndConnect } from './db'
 import sequelize from './dbapi'
-import { getAllForums } from './controllers/forumController'
-import { getForumById } from './controllers/forumController'
+import { getAllForums, getForumById } from './controllers/forumController'
+import { createTopic, getTopicsByForumId } from './controllers/topicController'
+import {
+  getMessagesByTopicId,
+  createMessage,
+} from './controllers/messageController'
 
 const routes = ['/', '/signin', '/signup']
 
@@ -23,6 +27,7 @@ async function startServer() {
   const port = Number(process.env.SERVER_PORT) || 3000
 
   // createClientAndConnect()
+  // Подключаемся к БД
   sequelize
     .authenticate()
     .then(() => {
@@ -32,6 +37,8 @@ async function startServer() {
       console.error('Неудалось подключиться к БД: ', err)
     })
 
+  sequelize.sync({ force: true })
+
   let vite: ViteDevServer | undefined
 
   const distPath = path.resolve('../../client/dist')
@@ -40,6 +47,12 @@ async function startServer() {
 
   app.get('/forum', getAllForums)
   app.get('/topics/:id', getForumById)
+
+  app.get('/topics/:forumId', getTopicsByForumId)
+  app.post('/topics', createTopic)
+
+  app.get('/discuss/:topicId', getMessagesByTopicId)
+  app.post('/discuss', createMessage)
 
   if (isDev()) {
     vite = await createViteServer({
