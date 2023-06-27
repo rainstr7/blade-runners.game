@@ -10,7 +10,10 @@ import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 
-import { createClientAndConnect } from './db'
+// import { createClientAndConnect } from './db'
+import sequelize from './dbapi'
+import { getAllForums } from './controllers/forumController'
+import { getForumById } from './controllers/forumController'
 
 const routes = ['/', '/signin', '/signup']
 
@@ -19,13 +22,24 @@ async function startServer() {
   app.use(cors())
   const port = Number(process.env.SERVER_PORT) || 3000
 
-  createClientAndConnect()
+  // createClientAndConnect()
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Соединение с БД установленно')
+    })
+    .catch((err: Error) => {
+      console.error('Неудалось подключиться к БД: ', err)
+    })
 
   let vite: ViteDevServer | undefined
 
   const distPath = path.resolve('../../client/dist')
   const srcPath = path.resolve('../../client')
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
+
+  app.get('/forum', getAllForums)
+  app.get('/topics/:id', getForumById)
 
   if (isDev()) {
     vite = await createViteServer({
@@ -51,19 +65,15 @@ async function startServer() {
     try {
       let template: string
 
-
       if (!isDev()) {
         template = fs.readFileSync(
           path.resolve(distPath, 'index.html'),
           'utf-8'
-        );
+        )
       } else {
-        template = fs.readFileSync(
-          path.resolve(srcPath, 'index.html'),
-          'utf-8'
-        );
+        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
 
-        template = await vite!.transformIndexHtml(url, template);
+        template = await vite!.transformIndexHtml(url, template)
       }
 
       let create: (initialState: any) => any
