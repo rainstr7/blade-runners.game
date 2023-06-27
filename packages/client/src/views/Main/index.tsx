@@ -38,7 +38,7 @@ const Main = () => {
   return (
     <main className={cn.Container}>
       <header className={cn.Header}>
-        <p>By Blade Runners</p>
+        <p style={{marginLeft: `${3}rem`}}>By Blade Runners</p>
         {id ? (
           <Avatar src={getAvatarFullUrl(avatar)} />
         ) : (

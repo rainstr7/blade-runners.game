@@ -4,16 +4,13 @@ import Button from '../../../components/UI/Button'
 import Forum from '../index'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../../store/reduces/interfaces'
-import { useEffect, useContext } from 'react'
+import { useEffect } from 'react'
 import useForum from '../../../hooks/useForum'
-import { ThemeContext } from '../../../components/Theme'
 
 const ForumPage = () => {
   const navigate = useNavigate()
   const { forums } = useSelector((state: IRootStore) => state.forum)
   const { getForumsList } = useForum()
-
-  const theme = useContext(ThemeContext)
 
   useEffect(() => {
     getForumsList().catch()
@@ -33,7 +30,7 @@ const ForumPage = () => {
       <div className={cn.ListContainer}>
         <ul className={cn.List}>
           <li className={cn.ListElement}>
-            <div className={cn.HeaderContainer} style={{color: theme?.defaultColor}}>
+            <div className={cn.HeaderContainer}>
               <div className={cn.TitleHeader}>FORUMS/SOCIAL</div>
               <div className={cn.TopicCountHeader}>TRENDS</div>
               <div className={cn.MsgCountHeader}>COMMENTS</div>

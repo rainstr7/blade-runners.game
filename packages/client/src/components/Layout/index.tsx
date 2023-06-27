@@ -34,7 +34,7 @@ const Layout = ({ children }: Props) => {
         <div className={cn.Wrapper}>
           <Header>{header}</Header>
           {children}
-          <p className={cn.Authors} style={{color: theme?.defaultColor }}>by blade runners</p>
+          <p className={cn.Authors}>by blade runners</p>
         </div>
       </div>
       <Alert />

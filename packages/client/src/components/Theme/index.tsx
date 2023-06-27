@@ -16,8 +16,6 @@ const themeDark = {
   layoutBackground: bgDark
 }
 
-
-
 const themes: Themes = {
   light: themeLight,
   dark: themeDark
@@ -41,20 +39,18 @@ interface Props {
 export const ThemeContext = createContext<Theme | null>(null)
 
 export const ThemeProvider = ({children}: Props ) => {
-  const [theme, setTheme] = useState<Theme | null>(null);
+  const [theme, setTheme] = useState<Theme | null>(themes.dark);
 
   const toggleTheme = () => {
     setTheme(theme?.type === 'dark' ? themes.light : themes.dark)
   }
   
-  useEffect(() => {
-    setTheme(themes.dark)
-  }, [])
-  
   return (
-    <ThemeContext.Provider value={theme}>
-      <button className={`${cn.button} ${theme?.type === 'dark' ? cn.dark : cn.light}`} onClick={toggleTheme}></button>
-      {children}
-    </ThemeContext.Provider>
+    <div className={cn.ThemeWrapper} style={{ "--default-color": theme?.defaultColor } as React.CSSProperties}>
+      <ThemeContext.Provider value={theme}>
+        <button className={`${cn.button} ${theme?.type === 'dark' ? cn.dark : cn.light}`} onClick={toggleTheme}></button>
+        {children}
+      </ThemeContext.Provider>
+    </div>
   )
 }

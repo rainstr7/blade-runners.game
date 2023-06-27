@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react'
+import { useEffect } from 'react'
 import cn from './style.module.scss'
 import Avatar from '../../components/UI/Avatar'
 import CardLink from '../../components/UI/CardLink'
@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'
 import { IRootStore } from '../../store/reduces/interfaces'
 import getAvatarFullUrl from '../../utils/getFullAvatarUrl'
 import { Player } from '../interfaces'
-import { ThemeContext } from '../../components/Theme'
 
 const LeaderBoard = () => {
   const { getLeaderboardData } = useScore()
@@ -15,8 +14,6 @@ const LeaderBoard = () => {
   const leaderboard: Array<Player> = useSelector(
     (state: IRootStore) => state.score.leaderboard
   )
-
-  const theme = useContext(ThemeContext)
 
   useEffect(() => {
     if (leaderboard && leaderboard.length > 0) {
@@ -27,13 +24,13 @@ const LeaderBoard = () => {
 
   return (
     <main className={cn.leaderboard}>
-      <div className={cn.title} style={{color: theme?.defaultColor}}>
+      <div className={cn.title}>
         <CardLink to="/start">Back</CardLink>
         LeaderBoard
         <div className="empty" />
       </div>
       <div className={cn.list}>
-        <div className={cn.header} style={{color: theme?.defaultColor}}>
+        <div className={cn.header}>
           <span>Player</span>
           <span>Score</span>
         </div>
