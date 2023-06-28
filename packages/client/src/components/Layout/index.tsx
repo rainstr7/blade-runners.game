@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from 'react'
+import { ReactElement, useMemo, useContext } from 'react'
 import cn from './style.module.scss'
 import Header from '../UI/Header'
 import Alert from '../UI/Alert'
@@ -6,13 +6,15 @@ import Loader from '../Loader'
 import { useLocation } from 'react-router-dom'
 import { routerList } from '../RouterList/settings'
 import NetworkIndicator from '../NetworkIndicator'
-
+import { ThemeContext } from '../Theme'
 interface Props {
   children: ReactElement
 }
 
 const Layout = ({ children }: Props) => {
   const { pathname } = useLocation()
+
+  const theme = useContext(ThemeContext)
 
   const { type, header } = useMemo(() => {
     if (Object.hasOwn(routerList, pathname)) {
@@ -26,7 +28,7 @@ const Layout = ({ children }: Props) => {
   }
 
   return (
-    <div className={`${cn.Layout} ${cn[type ?? 'Default']}`}>
+    <div className={`${cn.Layout} ${cn[type ?? 'Default']}`} style={{backgroundImage: `url(${theme?.layoutBackground})` }}>
       <NetworkIndicator />
       <div className={`${cn.Container}`}>
         <div className={cn.Wrapper}>
