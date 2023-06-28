@@ -11,7 +11,7 @@ export const getAllForums = async (
     res.json(forums)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при получении форумов.' })
+    res.status(500).json({ reason: 'Произошла ошибка при получении форумов.' })
   }
 }
 
@@ -24,13 +24,13 @@ export const getForumById = async (
   try {
     const forum = await Forum.findByPk(id)
     if (!forum) {
-      res.status(404).json({ message: 'Форум не найден.' })
+      res.status(404).json({ reason: 'Форум не найден.' })
       return
     }
     res.json(forum)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при получении форума.' })
+    res.status(500).json({ reason: 'Произошла ошибка при получении форума.' })
   }
 }
 
@@ -43,14 +43,14 @@ export const deleteForum = async (
   try {
     const forum = await Forum.findByPk(id)
     if (!forum) {
-      res.status(404).json({ message: 'Форум не найден.' })
+      res.status(404).json({ reason: 'Форум не найден.' })
       return
     }
     await forum.destroy()
-    res.json({ message: 'Форум успешно удален.' })
+    res.json({ reason: 'Форум успешно удален.' })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при удалении форума.' })
+    res.status(500).json({ reason: 'Произошла ошибка при удалении форума.' })
   }
 }
 
@@ -65,7 +65,7 @@ export const createForum = async (
     res.status(201).json(forum)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при создании форума.' })
+    res.status(500).json({ reason: 'Произошла ошибка при создании форума.' })
   }
 }
 
@@ -79,13 +79,13 @@ export const updateForum = async (
   try {
     const forum = await Forum.findByPk(id)
     if (!forum) {
-      res.status(404).json({ message: 'Форум не найден.' })
+      res.status(404).json({ reason: 'Форум не найден.' })
       return
     }
     await forum.update({ title, trends, comms })
     res.json(forum)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при обновлении форума.' })
+    res.status(500).json({ reason: 'Произошла ошибка при обновлении форума.' })
   }
 }

@@ -14,7 +14,7 @@ export const getMessagesByTopicId = async (
     console.error(error)
     res
       .status(500)
-      .json({ message: 'Произошла ошибка при получении сообщений для топика.' })
+      .json({ reason: 'Произошла ошибка при получении сообщений для топика.' })
   }
 }
 
@@ -29,13 +29,13 @@ export const getMessageById = async (
     if (message) {
       res.json(message)
     } else {
-      res.status(404).json({ message: 'Сообщение не найдено.' })
+      res.status(404).json({ reason: 'Сообщение не найдено.' })
     }
   } catch (error) {
     console.error(error)
     res
       .status(500)
-      .json({ message: 'Произошла ошибка при получении сообщения.' })
+      .json({ reason: 'Произошла ошибка при получении сообщения.' })
   }
 }
 
@@ -50,9 +50,7 @@ export const createMessage = async (
     res.status(201).json(message)
   } catch (error) {
     console.error(error)
-    res
-      .status(500)
-      .json({ message: 'Произошла ошибка при создании сообщения.' })
+    res.status(500).json({ reason: 'Произошла ошибка при создании сообщения.' })
   }
 }
 
@@ -75,7 +73,7 @@ export const updateMessage = async (
     console.error(error)
     res
       .status(500)
-      .json({ message: 'Произошла ошибка при обновлении сообщения.' })
+      .json({ reason: 'Произошла ошибка при обновлении сообщения.' })
   }
 }
 
@@ -89,14 +87,12 @@ export const deleteMessage = async (
     const message = await Message.findByPk(id)
     if (message) {
       await message.destroy()
-      res.json({ message: 'Сообщение успешно удалено.' })
+      res.json({ reason: 'Сообщение успешно удалено.' })
     } else {
-      res.status(404).json({ message: 'Сообщение не найдено.' })
+      res.status(404).json({ reason: 'Сообщение не найдено.' })
     }
   } catch (error) {
     console.error(error)
-    res
-      .status(500)
-      .json({ message: 'Произошла ошибка при удалении сообщения.' })
+    res.status(500).json({ reason: 'Произошла ошибка при удалении сообщения.' })
   }
 }

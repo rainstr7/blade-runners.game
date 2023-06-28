@@ -17,6 +17,8 @@ import { createTopic, getTopicsByForumId } from './controllers/topicController'
 import {
   getMessagesByTopicId,
   createMessage,
+  updateMessage,
+  deleteMessage,
 } from './controllers/messageController'
 
 const routes = ['/', '/signin', '/signup']
@@ -53,6 +55,8 @@ async function startServer() {
 
   app.get('/discuss/:topicId', getMessagesByTopicId)
   app.post('/discuss', createMessage)
+  app.put('/discuss/:id', updateMessage)
+  app.delete('/discuss/:id', deleteMessage)
 
   if (isDev()) {
     vite = await createViteServer({

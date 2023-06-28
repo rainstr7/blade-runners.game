@@ -11,7 +11,7 @@ export const getAllTopics = async (
     res.json(topics)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при получении тем.' })
+    res.status(500).json({ reason: 'Произошла ошибка при получении тем.' })
   }
 }
 
@@ -28,7 +28,7 @@ export const getTopicsByForumId = async (
     console.error(error)
     res
       .status(500)
-      .json({ message: 'Произошла ошибка при получении тем для форума.' })
+      .json({ reason: 'Произошла ошибка при получении тем для форума.' })
   }
 }
 
@@ -41,13 +41,13 @@ export const getTopicById = async (
   try {
     const topic = await Topic.findByPk(id)
     if (!topic) {
-      res.status(404).json({ message: 'Тема не найдена.' })
+      res.status(404).json({ reason: 'Тема не найдена.' })
       return
     }
     res.json(topic)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при получении темы.' })
+    res.status(500).json({ reason: 'Произошла ошибка при получении темы.' })
   }
 }
 
@@ -62,7 +62,7 @@ export const createTopic = async (
     res.status(201).json(topic)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при создании темы.' })
+    res.status(500).json({ reason: 'Произошла ошибка при создании темы.' })
   }
 }
 
@@ -76,14 +76,14 @@ export const updateTopic = async (
   try {
     const topic = await Topic.findByPk(id)
     if (!topic) {
-      res.status(404).json({ message: 'Тема не найдена.' })
+      res.status(404).json({ reason: 'Тема не найдена.' })
       return
     }
     await topic.update({ title, forumId })
     res.json(topic)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при обновлении темы.' })
+    res.status(500).json({ reason: 'Произошла ошибка при обновлении темы.' })
   }
 }
 
@@ -96,13 +96,13 @@ export const deleteTopic = async (
   try {
     const topic = await Topic.findByPk(id)
     if (!topic) {
-      res.status(404).json({ message: 'Тема не найдена.' })
+      res.status(404).json({ reason: 'Тема не найдена.' })
       return
     }
     await topic.destroy()
-    res.json({ message: 'Тема успешно удалена.' })
+    res.json({ reason: 'Тема успешно удалена.' })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: 'Произошла ошибка при удалении темы.' })
+    res.status(500).json({ reason: 'Произошла ошибка при удалении темы.' })
   }
 }
