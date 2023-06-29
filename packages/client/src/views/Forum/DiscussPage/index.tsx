@@ -82,7 +82,7 @@ const DiscussPage = () => {
         </Button>
         <h2>{selectedTopic}</h2>
       </nav>
-      <section className={cn.MsgContainer}>
+      <section className={cn.MsgContainer} >
         {Object.keys(messages).length === 0 ? (
           <div>Empty topic</div>
         ) : (
