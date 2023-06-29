@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.1.0",
+    "@reduxjs/toolkit": "^1.9.5",
     "@types/react-redux": "^7.1.25",
     "@types/redux": "^3.6.0",
     "@types/serviceworker": "^0.0.67",
