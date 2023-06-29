@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { Provider } from 'react-redux'
 import { initialServiceWorker } from '../sw/initialServiceWorker'
-import { create } from '@src/utils/createStore'
+import { create } from './utils/createStore'
 
 initialServiceWorker()
 
