@@ -18,7 +18,7 @@
   top: 10px;
   left: 10px;
   position: absolute;
-  
+
   &.light {
     background: transparent;
     border: none;
@@ -28,7 +28,7 @@
       font-size: 33px;
     }
   }
-  
+
   &.dark {
     background: #00000080;
     border: none;
@@ -37,5 +37,4 @@
       font-size: 33px;
     }
   }
-
 }

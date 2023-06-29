@@ -28,7 +28,9 @@ const Layout = ({ children }: Props) => {
   }
 
   return (
-    <div className={`${cn.Layout} ${cn[type ?? 'Default']}`} style={{backgroundImage: `url(${theme?.layoutBackground})` }}>
+    <div
+      className={`${cn.Layout} ${cn[type ?? 'Default']}`}
+      style={{ backgroundImage: `url(${theme?.layoutBackground})` }}>
       <NetworkIndicator />
       <div className={`${cn.Container}`}>
         <div className={cn.Wrapper}>
