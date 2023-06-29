@@ -11,7 +11,7 @@ interface AvatarProps {
 }
 
 const Avatar = ({
-  src = '../../../src/assets/avatar.jpeg',
+  src = './avatar.jpeg',
   name,
   size = 'small',
   onChangeAvatar,
