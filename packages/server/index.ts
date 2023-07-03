@@ -11,7 +11,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 // import { createClientAndConnect } from './db'
-import sequelize from './dbapi'
+import {connectToDB} from './dbapi'
 import { getAllForums, getForumById } from './controllers/forumController'
 import { createTopic, getTopicsByForumId } from './controllers/topicController'
 import {
@@ -20,26 +20,30 @@ import {
   updateMessage,
   deleteMessage,
 } from './controllers/messageController'
+// import Forum from './models/Forum'
 
 const routes = ['/', '/signin', '/signup']
 
 async function startServer() {
   const app = express()
   app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3000
+  const port = Number(process.env.SERVER_PORT) || 3001
 
   // createClientAndConnect()
   // Подключаемся к БД
-  sequelize
-    .authenticate()
-    .then(() => {
-      console.log('Соединение с БД установленно')
-    })
-    .catch((err: Error) => {
-      console.error('Неудалось подключиться к БД: ', err)
-    })
+  connectToDB()
+  // const res = await Forum.findAll()
+  // console.log(res)
+  // sequelize
+  //   .authenticate()
+  //   .then(() => {
+  //     console.log('Соединение с БД установленно')
+  //   })
+  //   .catch((err: Error) => {
+  //     console.error('Неудалось подключиться к БД: ', err)
+  //   })
 
-  sequelize.sync({ force: true })
+  // sequelize.sync({ force: true })
 
   let vite: ViteDevServer | undefined
 

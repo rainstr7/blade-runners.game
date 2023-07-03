@@ -1,5 +1,5 @@
 import { DataType } from 'sequelize-typescript'
-import sequelize from '../dbapi'
+import {sequelize} from '../dbapi'
 import Forum from './Forum'
 
 const Topic = sequelize.define('Topic', {
