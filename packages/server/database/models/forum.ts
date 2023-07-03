@@ -1,7 +1,14 @@
-import { DataType } from 'sequelize-typescript'
-import { sequelize } from '../dbapi'
+import { DataType, Model } from 'sequelize-typescript'
+import type { ModelAttributes } from 'sequelize/types'
 
-const Forum = sequelize.define('Forum', {
+export interface IForum {
+  id: number
+  title: string
+  topicsCount: number
+  messagesCount: number
+}
+
+export const forumModel: ModelAttributes<Model, IForum> = {
   id: {
     type: DataType.INTEGER,
     autoIncrement: true,
@@ -19,6 +26,4 @@ const Forum = sequelize.define('Forum', {
     type: DataType.INTEGER,
     allowNull: false,
   },
-})
-
-export default Forum
+}
