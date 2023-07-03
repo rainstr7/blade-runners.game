@@ -22,6 +22,7 @@ import {
   updateMessage,
   deleteMessage,
 } from './controllers/messageController'
+// import Forum from './models/Forum'
 
 const routes = ['/', '/signin', '/signup']
 
