@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite'
-// import { VitePWA } from 'vite-plugin-pwa'
+import { VitePWA } from 'vite-plugin-pwa'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import react from '@vitejs/plugin-react'
 import dotenv from 'dotenv'
@@ -17,11 +17,11 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    // VitePWA({ injectRegister: 'auto' }),
+    VitePWA({ injectRegister: 'auto' }),
     viteStaticCopy({
       targets: [
         {
-          src: './src/sw/sw.js',
+          src: './sw/sw.js',
           dest: '/',
         },
       ],

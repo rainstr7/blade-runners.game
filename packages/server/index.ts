@@ -45,6 +45,7 @@ async function startServer() {
 
   const distPath = path.resolve('../../client/dist')
   const srcPath = path.resolve('../../client')
+  const swPath = path.resolve('../../client/sw')
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
 
   app.get('/forum', getAllForums)
@@ -57,6 +58,10 @@ async function startServer() {
   app.post('/discuss', createMessage)
   app.put('/discuss/:id', updateMessage)
   app.delete('/discuss/:id', deleteMessage)
+
+  app.get("/sw.js", (_, res) => {
+    res.sendFile(path.resolve(swPath, 'sw.js'));
+  });
 
   if (isDev()) {
     vite = await createViteServer({
