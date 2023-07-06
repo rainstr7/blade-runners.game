@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express'
+// import { Topic } from '../database/models/topic'
 import Topic from '../models/Topic'
 
 // Получение всех тем

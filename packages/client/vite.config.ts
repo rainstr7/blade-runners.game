@@ -21,7 +21,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: './src/sw/sw.js',
+          src: './sw/sw.js',
           dest: '/',
         },
       ],

@@ -11,7 +11,9 @@ import * as fs from 'fs'
 import * as path from 'path'
 
 // import { createClientAndConnect } from './db'
-import sequelize from './dbapi'
+// import sequelize from './dbapi'
+import Forum from './models/Forum'
+import { dbConnect } from './database/init'
 import { getAllForums, getForumById } from './controllers/forumController'
 import { createTopic, getTopicsByForumId } from './controllers/topicController'
 import {
@@ -26,25 +28,31 @@ const routes = ['/', '/signin', '/signup']
 async function startServer() {
   const app = express()
   app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3000
+  const port = Number(process.env.SERVER_PORT) || 3001
 
-  // createClientAndConnect()
   // Подключаемся к БД
-  sequelize
-    .authenticate()
-    .then(() => {
-      console.log('Соединение с БД установленно')
-    })
-    .catch((err: Error) => {
-      console.error('Неудалось подключиться к БД: ', err)
-    })
+  dbConnect().then(async () => {
+    await Forum.create({title: 'forum first'})
+    const forums = await Forum.findAll()
+    console.log('FORUMS :',forums)
+  })
+  // createClientAndConnect()
+  // sequelize
+  //   .authenticate()
+  //   .then(() => {
+  //     console.log('Соединение с БД установленно')
+  //   })
+  //   .catch((err: Error) => {
+  //     console.error('Неудалось подключиться к БД: ', err)
+  //   })
 
-  sequelize.sync({ force: true })
+  // sequelize.sync({ force: true })
 
   let vite: ViteDevServer | undefined
 
   const distPath = path.resolve('../../client/dist')
   const srcPath = path.resolve('../../client')
+  const swPath = path.resolve('../../client/sw')
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
 
   app.get('/forum', getAllForums)
@@ -57,6 +65,10 @@ async function startServer() {
   app.post('/discuss', createMessage)
   app.put('/discuss/:id', updateMessage)
   app.delete('/discuss/:id', deleteMessage)
+
+  app.get("/sw.js", (_, res) => {
+    res.sendFile(path.resolve(swPath, 'sw.js'));
+  });
 
   if (isDev()) {
     vite = await createViteServer({
