@@ -1,5 +1,6 @@
 import { DataType } from 'sequelize-typescript'
-import sequelize from '../dbapi'
+// import sequelize from '../dbapi'
+import { sequelize } from '../database/init'
 
 const Forum = sequelize.define('Forum', {
   id: {
@@ -14,10 +15,12 @@ const Forum = sequelize.define('Forum', {
   topicsCount: {
     type: DataType.INTEGER,
     allowNull: false,
+    defaultValue: 0,
   },
   messagesCount: {
     type: DataType.INTEGER,
     allowNull: false,
+    defaultValue: 0,
   },
 })
 

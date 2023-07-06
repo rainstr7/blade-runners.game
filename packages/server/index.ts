@@ -10,8 +10,10 @@ import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 
-import { createClientAndConnect } from './db'
+// import { createClientAndConnect } from './db'
 // import sequelize from './dbapi'
+import Forum from './models/Forum'
+import { dbConnect } from './database/init'
 import { getAllForums, getForumById } from './controllers/forumController'
 import { createTopic, getTopicsByForumId } from './controllers/topicController'
 import {
@@ -28,8 +30,13 @@ async function startServer() {
   app.use(cors())
   const port = Number(process.env.SERVER_PORT) || 3001
 
-  createClientAndConnect()
   // Подключаемся к БД
+  dbConnect().then(async () => {
+    await Forum.create({title: 'forum first'})
+    const forums = await Forum.findAll()
+    console.log('FORUMS :',forums)
+  })
+  // createClientAndConnect()
   // sequelize
   //   .authenticate()
   //   .then(() => {
