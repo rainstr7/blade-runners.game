@@ -21,7 +21,7 @@ import {
   MessagesPayloadInterface,
 } from '../store/reduces/interfaces'
 import { EmojiClickData } from 'emoji-picker-react'
-import axios from 'axios'
+// import axios from 'axios'
 
 type Data = { data: ForumType | MessagesPayloadInterface; status: number }
 
@@ -29,7 +29,14 @@ const getData = (data: string, id = 0): Promise<Data> =>
   new Promise(resolve => {
     switch (data) {
       case 'forums':
-        axios.get('/getdata').then(res => {console.log('DATA FORUM : ', res)}).catch(err => {console.error(err)})
+        // axios
+        //   .get('/dbapi/get-data')
+        //   .then(res => {
+        //     console.log('DATA FORUM : ', res)
+        //   })
+        //   .catch(err => {
+        //     console.error(err)
+        //   })
         setTimeout(() => resolve({ status: 200, data: { ...forumsDB } }), 500)
         break
       case 'messages':
@@ -57,6 +64,7 @@ const useForum = () => {
 
   const getForumsList = useCallback(async () => {
     // const { status, data } = await request(getForumList)
+
     dispatch(showLoader())
     const { status, data } = await getData('forums')
     switch (status) {

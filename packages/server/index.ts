@@ -10,24 +10,10 @@ import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 
-// import { createClientAndConnect } from './db'
-// import sequelize from './dbapi'
-import Forum from './models/Forum'
-import Topic from './models/Topic'
+import Forum from './database/models/Forum'
+import Topic from './database/models/Topic'
 import { dbConnect } from './database/init'
-import {
-  getAllForums,
-  getForumById,
-  createForum,
-  getAllForumsWithTopics,
-} from './controllers/forumController'
-import { createTopic, getTopicsByForumId } from './controllers/topicController'
-import {
-  getMessagesByTopicId,
-  createMessage,
-  updateMessage,
-  deleteMessage,
-} from './controllers/messageController'
+import { dbapi } from './dbapi'
 
 const routes = ['/', '/signin', '/signup']
 
@@ -53,17 +39,6 @@ async function startServer() {
     const topics = await Topic.findAll()
     console.log('TOPICS : ', JSON.stringify(topics))
   })
-  // createClientAndConnect()
-  // sequelize
-  //   .authenticate()
-  //   .then(() => {
-  //     console.log('Соединение с БД установленно')
-  //   })
-  //   .catch((err: Error) => {
-  //     console.error('Неудалось подключиться к БД: ', err)
-  //   })
-
-  // sequelize.sync({ force: true })
 
   let vite: ViteDevServer | undefined
 
@@ -72,22 +47,11 @@ async function startServer() {
   const swPath = path.resolve('../../client/sw')
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
 
-  app.get('/getforums', getAllForums)
-  app.get('/getdata', getAllForumsWithTopics)
-  app.post('/newforum', createForum)
-  app.get('/topics/:id', getForumById)
+  app.use('/dbapi', dbapi)
 
-  app.get('/topics/:forumId', getTopicsByForumId)
-  app.post('/topics', createTopic)
-
-  app.get('/discuss/:topicId', getMessagesByTopicId)
-  app.post('/discuss', createMessage)
-  app.put('/discuss/:id', updateMessage)
-  app.delete('/discuss/:id', deleteMessage)
-
-  app.get("/sw.js", (_, res) => {
-    res.sendFile(path.resolve(swPath, 'sw.js'));
-  });
+  app.get('/sw.js', (_, res) => {
+    res.sendFile(path.resolve(swPath, 'sw.js'))
+  })
 
   if (isDev()) {
     vite = await createViteServer({

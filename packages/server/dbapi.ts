@@ -1,38 +1,29 @@
-// import Forum from './models/Forum'
-import dotenv from 'dotenv'
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import { Router } from 'express'
+import {
+  getAllForums,
+  getAllForumsWithTopics,
+  getForumById,
+  createForum,
+} from './controllers/forumController'
+import { getTopicsByForumId, createTopic } from './controllers/topicController'
+import {
+  getMessagesByTopicId,
+  createMessage,
+  updateMessage,
+  deleteMessage,
+} from './controllers/messageController'
 
-dotenv.config()
+export const dbapi = Router()
+  .get('/get-data', getAllForumsWithTopics)
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-  process.env
+  .get('/get-forums', getAllForums)
+  .get('/get-forums/:id', getForumById)
+  .post('/new-forum', createForum)
 
-export const sequelizeOptions: SequelizeOptions = {
-  host: 'localhost',
-  port: Number(POSTGRES_PORT),
-  username: POSTGRES_USER,
-  password: POSTGRES_PASSWORD,
-  database: POSTGRES_DB,
-  dialect: 'postgres',
-  // models: [Forum]
-}
-export const sequelize = new Sequelize(sequelizeOptions)
+  .get('/get-topics/:id', getTopicsByForumId)
+  .post('/new-topic', createTopic)
 
-export const connectToDB = async () => {
-  
-  try {
-    await sequelize.authenticate()
-    console.log('Connected to DB')
-    return sequelize
-    // const forums = await Forum.findAll()
-    // console.log('FORUMS : ', forums)
-
-    // await sequelize.close()
-    // console.log('Conecction close')
-  } catch (error) {
-    console.error('Cant connect to DB ', error)
-  }
-  return null
-}
-
-// export default connectToDB
+  .get('/get-message/:topicId', getMessagesByTopicId)
+  .post('/new-message', createMessage)
+  .put('/update-message/:id', updateMessage)
+  .delete('/delete-message/:id', deleteMessage)
