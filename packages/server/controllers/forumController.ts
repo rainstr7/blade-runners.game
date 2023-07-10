@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express'
+// import {Forum} from '../database/models/forum'
 import Forum from '../models/Forum'
 
 // Получение всех форумов
@@ -59,9 +60,9 @@ export const createForum = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { title, trends, comms } = req.body
+  const { title, topicsCount, messagesCount } = req.body
   try {
-    const forum = await Forum.create({ title, trends, comms })
+    const forum = await Forum.create({ title, topicsCount, messagesCount })
     res.status(201).json(forum)
   } catch (error) {
     console.error(error)
@@ -75,14 +76,14 @@ export const updateForum = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params
-  const { title, trends, comms } = req.body
+  const { title, topicsCount, messagesCount } = req.body
   try {
     const forum = await Forum.findByPk(id)
     if (!forum) {
       res.status(404).json({ reason: 'Форум не найден.' })
       return
     }
-    await forum.update({ title, trends, comms })
+    await forum.update({ title, topicsCount, messagesCount })
     res.json(forum)
   } catch (error) {
     console.error(error)

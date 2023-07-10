@@ -1,31 +1,30 @@
-// import dotenv from 'dotenv'
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
-import { forumModel } from '../models/forum'
+// import { Forum } from '../models/forum'
+// import Forum from '../../models/Forum'
 
-// dotenv.config()
-
-// const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
+// const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT, POSTGRES_HOST } =
 //   process.env
 
 const sequelizeOptions: SequelizeOptions = {
-  host: 'localhost',
+  // host: POSTGRES_HOST,
   port: 5450,
   username: 'postgres',
   password: 'postgres',
   database: 'postgres',
   dialect: 'postgres',
+  // models: ['../models'],
 }
 
 // Создаем инстанс Sequelize
 export const sequelize = new Sequelize(sequelizeOptions)
 
 // Инициализируем модели
-export const Forum = sequelize.define('Forums', forumModel, {})
+// export const forum = sequelize.define('Forums', Forum, {})
 
 export async function dbConnect() {
   try {
     await sequelize.authenticate() // Проверка аутентификации в БД
-    await sequelize.sync() // Синхронизация базы данных
+    await sequelize.sync({ force: true }) // Синхронизация базы данных
     console.log('Connection has been established successfully.')
   } catch (error) {
     console.error('Unable to connect to the database:', error)

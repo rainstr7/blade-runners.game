@@ -1,13 +1,13 @@
 import { Client } from 'pg'
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
+const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT, POSTGRES_HOST } =
   process.env
 
 export const createClientAndConnect = async (): Promise<Client | null> => {
   try {
     const client = new Client({
       user: POSTGRES_USER,
-      host: 'localhost',
+      host: POSTGRES_HOST,
       database: POSTGRES_DB,
       password: POSTGRES_PASSWORD,
       port: Number(POSTGRES_PORT),
@@ -15,15 +15,15 @@ export const createClientAndConnect = async (): Promise<Client | null> => {
 
     await client.connect()
 
-    const res = await client.query('SELECT NOW()')
-    console.log('  ➜ 🎸 Connected to the database at:', res?.rows?.[0].now)
-    // const forums = await client.query('SELECT * FROM forums')
-    // console.log('FORUMS : ', forums)
-    client.end()
+    client.query('SELECT NOW()').then(res => {
+      console.log(res.rows);
+      client.end();
+    }).catch(err => {
+      console.log('error', err);
+    });
 
-    return client
   } catch (e) {
-    console.error(e)
+    console.error('createClientAndConnect', e)
   }
 
   return null
