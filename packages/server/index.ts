@@ -19,6 +19,7 @@ import {
   getAllForums,
   getForumById,
   createForum,
+  getAllForumsWithTopics,
 } from './controllers/forumController'
 import { createTopic, getTopicsByForumId } from './controllers/topicController'
 import {
@@ -64,9 +65,7 @@ async function startServer() {
 
   // sequelize.sync({ force: true })
 
-    const distPath = path.resolve('../../client/dist')
-    const srcPath = path.resolve('../../client')
-    const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
+  let vite: ViteDevServer | undefined
 
   const distPath = path.resolve('../../client/dist')
   const srcPath = path.resolve('../../client')
@@ -74,6 +73,7 @@ async function startServer() {
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
 
   app.get('/getforums', getAllForums)
+  app.get('/getdata', getAllForumsWithTopics)
   app.post('/newforum', createForum)
   app.get('/topics/:id', getForumById)
 
@@ -85,9 +85,9 @@ async function startServer() {
   app.put('/discuss/:id', updateMessage)
   app.delete('/discuss/:id', deleteMessage)
 
-  app.get('/sw.js', (_, res) => {
-    res.sendFile(path.resolve(swPath, 'sw.js'))
-  })
+  app.get("/sw.js", (_, res) => {
+    res.sendFile(path.resolve(swPath, 'sw.js'));
+  });
 
   if (isDev()) {
     vite = await createViteServer({
@@ -161,110 +161,37 @@ async function startServer() {
         loading: { loading: false },
       })
 
-      app.use(vite.middlewares)
-    }
+      let renderUrl = '/'
+      const availRoute = routes.find(r => r === url)
+      if (availRoute) {
+        renderUrl = availRoute
+      }
 
-    app.get('/api', (_, res) => {
-      res.json('👋 Howdy from the server :)')
-    })
+      const appHtml = await render(store, renderUrl)
 
-    if (!isDev()) {
-      app.use('/assets', express.static(path.resolve(distPath, 'assets')))
-    }
-
-    app.use('*', async (req, res, next) => {
-      const url = req.originalUrl
-
-      try {
-        let template: string
-
-        if (!isDev()) {
-          template = fs.readFileSync(
-            path.resolve(distPath, 'index.html'),
-            'utf-8'
-          )
-        } else {
-          template = fs.readFileSync(
-            path.resolve(srcPath, 'index.html'),
-            'utf-8'
-          )
-
-          template = await vite!.transformIndexHtml(url, template)
-        }
-
-        let create: (initialState: any) => any
-        let render: (store: any, url: string) => Promise<string>
-
-        if (!isDev()) {
-          render = (await import(ssrClientPath)).render
-          create = (await import(ssrClientPath)).create
-        } else {
-          render = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
-            .render
-
-          create = (await vite!.ssrLoadModule(path.resolve(srcPath, 'ssr.tsx')))
-            .create
-        }
-
-        const store = create({
-          score: {
-            value: 0,
-            leaderboard: [],
-          },
-          user: {
-            id: undefined,
-            first_name: undefined,
-            second_name: undefined,
-            display_name: undefined,
-            login: undefined,
-            email: undefined,
-            phone: undefined,
-            avatar: undefined,
-          },
-          alert: {
-            show: false,
-            type: 'success',
-            text: '',
-          },
-          loading: { loading: false },
-        })
-
-        let renderUrl = '/'
-        const availRoute = routes.find(r => r === url)
-        if (availRoute) {
-          renderUrl = availRoute
-        }
-
-        const appHtml = await render(store, renderUrl)
-
-        const html = template.replace(
-          `<!--ssr-outlet-->`,
-          appHtml +
-            `<script> 
+      const html = template.replace(
+        `<!--ssr-outlet-->`,
+        appHtml +
+          `<script> 
           window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(
             /</g,
             '\\u003c'
           )}
         </script>`
-        )
+      )
 
-        res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
-      } catch (e) {
-        if (isDev()) {
-          vite!.ssrFixStacktrace(e as Error)
-        }
-        next(e)
+      res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+    } catch (e) {
+      if (isDev()) {
+        vite!.ssrFixStacktrace(e as Error)
       }
-    })
-
-    app.listen(port, () => {
-      console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
-    })
+      next(e)
+    }
   })
 
-  // await Forum.create({ title: 'forum 10500' })
-  // const db = await Forum.findAll()
-  // console.log('FORUMS : ', db)
+  app.listen(port, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  })
 }
 
 startServer()

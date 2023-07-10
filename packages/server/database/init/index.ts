@@ -2,17 +2,17 @@ import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
 // import { Forum } from '../models/forum'
 // import Forum from '../../models/Forum'
 
-// const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT, POSTGRES_HOST } =
-//   process.env
+const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT, POSTGRES_HOST } =
+  process.env
 
 const sequelizeOptions: SequelizeOptions = {
-  // host: POSTGRES_HOST,
-  port: 5450,
-  username: 'postgres',
-  password: 'postgres',
-  database: 'postgres',
+  host: POSTGRES_HOST,
+  port: Number(POSTGRES_PORT),
+  username: POSTGRES_USER,
+  password: POSTGRES_PASSWORD,
+  database: POSTGRES_DB,
   dialect: 'postgres',
-  // models: ['../models'],
+  models: ['../models'],
 }
 
 // Создаем инстанс Sequelize
