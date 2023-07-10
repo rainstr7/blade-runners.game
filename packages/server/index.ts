@@ -24,16 +24,10 @@ async function startServer() {
 
   // Подключаемся к БД
   dbConnect().then(async () => {
-    await Forum.bulkCreate([
-      { title: 'forum first' },
-      { title: 'forum sec' },
-      { title: 'forum tree' },
-    ])
-    await Topic.bulkCreate([
-      { title: 'topic 1 and foum1', forumId: 1 },
-      { title: 'topic 2 and foum2', forumId: 2 },
-      { title: 'topic 3 and foum3', forumId: 3 },
-    ])
+    await Forum.create({ title: 'forum first' })
+    await Forum.create({ title: 'forum sec' })
+    await Forum.create({ title: 'forum tree' })
+    await Topic.create({ title: 'topic 1 and foum1', forumId: 1 })
     const forums = await Forum.findAll()
     console.log('FORUMS :', JSON.stringify(forums, null, 2))
     const topics = await Topic.findAll()

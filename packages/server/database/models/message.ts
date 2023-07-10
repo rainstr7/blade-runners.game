@@ -3,7 +3,7 @@ import { sequelize } from '../init'
 import Topic from './Topic'
 
 const Message = sequelize.define(
-  'Forum',
+  'Message',
   {
     id: {
       type: DataType.INTEGER,

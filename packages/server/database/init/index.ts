@@ -15,6 +15,7 @@ const sequelizeOptions: SequelizeOptions = {
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   dialect: 'postgres',
+  models: ['../models']
 }
 
 export const sequelize = new Sequelize(sequelizeOptions)
