@@ -12,7 +12,6 @@ export const getAllForumsWithTopics = async (
       include: {
         model: Topic,
       },
-      group: ['Forum.id'],
     })
 
     res.json(forumsWithTopics)
@@ -42,6 +41,7 @@ export const getForumById = async (
   res: Response
 ): Promise<void> => {
   const { id } = req.params
+  console.log(req.params)
   try {
     const forum = await Forum.findByPk(id)
     if (!forum) {
@@ -54,12 +54,34 @@ export const getForumById = async (
     res.status(500).json({ reason: 'Произошла ошибка при получении форума.' })
   }
 }
-
+// Получение форума по id c топиками
+export const getForumByIdWithTpoics = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  console.log(req.params)
+  const { id } = req.params
+  try {
+    const forum = await Forum.findOne({
+      where: {id: id},
+      include: {model: Topic}
+    })
+    if (!forum) {
+      res.status(404).json({ reason: 'Форум не найден.' })
+      return
+    }
+    res.json(forum)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ reason: 'Произошла ошибка при получении форума.' })
+  }
+}
 // Удаление форума по id
 export const deleteForum = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  console.log('BODY ', req.body)
   const { id } = req.params
   try {
     const forum = await Forum.findByPk(id)
@@ -80,6 +102,7 @@ export const createForum = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  console.log('BODY ', req.body)
   const { title, topicsCount, messagesCount } = req.body
   try {
     const forum = await Forum.create({ title, topicsCount, messagesCount })

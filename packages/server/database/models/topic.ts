@@ -33,4 +33,6 @@ const Topic = sequelize.define(
   }
 )
 
+// Topic.belongsTo(Forum)
+
 export default Topic
