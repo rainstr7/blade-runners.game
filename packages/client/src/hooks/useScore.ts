@@ -28,6 +28,7 @@ const useScore = () => {
   const { request, error } = useHttp()
   const dispatch = useDispatch()
   const { handleShowAlert } = useAlert()
+
   useEffect(() => {
     if (error) {
       handleShowAlert('error', error)
@@ -56,13 +57,13 @@ const useScore = () => {
     }
   }, [])
 
-  const handleSetScore = async (data: FieldValues) => {
+  const handleSetScore = useCallback( async ({ player: { display_name, avatar }, rating }: FieldValues) => {
     newRating.data = {
       player: {
-        display_name: data.player.display_name,
-        avatar: data.player.avatar,
+        display_name,
+        avatar,
       },
-      rating: data.rating,
+      rating,
     }
 
     const { status } = await request(addScoreResult, 'POST', newRating)
@@ -71,7 +72,7 @@ const useScore = () => {
       return true
     }
     return false
-  }
+  }, [])
 
   return {
     handleSetScore,

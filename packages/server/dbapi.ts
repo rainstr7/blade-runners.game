@@ -1,17 +1,31 @@
-import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
+import { Router } from 'express'
+import {
+  getAllForums,
+  getAllForumsWithTopics,
+  getForumById,
+  createForum,
+} from './controllers/forumController'
+import { getTopicsByForumId, createTopic } from './controllers/topicController'
+import {
+  getMessagesByTopicId,
+  createMessage,
+  updateMessage,
+  deleteMessage,
+} from './controllers/messageController'
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT } =
-  process.env
+export const dbapi = Router()
+  .get('/get-data', getAllForumsWithTopics)
 
-const sequelizeOptions: SequelizeOptions = {
-  host: 'localhost',
-  port: Number(POSTGRES_PORT) | 5432,
-  username: POSTGRES_USER,
-  password: POSTGRES_PASSWORD,
-  database: POSTGRES_DB,
-  dialect: 'postgres',
-}
+  .get('/get-forums', getAllForums)
+  .get('/get-forums/:id', getForumById)
+  .post('/new-forum', createForum)
 
-const sequelize = new Sequelize(sequelizeOptions)
+  .get('/get-topics/:id', getTopicsByForumId)
+  .post('/new-topic', createTopic)
 
-export default sequelize
+  .get('/get-message/:topicId', getMessagesByTopicId)
+  .post('/new-message', createMessage)
+  .put('/update-message/:id', updateMessage)
+  .delete('/delete-message/:id', deleteMessage)
+
+  // .post('/auth-user', addNewUser)

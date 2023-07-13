@@ -1,30 +1,32 @@
-import { AllowNull, AutoIncrement, Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript'
+import { DataType } from 'sequelize-typescript'
+import { sequelize } from '../init'
 
-@Table({
-  tableName: 'forums',
-  timestamps: false,
-})
-export class Forum extends Model<Forum> {
-  @AutoIncrement
-  @PrimaryKey
-  @Column(DataType.INTEGER)
-  forumid: number | undefined
+const Forum = sequelize.define(
+  'Forum',
+  {
+    id: {
+      type: DataType.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    title: {
+      type: DataType.STRING,
+      allowNull: false,
+    },
+    topicsCount: {
+      type: DataType.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    messagesCount: {
+      type: DataType.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+  },
+  {
+    timestamps: false,
+  }
+)
 
-  @AllowNull(false)
-  @Column(DataType.STRING)
-  title: string | undefined
-
-  // @AllowNull(false)
-  @Column({
-    type: DataType.INTEGER,
-    defaultValue: 0
-  })
-  topicsCount: number | undefined
-  
-  // @AllowNull(false)
-  @Column({
-    type: DataType.INTEGER,
-    defaultValue: 0
-  })
-  messagesCount: number | undefined
-}
+export default Forum

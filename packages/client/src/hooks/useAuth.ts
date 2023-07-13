@@ -37,6 +37,8 @@ const useAuth = () => {
     const { status, data } = await request(userData)
     if (status === 200) {
       dispatch(changeProfile(data))
+      const responseFromBd = await request('http://localhost:3001/api/auth-user', 'POST', data)
+      console.log('responseFromBd', responseFromBd); //TODO починить и добавить загрузку theme в redux
     }
   }, [])
 

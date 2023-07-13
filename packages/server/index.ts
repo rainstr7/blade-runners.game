@@ -10,43 +10,44 @@ import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 
-// import { createClientAndConnect } from './db'
-// import sequelize from './dbapi'
-import Forum from './models/Forum'
+import Forum from './database/models/forum'
+import Topic from './database/models/topic'
 import { dbConnect } from './database/init'
-import { getAllForums, getForumById } from './controllers/forumController'
-import { createTopic, getTopicsByForumId } from './controllers/topicController'
-import {
-  getMessagesByTopicId,
-  createMessage,
-  updateMessage,
-  deleteMessage,
-} from './controllers/messageController'
+import { updateTheme, updateUser } from './controllers/userController'
 
 const routes = ['/', '/signin', '/signup']
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 
+dotenv.config();
 async function startServer() {
-  const app = express()
-  app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3001
 
+  const app = express()
+
+  const clientPort = Number(process.env.CLIENT_PORT) || 3000;
+  const serverPort = Number(process.env.SERVER_PORT) || 3001
+
+  const corsOptions = {
+    credentials: true,
+    origin: [
+      `http://127.0.0.1:${clientPort}`,
+      `http://localhost:${clientPort}`,
+    ],
+  };
+  app.use(cors(corsOptions))
+  app.use(bodyParser.json())
+  app.use(cookieParser())
   // Подключаемся к БД
   dbConnect().then(async () => {
-    await Forum.create({title: 'forum first'})
+    await Forum.create({ title: 'forum first' })
+    await Forum.create({ title: 'forum sec' })
+    await Forum.create({ title: 'forum tree' })
+    await Topic.create({ title: 'topic 1 and foum1', forumId: 1 })
     const forums = await Forum.findAll()
-    console.log('FORUMS :',forums)
+    console.log('FORUMS :', JSON.stringify(forums, null, 2))
+    const topics = await Topic.findAll()
+    console.log('TOPICS : ', JSON.stringify(topics))
   })
-  // createClientAndConnect()
-  // sequelize
-  //   .authenticate()
-  //   .then(() => {
-  //     console.log('Соединение с БД установленно')
-  //   })
-  //   .catch((err: Error) => {
-  //     console.error('Неудалось подключиться к БД: ', err)
-  //   })
-
-  // sequelize.sync({ force: true })
 
   let vite: ViteDevServer | undefined
 
@@ -55,20 +56,12 @@ async function startServer() {
   const swPath = path.resolve('../../client/sw')
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
 
-  app.get('/forum', getAllForums)
-  app.get('/topics/:id', getForumById)
-
-  app.get('/topics/:forumId', getTopicsByForumId)
-  app.post('/topics', createTopic)
-
-  app.get('/discuss/:topicId', getMessagesByTopicId)
-  app.post('/discuss', createMessage)
-  app.put('/discuss/:id', updateMessage)
-  app.delete('/discuss/:id', deleteMessage)
-
-  app.get("/sw.js", (_, res) => {
-    res.sendFile(path.resolve(swPath, 'sw.js'));
-  });
+  // app.use('/api', dbapi)
+  app.post('/api/auth-user', updateUser)
+  app.put('/api/update-theme', updateTheme)
+  app.get('/sw.js', (_, res) => {
+    res.sendFile(path.resolve(swPath, 'sw.js'))
+  })
 
   if (isDev()) {
     vite = await createViteServer({
@@ -79,10 +72,6 @@ async function startServer() {
 
     app.use(vite.middlewares)
   }
-
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)')
-  })
 
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
@@ -170,8 +159,8 @@ async function startServer() {
     }
   })
 
-  app.listen(port, () => {
-    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  app.listen(serverPort, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${serverPort}`)
   })
 }
 

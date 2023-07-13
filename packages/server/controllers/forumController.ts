@@ -1,6 +1,26 @@
 import type { Request, Response } from 'express'
-// import {Forum} from '../database/models/forum'
-import Forum from '../models/Forum'
+import Forum from '../database/models/forum'
+import Topic from '../database/models/topic'
+
+// Получение всех форумов и топиков
+export const getAllForumsWithTopics = async (
+  _: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const forumsWithTopics = await Forum.findAll({
+      include: {
+        model: Topic,
+      },
+      group: ['Forum.id'],
+    })
+
+    res.json(forumsWithTopics)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ reason: 'Произошла ошибка при получении форумов.' })
+  }
+}
 
 // Получение всех форумов
 export const getAllForums = async (
