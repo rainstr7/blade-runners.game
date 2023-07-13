@@ -10,18 +10,33 @@ import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
 
-import Forum from './database/models/Forum'
-import Topic from './database/models/Topic'
+import Forum from './database/models/forum'
+import Topic from './database/models/topic'
 import { dbConnect } from './database/init'
-import { dbapi } from './dbapi'
+import { updateTheme, updateUser } from './controllers/userController'
 
 const routes = ['/', '/signin', '/signup']
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 
+dotenv.config();
 async function startServer() {
-  const app = express()
-  app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3001
 
+  const app = express()
+
+  const clientPort = Number(process.env.CLIENT_PORT) || 3000;
+  const serverPort = Number(process.env.SERVER_PORT) || 3001
+
+  const corsOptions = {
+    credentials: true,
+    origin: [
+      `http://127.0.0.1:${clientPort}`,
+      `http://localhost:${clientPort}`,
+    ],
+  };
+  app.use(cors(corsOptions))
+  app.use(bodyParser.json())
+  app.use(cookieParser())
   // Подключаемся к БД
   dbConnect().then(async () => {
     await Forum.create({ title: 'forum first' })
@@ -41,8 +56,9 @@ async function startServer() {
   const swPath = path.resolve('../../client/sw')
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
 
-  app.use('/dbapi', dbapi)
-
+  // app.use('/api', dbapi)
+  app.post('/api/auth-user', updateUser)
+  app.put('/api/update-theme', updateTheme)
   app.get('/sw.js', (_, res) => {
     res.sendFile(path.resolve(swPath, 'sw.js'))
   })
@@ -56,10 +72,6 @@ async function startServer() {
 
     app.use(vite.middlewares)
   }
-
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)')
-  })
 
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
@@ -147,8 +159,8 @@ async function startServer() {
     }
   })
 
-  app.listen(port, () => {
-    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  app.listen(serverPort, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${serverPort}`)
   })
 }
 

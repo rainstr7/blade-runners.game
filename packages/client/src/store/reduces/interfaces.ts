@@ -17,12 +17,17 @@ import {
   ADD_EMOJI,
   DEL_EMOJI,
   DEL_MESSAGE,
-  DEL_TOPIC,
+  DEL_TOPIC, SET_THEME, TOGGLE_THEME
 } from '../actions/types'
 import { EmojiClickData } from 'emoji-picker-react'
 
 type responseInfo = string | undefined
 export type AlertType = 'success' | 'error' | 'warning' | 'info'
+
+export interface ThemePayloadInterface {
+  theme: 'light' | 'dark'
+}
+
 export interface AlertPayloadInterface {
   show: boolean
   type: AlertType
@@ -93,6 +98,7 @@ export interface IRootStore {
   alert: AlertPayloadInterface
   loading: LoadingPayloadInterface
   forum: ForumsPayloadInterface
+  theme: ThemePayloadInterface
 }
 
 export interface ActionInterface {
@@ -119,4 +125,6 @@ const actions = {
   DEL_TOPIC,
   ADD_MESSAGE,
   DEL_MESSAGE,
+  SET_THEME,
+  TOGGLE_THEME
 }

@@ -3,7 +3,7 @@ import useAlert from './useAlert'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useCallback, useEffect } from 'react'
-import { forumsDB, messagesDB } from '../store/reduces/forumReducer'
+// import { forumsDB, messagesDB } from '../store/reduces/forumReducer'
 import {
   addEmoji,
   addMessage,
@@ -22,35 +22,36 @@ import {
 } from '../store/reduces/interfaces'
 import { EmojiClickData } from 'emoji-picker-react'
 // import axios from 'axios'
+//
+// type Data = { data: ForumType | MessagesPayloadInterface; status: number }
 
-type Data = { data: ForumType | MessagesPayloadInterface; status: number }
-
-const getData = (data: string, id = 0): Promise<Data> =>
-  new Promise(resolve => {
-    switch (data) {
-      case 'forums':
-        // axios
-        //   .get('/dbapi/get-data')
-        //   .then(res => {
-        //     console.log('DATA FORUM : ', res)
-        //   })
-        //   .catch(err => {
-        //     console.error(err)
-        //   })
-        setTimeout(() => resolve({ status: 200, data: { ...forumsDB } }), 500)
-        break
-      case 'messages':
-        setTimeout(
-          () =>
-            resolve({ status: 200, data: { ...messagesDB[`${id}`] } ?? {} }),
-          500
-        )
-        break
-    }
-  })
+// const getData = (data: string, id = 0): Promise<Data> =>
+//   new Promise(resolve => {
+//     switch (data) {
+//       case 'forums':
+//         // axios
+//         //   .get('/dbapi/get-data')
+//         //   .then(res => {
+//         //     console.log('DATA FORUM : ', res)
+//         //   })
+//         //   .catch(err => {
+//         //     console.error(err)
+//         //   })
+//
+//         setTimeout(() => resolve({ status: 200, data: { ...forumsDB } }), 500)
+//         break
+//       case 'messages':
+//         setTimeout(
+//           () =>
+//             resolve({ status: 200, data: { ...messagesDB[`${id}`] } ?? {} }),
+//           500
+//         )
+//         break
+//     }
+//   })
 
 const useForum = () => {
-  const { /*request,*/ error } = useHttp()
+  const { request,  error } = useHttp()
   const { handleShowAlert } = useAlert()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -66,7 +67,7 @@ const useForum = () => {
     // const { status, data } = await request(getForumList)
 
     dispatch(showLoader())
-    const { status, data } = await getData('forums')
+    const { status, data } = await request( `http://${'__API_SERVER_HOST__'}:${'__SERVER_PORT__'}/api/get-forums`)
     switch (status) {
       case 200:
         dispatch(forumsDownload({ ...data, ...forums } as ForumType))
@@ -88,7 +89,7 @@ const useForum = () => {
       console.log('BODY', body)
       // const { status, data } = await request(getForumList, 'POST', body)
       dispatch(showLoader())
-      const { status, data } = await getData('messages', topicID)
+      const { status, data } = {status: 404, data: {}}//await getData('messages', topicID)
       switch (status) {
         case 200:
           dispatch(messagesDownload(data as MessagesPayloadInterface))

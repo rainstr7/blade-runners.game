@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
-import Forum from '../database/models/Forum'
-import Topic from '../database/models/Topic'
+import Forum from '../database/models/forum'
+import Topic from '../database/models/topic'
 
 // Получение всех форумов и топиков
 export const getAllForumsWithTopics = async (

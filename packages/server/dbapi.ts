@@ -27,3 +27,5 @@ export const dbapi = Router()
   .post('/new-message', createMessage)
   .put('/update-message/:id', updateMessage)
   .delete('/delete-message/:id', deleteMessage)
+
+  // .post('/auth-user', addNewUser)

@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import Message from '../database/models/Message'
+import Message from '../database/models/message'
 
 // Получение всех сообщений для топика по topicId
 export const getMessagesByTopicId = async (

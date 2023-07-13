@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express'
-// import { Topic } from '../database/models/topic'
-import Topic from '../database/models/Topic'
+import Topic from '../database/models/topic'
 
 // Получение всех тем
 export const getAllTopics = async (
