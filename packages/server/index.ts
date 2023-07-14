@@ -21,13 +21,22 @@ const routes = ['/', '/signin', '/signup']
 async function startServer() {
   const app = express()
   app.use(bodyParser.json())
+  app.use(bodyParser.urlencoded())
   app.use(cors())
   const port = Number(process.env.SERVER_PORT) || 3001
 
   // Подключаемся к БД
   dbConnect().then(async () => {
-    await Forum.bulkCreate([{ title: 'forum first' }, { title: 'forum sec' }, { title: 'forum tree' }])
-    await Topic.bulkCreate([{ title: 'topic 1 and foum1', forumId: 1 }, { title: 'topic 2 and foum1', forumId: 1 },{ title: 'topic 2.1 and foum2', forumId: 2 }])
+    await Forum.bulkCreate([
+      { title: 'forum first' },
+      { title: 'forum sec' },
+      { title: 'forum tree' },
+    ])
+    await Topic.bulkCreate([
+      { title: 'topic 1 and foum1', forumId: 1 },
+      { title: 'topic 2 and foum1', forumId: 1 },
+      { title: 'topic 2.1 and foum2', forumId: 2 },
+    ])
     const forums = await Forum.findAll()
     console.log('FORUMS :', JSON.stringify(forums, null, 2))
     const topics = await Topic.findAll()
@@ -36,10 +45,10 @@ async function startServer() {
 
   let vite: ViteDevServer | undefined
 
-  const distPath = path.resolve('../../client/dist')
-  const srcPath = path.resolve('../../client')
-  const swPath = path.resolve('../../client/sw')
-  const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
+  const distPath = path.resolve('../client/dist')
+  const srcPath = path.resolve('../client')
+  const swPath = path.resolve('../client/sw')
+  const ssrClientPath = path.resolve('../client/ssr-dist/client.cjs')
 
   app.use('/api', dbapi)
 

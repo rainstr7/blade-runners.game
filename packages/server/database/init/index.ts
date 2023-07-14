@@ -15,8 +15,17 @@ const sequelizeOptions: SequelizeOptions = {
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   dialect: 'postgres',
-  models: ['../models']
+  models: ['../models'],
 }
+// const sequelizeOptions: SequelizeOptions = {
+//   // host: POSTGRES_HOST,
+//   port: 5450,
+//   username: 'postgres',
+//   password: 'postgres',
+//   database: 'postgres',
+//   dialect: 'postgres',
+//   models: ['../models'],
+// }
 
 export const sequelize = new Sequelize(sequelizeOptions)
 

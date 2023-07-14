@@ -23,7 +23,6 @@ import {
 import { EmojiClickData } from 'emoji-picker-react'
 import axios from 'axios'
 
-
 type Data = { data: ForumType | MessagesPayloadInterface; status: number }
 
 const getData = (data: string, id = 0): Promise<Data> =>
@@ -59,11 +58,11 @@ const useForum = () => {
     // const { status, data } = await request(getForumList)
 
     dispatch(showLoader())
-    // const { status, data } = await getData('forums')
+    const { status, data } = await getData('forums')
     // const { status, data } = await request(`http://${API_SERVER_HOST}:${SERVER_PORT}/api/get-data`)
-    const { status, data } = await axios.get('/api/get-forums')
-    console.log('STATUS : ', status)
-    console.log('DATA : ', data)
+    // const { status, data } = await axios.get('/api/get-forums')
+    // console.log('STATUS : ', status)
+    // console.log('DATA : ', data)
     switch (status) {
       case 200:
         dispatch(forumsDownload({ ...data, ...forums } as ForumType))
