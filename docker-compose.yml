@@ -3,7 +3,7 @@ version: '3.9'
 services:
   server:
     container_name: prakticum-server
-    image: prackicum-server
+    image: ghcr.io/rainstr7/blade-runners.game/server:703be0d0b5ffc31f80f241597e7ca609d2bf3506
     build:
       context: .
       dockerfile: Dockerfile.server
