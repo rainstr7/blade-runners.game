@@ -11,8 +11,8 @@ import bodyParser from 'body-parser'
 import * as fs from 'fs'
 import * as path from 'path'
 
-import Forum from './database/models/Forum'
-import Topic from './database/models/Topic'
+import Forum from './database/models/forum'
+import Topic from './database/models/topic'
 import { dbConnect } from './database/init'
 import { dbapi } from './dbapi'
 

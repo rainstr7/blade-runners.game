@@ -1,6 +1,6 @@
 import { DataType } from 'sequelize-typescript'
 import { sequelize } from '../init'
-import Topic from './Topic'
+import Topic from './topic'
 
 const Forum = sequelize.define(
   'Forum',
@@ -30,6 +30,6 @@ const Forum = sequelize.define(
   }
 )
 
-Forum.hasOne(Topic, {foreignKey: 'forumId'})
+Forum.hasOne(Topic, { foreignKey: 'forumId' })
 
 export default Forum

@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express'
-import Forum from '../database/models/Forum'
-import Topic from '../database/models/Topic'
+import Forum from '../database/models/forum'
+import Topic from '../database/models/topic'
 
 // Получение всех форумов и топиков
 export const getAllForumsWithTopics = async (
@@ -63,8 +63,8 @@ export const getForumByIdWithTpoics = async (
   const { id } = req.params
   try {
     const forum = await Forum.findOne({
-      where: {id: id},
-      include: {model: Topic}
+      where: { id: id },
+      include: { model: Topic },
     })
     if (!forum) {
       res.status(404).json({ reason: 'Форум не найден.' })

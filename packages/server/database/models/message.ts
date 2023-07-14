@@ -1,6 +1,6 @@
 import { DataType } from 'sequelize-typescript'
 import { sequelize } from '../init'
-import Topic from './Topic'
+import Topic from './topic'
 
 const Message = sequelize.define(
   'Message',
