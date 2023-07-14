@@ -7,6 +7,7 @@ import { useLocation } from 'react-router-dom'
 import { routerList } from '../RouterList/settings'
 import NetworkIndicator from '../NetworkIndicator'
 import { ThemeContext } from '../Theme'
+import FullScreen from '../FullScreen'
 interface Props {
   children: ReactElement
 }
@@ -29,6 +30,7 @@ const Layout = ({ children }: Props) => {
 
   return (
     <div className={`${cn.Layout} ${cn[type ?? 'Default']}`} style={{backgroundImage: `url(${theme?.layoutBackground})` }}>
+      <FullScreen/>
       <NetworkIndicator />
       <div className={`${cn.Container}`}>
         <div className={cn.Wrapper}>

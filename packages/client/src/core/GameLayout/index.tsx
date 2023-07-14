@@ -11,22 +11,12 @@ import play from './startSound'
 const GAME_WIDTH = 1024
 const GAME_HEIGHT = 768
 
-// FIXME этому тут не место
-function toggleFullScreen() {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen()
-  } else if (document.exitFullscreen) {
-    document.exitFullscreen()
-  }
-}
-
 const handleKeyDown = (e: Event, keyConfig: KeyConfiguration) => {
   const { code } = e as KeyboardEvent
   if (code === 'Space') {
     keyConfig.Space = 'down'
   } else if (code === 'Enter') {
     keyConfig.Enter = 'down'
-    toggleFullScreen()
   }
 }
 
