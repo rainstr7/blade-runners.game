@@ -9,11 +9,7 @@ dotenv.config()
 import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
-
-import Forum from './database/models/forum'
-import Topic from './database/models/topic'
 import { dbConnect } from './database/init'
-import { updateTheme, updateUser } from './controllers/userController'
 
 const routes = ['/', '/signin', '/signup']
 import bodyParser from 'body-parser'
@@ -37,17 +33,9 @@ async function startServer() {
   app.use(cors(corsOptions))
   app.use(bodyParser.json())
   app.use(cookieParser())
+
   // Подключаемся к БД
-  dbConnect().then(async () => {
-    await Forum.create({ title: 'forum first' })
-    await Forum.create({ title: 'forum sec' })
-    await Forum.create({ title: 'forum tree' })
-    await Topic.create({ title: 'topic 1 and foum1', forumId: 1 })
-    const forums = await Forum.findAll()
-    console.log('FORUMS :', JSON.stringify(forums, null, 2))
-    const topics = await Topic.findAll()
-    console.log('TOPICS : ', JSON.stringify(topics))
-  })
+  dbConnect().catch(e => (console.error(e)) )
 
   let vite: ViteDevServer | undefined
 
@@ -56,9 +44,10 @@ async function startServer() {
   const swPath = path.resolve('../../client/sw')
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
 
-  // app.use('/api', dbapi)
-  app.post('/api/auth-user', updateUser)
-  app.put('/api/update-theme', updateTheme)
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const api = require('./routesAPI')
+  app.use('/api', api)
+
   app.get('/sw.js', (_, res) => {
     res.sendFile(path.resolve(swPath, 'sw.js'))
   })
@@ -76,8 +65,7 @@ async function startServer() {
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
-
-  app.use('*', async (req, res, next) => {
+  const initialSSR =  async (req: any, res: any, next: any) => {
     const url = req.originalUrl
 
     try {
@@ -142,11 +130,11 @@ async function startServer() {
       const html = template.replace(
         `<!--ssr-outlet-->`,
         appHtml +
-          `<script> 
+        `<script> 
           window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(
-            /</g,
-            '\\u003c'
-          )}
+          /</g,
+          '\\u003c'
+        )}
         </script>`
       )
 
@@ -157,7 +145,10 @@ async function startServer() {
       }
       next(e)
     }
-  })
+  }
+  app.use('/', initialSSR)
+  app.use('/signin', initialSSR)
+  app.use('/signup', initialSSR)
 
   app.listen(serverPort, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${serverPort}`)

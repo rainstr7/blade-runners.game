@@ -1,112 +1,61 @@
 import type { Request, Response } from 'express'
 import Forum from '../database/models/forum'
-import Topic from '../database/models/topic'
+import { INCORRECT_USER_DATA_REASON, SERVER_ERROR_REASON } from './messages'
 
-// Получение всех форумов и топиков
-export const getAllForumsWithTopics = async (
-  _: Request,
+export const addForum = async (
+  req: Request,
   res: Response
 ): Promise<void> => {
+  const { title, userID } = req.body ?? {}
+  if (!userID || !title) {
+    res.status(400).send({ reason: INCORRECT_USER_DATA_REASON })
+  }
   try {
-    const forumsWithTopics = await Forum.findAll({
-      include: {
-        model: Topic,
-      },
-      group: ['Forum.id'],
-    })
+    const forum = await Forum.create({ title, authorID: userID })
+    if (forum) {
+      res.status(200).send(forum)
+    }
 
-    res.json(forumsWithTopics)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ reason: 'Произошла ошибка при получении форумов.' })
+    res.status(500).json({ reason: SERVER_ERROR_REASON })
   }
 }
 
-// Получение всех форумов
-export const getAllForums = async (
+export const delForum = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { forumID, userID } = req.body ?? {}
+  if (!forumID || !userID) {
+    res.status(400).send({ reason: INCORRECT_USER_DATA_REASON })
+  }
+  try {
+     await Forum.destroy({
+      where: {id: forumID}
+    })
+    const forums = await Forum.findAll()
+    if (forums) {
+      res.status(200).send(forums)
+    }
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ reason: SERVER_ERROR_REASON })
+  }
+}
+
+export const getForums = async (
   _: Request,
   res: Response
 ): Promise<void> => {
   try {
     const forums = await Forum.findAll()
-    res.json(forums)
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ reason: 'Произошла ошибка при получении форумов.' })
-  }
-}
-
-// Получение форума по id
-export const getForumById = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { id } = req.params
-  try {
-    const forum = await Forum.findByPk(id)
-    if (!forum) {
-      res.status(404).json({ reason: 'Форум не найден.' })
-      return
+    if (forums) {
+      res.status(200).send(forums)
     }
-    res.json(forum)
   } catch (error) {
     console.error(error)
-    res.status(500).json({ reason: 'Произошла ошибка при получении форума.' })
-  }
-}
-
-// Удаление форума по id
-export const deleteForum = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { id } = req.params
-  try {
-    const forum = await Forum.findByPk(id)
-    if (!forum) {
-      res.status(404).json({ reason: 'Форум не найден.' })
-      return
-    }
-    await forum.destroy()
-    res.json({ reason: 'Форум успешно удален.' })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ reason: 'Произошла ошибка при удалении форума.' })
-  }
-}
-
-// Создание форума
-export const createForum = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { title, topicsCount, messagesCount } = req.body
-  try {
-    const forum = await Forum.create({ title, topicsCount, messagesCount })
-    res.status(201).json(forum)
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ reason: 'Произошла ошибка при создании форума.' })
-  }
-}
-
-// Обновление форума по id
-export const updateForum = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const { id } = req.params
-  const { title, topicsCount, messagesCount } = req.body
-  try {
-    const forum = await Forum.findByPk(id)
-    if (!forum) {
-      res.status(404).json({ reason: 'Форум не найден.' })
-      return
-    }
-    await forum.update({ title, topicsCount, messagesCount })
-    res.json(forum)
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ reason: 'Произошла ошибка при обновлении форума.' })
+    res.status(500).json({ reason: SERVER_ERROR_REASON })
   }
 }

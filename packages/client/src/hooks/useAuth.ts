@@ -9,24 +9,27 @@ import {
   changeUserPassword,
   changeUserAvatar,
   oAuthSignin,
-  getServiceId,
+  getServiceId, SERVER_API
 } from '../api'
 import useHttp from './useHttp'
 import { FieldValues } from 'react-hook-form'
 import {
   changeProfile,
   cleanProfile,
-  createProfile,
+  createProfile
 } from '../store/actions/changeProfile'
 import { REDIRECT_URI } from '../config/oAuth.config'
 import useAlert from './useAlert'
 import { useNavigate } from 'react-router-dom'
+import useTheme from './useTheme'
 
 const useAuth = () => {
   const { request, error } = useHttp()
   const { handleShowAlert } = useAlert()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { updateClientTheme } = useTheme()
+
   useEffect(() => {
     if (error) {
       handleShowAlert('error', error)
@@ -37,8 +40,10 @@ const useAuth = () => {
     const { status, data } = await request(userData)
     if (status === 200) {
       dispatch(changeProfile(data))
-      const responseFromBd = await request('http://localhost:3001/api/auth-user', 'POST', data)
-      console.log('responseFromBd', responseFromBd); //TODO починить и добавить загрузку theme в redux
+      const dataFromDB = await request(`${SERVER_API}/auth-user`, 'POST', data)
+      if (dataFromDB.status === 200) {
+        updateClientTheme(dataFromDB.data.theme)
+      }
     }
   }, [])
 
@@ -140,7 +145,7 @@ const useAuth = () => {
     getOAuthServiceId,
     getUserData,
     handleOAuthRegistration,
-    error,
+    error
   }
 }
 

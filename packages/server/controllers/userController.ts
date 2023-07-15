@@ -1,10 +1,7 @@
 import type { Request, Response } from 'express'
 import User from '../database/models/user'
+import { INCORRECT_USER_DATA_REASON, MISSING_BODY_REASON, SERVER_ERROR_REASON, USER_NOT_FOUNDED } from './messages'
 
-const MISSING_BODY_REASON = 'Missing body'
-const INCORRECT_USER_DATA_REASON = 'Incorrect user data'
-const SERVER_ERROR_REASON = 'Server ERROR'
-const USER_NOT_FOUNDED = 'User not founded'
 export const updateUser = async (
   req: Request,
   res: Response
@@ -23,10 +20,10 @@ export const updateUser = async (
     res.status(400).send({ reason: INCORRECT_USER_DATA_REASON })
   }
   try {
-    const [currentUser, created] = await User.findOrCreate({
+    const [currentUser] = await User.findOrCreate({
       where: { userID: id },
       defaults: {
-        userId: id,
+        userID: id,
         display_name,
         first_name,
         second_name,
@@ -36,7 +33,6 @@ export const updateUser = async (
         avatar
       }
     })
-    console.log('created', created)
     res.json(currentUser)
   } catch (error) {
     console.error(error)

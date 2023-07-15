@@ -24,7 +24,7 @@ export async function dbConnect() {
   try {
     await sequelize.authenticate()
     await sequelize.sync({ force: true })
-    console.log('Connection has been established successfully.')
+    console.log(`Connection has been established successfully with options ${sequelizeOptions}`)
   } catch (error) {
     console.error('Unable to connect to the database:', error)
   }

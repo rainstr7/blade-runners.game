@@ -12,4 +12,5 @@ export const getServiceId = `${BASE_API}/oauth/yandex/service-id`
 export const addScoreResult = `${BASE_API}/leaderboard`
 export const leaderboardData = `${BASE_API}/leaderboard/`
 
-export const getForumList = '/' //TODO ADD LINK
+export const SERVER_API = `http://localhost:3001/api`;
+export const topic = `${SERVER_API}/forums`

@@ -1,6 +1,6 @@
 import { DataType } from 'sequelize-typescript'
 import { sequelize } from '../init'
-import Topic from './topic'
+import Forum from './forum'
 
 const Message = sequelize.define(
   'Message',
@@ -26,7 +26,7 @@ const Message = sequelize.define(
       type: DataType.INTEGER,
       allowNull: false,
       references: {
-        model: Topic,
+        model: Forum,
         key: 'id',
       },
     },

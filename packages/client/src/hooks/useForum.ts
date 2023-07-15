@@ -3,59 +3,16 @@ import useAlert from './useAlert'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useCallback, useEffect } from 'react'
-// import { forumsDB, messagesDB } from '../store/reduces/forumReducer'
-import {
-  addEmoji,
-  addMessage,
-  addTopic,
-  delEmoji,
-  delMessage,
-  delTopic,
-  forumsDownload,
-  messagesDownload,
-} from '../store/actions/forum'
-import { hideLoader, showLoader } from '../store/actions/loading'
-import {
-  ForumType,
-  IRootStore,
-  MessagesPayloadInterface,
-} from '../store/reduces/interfaces'
-import { EmojiClickData } from 'emoji-picker-react'
-// import axios from 'axios'
-//
-// type Data = { data: ForumType | MessagesPayloadInterface; status: number }
-
-// const getData = (data: string, id = 0): Promise<Data> =>
-//   new Promise(resolve => {
-//     switch (data) {
-//       case 'forums':
-//         // axios
-//         //   .get('/dbapi/get-data')
-//         //   .then(res => {
-//         //     console.log('DATA FORUM : ', res)
-//         //   })
-//         //   .catch(err => {
-//         //     console.error(err)
-//         //   })
-//
-//         setTimeout(() => resolve({ status: 200, data: { ...forumsDB } }), 500)
-//         break
-//       case 'messages':
-//         setTimeout(
-//           () =>
-//             resolve({ status: 200, data: { ...messagesDB[`${id}`] } ?? {} }),
-//           500
-//         )
-//         break
-//     }
-//   })
+import { addForum, forumsDownload } from '../store/actions/forum'
+import { topic } from '../api'
+import { IRootStore } from '../store/reduces/interfaces'
 
 const useForum = () => {
-  const { request,  error } = useHttp()
+  const { request, error } = useHttp()
   const { handleShowAlert } = useAlert()
-  const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { forums } = useSelector((state: IRootStore) => state.forum)
+  const dispatch = useDispatch()
+  const {user} = useSelector((state: IRootStore) => state)
 
   useEffect(() => {
     if (error) {
@@ -64,14 +21,11 @@ const useForum = () => {
   }, [error])
 
   const getForumsList = useCallback(async () => {
-    // const { status, data } = await request(getForumList)
-
-    dispatch(showLoader())
-    const { status, data } = await request( `http://${'__API_SERVER_HOST__'}:${'__SERVER_PORT__'}/api/get-forums`)
+    const { status, data } = await request(topic)
     switch (status) {
       case 200:
-        dispatch(forumsDownload({ ...data, ...forums } as ForumType))
-        dispatch(hideLoader())
+        console.log('TOPICS', data)
+        dispatch(forumsDownload(data))
         navigate('/forum')
         handleShowAlert('success', 'forums has been successfully downloaded')
         return true
@@ -80,116 +34,47 @@ const useForum = () => {
     }
   }, [])
 
-  const getMessagesList = useCallback(
-    async (forumID: number, topicID: number) => {
-      const body = {
-        forumID,
-        topicID,
-      }
-      console.log('BODY', body)
-      // const { status, data } = await request(getForumList, 'POST', body)
-      dispatch(showLoader())
-      const { status, data } = {status: 404, data: {}}//await getData('messages', topicID)
-      switch (status) {
-        case 200:
-          dispatch(messagesDownload(data as MessagesPayloadInterface))
-          dispatch(hideLoader())
-          navigate(`/discuss/${forums[forumID].topics[topicID].title}`)
-          Object.keys(data).length === 0
-            ? handleShowAlert('warning', 'topic is empty')
-            : handleShowAlert(
-                'success',
-                'messages has been successfully downloaded'
-              )
-          return true
-        default:
-          return false
-      }
-    },
-    []
-  )
-
-  const handleAddEmoji = useCallback(
-    (emoji: EmojiClickData, messageID: number) => {
-      const body = {
-        messageID,
-        emoji,
-      }
-      console.log('BODY', body)
-      dispatch(addEmoji(body))
-    },
-    []
-  )
-
-  const handleDelEmoji = useCallback(
-    (emoji: EmojiClickData, messageID: number) => {
-      const body = {
-        messageID,
-        emoji,
-      }
-      console.log('BODY', body)
-      dispatch(delEmoji(body))
-    },
-    []
-  )
-
-  const handleAddMessage = useCallback(
-    (
-      messageID: number,
-      content: string,
-      author = 'No Name',
-      avatar?: string
-    ) => {
-      const body = {
-        messageID,
-        content,
-        author,
-        avatar,
-        date: new Date(),
-        emoji: [],
-      }
-      console.log('BODY', body)
-      dispatch(addMessage(body))
-    },
-    []
-  )
-
-  const handleDelMessage = useCallback((messageID: number) => {
+  const handleAddForum = useCallback(async (title: string) => {
     const body = {
-      messageID,
-    }
-    console.log('BODY', body)
-    dispatch(delMessage(body))
-  }, [])
-
-  const handleAddTopic = useCallback((forumID: number, title: string) => {
-    const body = {
-      forumID,
       title,
-      messagesCount: 0,
+      userID: user.id
     }
-    console.log('BODY', body)
-    dispatch(addTopic(body))
+    const { status, data } = await request(topic, 'POST', body)
+    switch (status) {
+      case 200:
+        dispatch(addForum(data))
+        navigate(`/discuss/${data?.id}`)
+        handleShowAlert('success', 'forums has been successfully created')
+        return true
+      default:
+        return false
+    }
+    // dispatch(addTopic(body))
   }, [])
 
-  const handleDelTopic = useCallback((forumID: number, topicID: number) => {
+  const handleDelForum = useCallback(async (forumID: string) => {
     const body = {
       forumID,
-      topicID,
+      userID: user.id
     }
-    console.log('BODY', body)
-    dispatch(delTopic(body))
+    const { status, data } = await request(topic, 'DELETE', body)
+    switch (status) {
+      case 200:
+        dispatch(forumsDownload(data))
+        handleShowAlert('success', 'forums has been successfully deleted')
+        return true
+      default:
+        return false
+    }
+
+
+    // dispatch(addTopic(body))
   }, [])
 
   return {
     getForumsList,
-    getMessagesList,
-    handleAddEmoji,
-    handleDelEmoji,
-    handleAddMessage,
-    handleDelMessage,
-    handleAddTopic,
-    handleDelTopic,
+    handleAddForum,
+    handleDelForum
   }
 }
 

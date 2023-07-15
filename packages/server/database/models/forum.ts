@@ -13,10 +13,9 @@ const Forum = sequelize.define(
       type: DataType.STRING,
       allowNull: false,
     },
-    topicsCount: {
+    authorID: {
       type: DataType.INTEGER,
       allowNull: false,
-      defaultValue: 0,
     },
     messagesCount: {
       type: DataType.INTEGER,
