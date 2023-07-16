@@ -14,15 +14,21 @@ import DeleteButton from '../../../components/UI/DeleteButton'
 interface MessageProps {
   id: string
   author: string
-  date: Date
+  createdAt: Date
   content: string
   avatar?: string
   emoji: EmojiClickData[]
-  addEmoji(emoji: EmojiClickData, id: string): void
-  delEmoji(emoji: EmojiClickData, id: string): void
+
+  addEmoji(id: number, emoji: EmojiClickData): void
+
+  delEmoji(id: number, emoji: EmojiClickData): void
+
   isOpenEmojiList: boolean
+
   handleToggleEmoji(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void
+
   isOwnMessage: boolean
+
   handleDelOwnMessage(id: string): void
 }
 
@@ -31,7 +37,7 @@ const Message = forwardRef(
     {
       id,
       author,
-      date,
+      createdAt,
       content,
       avatar,
       emoji,
@@ -44,7 +50,7 @@ const Message = forwardRef(
     }: MessageProps,
     ref: LegacyRef<HTMLDivElement> | undefined
   ) => {
-    if (!date || !author || !emoji) {
+    if (!createdAt || !author) {
       return <div>No messages</div>
     }
     return (
@@ -52,7 +58,7 @@ const Message = forwardRef(
         <div className={cn.MsgHeader}>
           <Avatar src={getAvatarFullUrl(avatar)} name={author} />
           <div className={cn.DelButtonWrapper}>
-            <Time date={date} />
+            <Time createdAt={createdAt} />
             {isOwnMessage && (
               <DeleteButton onClick={() => handleDelOwnMessage(id)} />
             )}
@@ -63,7 +69,7 @@ const Message = forwardRef(
           {emoji.map(emoji => (
             <div
               className={cn.EmojiWrapper}
-              onClick={() => delEmoji(emoji, id)}
+              onClick={() => delEmoji(+id, emoji)}
               key={emoji.unified}>
               <Emoji
                 unified={emoji.unified}
@@ -78,7 +84,7 @@ const Message = forwardRef(
           {isOpenEmojiList && (
             <div className={cn.EmojiPickerWrapper}>
               <EmojiPicker
-                onEmojiClick={emoji => addEmoji(emoji, id)}
+                onEmojiClick={emoji => addEmoji(+id, emoji)}
                 autoFocusSearch={false}
                 emojiStyle={EmojiStyle.APPLE}
                 searchDisabled

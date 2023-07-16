@@ -5,10 +5,10 @@ import RoutersList from './components/RouterList'
 import React from 'react'
 
 const App = () => (
-    <Layout>
-      <ErrorBoundary>
-        <RoutersList />
-      </ErrorBoundary>
-    </Layout>
+  <Layout>
+    <ErrorBoundary>
+      <RoutersList />
+    </ErrorBoundary>
+  </Layout>
 )
 export default App

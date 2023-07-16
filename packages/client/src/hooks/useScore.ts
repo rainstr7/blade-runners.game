@@ -57,22 +57,25 @@ const useScore = () => {
     }
   }, [])
 
-  const handleSetScore = useCallback( async ({ player: { display_name, avatar }, rating }: FieldValues) => {
-    newRating.data = {
-      player: {
-        display_name,
-        avatar,
-      },
-      rating,
-    }
+  const handleSetScore = useCallback(
+    async ({ player: { display_name, avatar }, rating }: FieldValues) => {
+      newRating.data = {
+        player: {
+          display_name,
+          avatar,
+        },
+        rating,
+      }
 
-    const { status } = await request(addScoreResult, 'POST', newRating)
-    if (status === 200) {
-      handleShowAlert('success', 'Rating added successfully')
-      return true
-    }
-    return false
-  }, [])
+      const { status } = await request(addScoreResult, 'POST', newRating)
+      if (status === 200) {
+        handleShowAlert('success', 'Rating added successfully')
+        return true
+      }
+      return false
+    },
+    []
+  )
 
   return {
     handleSetScore,

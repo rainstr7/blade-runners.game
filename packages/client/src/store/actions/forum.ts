@@ -5,13 +5,14 @@ import {
   DEL_EMOJI,
   DEL_MESSAGE,
   FORUMS_DOWNLOAD,
-  MESSAGES_DOWNLOAD
+  MESSAGES_DOWNLOAD,
 } from './types'
 import {
-  EmojiPayloadInterface, ForumPayloadInterface,
+  EmojiPayloadInterface,
+  ForumPayloadInterface,
   ForumType,
   MessageIDPayloadType,
-  MessagePayloadInterface
+  MessagePayloadInterface,
 } from '../reduces/interfaces'
 
 export const forumsDownload = (payload: ForumType) => {
@@ -21,7 +22,8 @@ export const forumsDownload = (payload: ForumType) => {
   }
 }
 
-export const messagesDownload = (payload: any) => {
+export const messagesDownload = (payload: any[]) => {
+  //TODO add interface
   return {
     type: MESSAGES_DOWNLOAD,
     payload,

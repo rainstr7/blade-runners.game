@@ -30,8 +30,7 @@ const Layout = ({ children }: Props) => {
     return (
       <div
         className={`${cn.Layout} ${cn[type ?? 'Default']}`}
-        style={{ backgroundImage: `url(${theme?.layoutBackground})` }}
-      >
+        style={{ backgroundImage: `url(${theme?.layoutBackground})` }}>
         <NetworkIndicator />
         <div className={`${cn.Container}`}>
           <div className={cn.Wrapper}>
@@ -46,15 +45,19 @@ const Layout = ({ children }: Props) => {
     )
   }, [type, cn, theme])
 
-return (
-  <div className={cn.ThemeWrapper} style={{ '--default-color': theme?.defaultColor } as React.CSSProperties}>
-    <button
-      className={`${cn.button} ${cn[theme?.type]}`}
-      onClick={() => handleToggleTheme(theme.type === 'light' ? 'dark' : 'light')}
-    />
-    {render}
-  </div>
-)
+  return (
+    <div
+      className={cn.ThemeWrapper}
+      style={{ '--default-color': theme?.defaultColor } as React.CSSProperties}>
+      <button
+        className={`${cn.button} ${cn[theme?.type]}`}
+        onClick={() =>
+          handleToggleTheme(theme.type === 'light' ? 'dark' : 'light')
+        }
+      />
+      {render}
+    </div>
+  )
 }
 
 export default Layout

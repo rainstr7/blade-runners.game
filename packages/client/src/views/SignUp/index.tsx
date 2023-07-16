@@ -6,7 +6,6 @@ import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { regFormData, schema } from './settings'
 import useAuth from '../../hooks/useAuth'
-import { useCallback } from 'react'
 
 const SignUp = () => {
   const { handleRegistration } = useAuth()
@@ -17,9 +16,9 @@ const SignUp = () => {
   } = useForm<FieldValues>({
     resolver: yupResolver<FieldValues>(schema),
   })
-  const onSubmit: SubmitHandler<FieldValues> = useCallback(async data => {
+  const onSubmit: SubmitHandler<FieldValues> = async data => {
     await handleRegistration(data)
-  }, [])
+  }
 
   return (
     <main className={cn.Block}>

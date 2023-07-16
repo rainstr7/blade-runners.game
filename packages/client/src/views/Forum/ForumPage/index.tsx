@@ -1,4 +1,4 @@
-import { useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import cn from './style.module.scss'
 import Button from '../../../components/UI/Button'
 import Forum from '../index'
@@ -14,9 +14,8 @@ const ForumPage = () => {
   const { getForumsList, handleDelForum } = useForum()
 
   useEffect(() => {
-      (async () => await getForumsList())()
-    }
-  , [])
+    ;(async () => await getForumsList())()
+  }, [])
 
   const handleGoCreate = useCallback(() => {
     navigate('/create-theme')
@@ -54,25 +53,22 @@ const ForumPage = () => {
             <div className={cn.MsgCountHeader}>COMMENTS</div>
           </div>
         </li>
-        {forums.map(({id, title, messagesCount}) => (
-            <li className={cn.ButtonElement} key={id}>
-              <div className={cn.Topic}>
-                <div
-                  className={cn.Title}
-                  onClick={handleDownloadMessages}
-                  id={String(id)}>
-                  {title}
-                </div>
-                <div className={cn.MsgCount}>{messagesCount}</div>
-                <div className={cn.DelButtonWrapper}>
-                  <DeleteButton
-                    onClick={() => handleDeleteForum(`${id}`)}
-                  />
-                </div>
+        {forums.map(({ id, title, messagesCount }) => (
+          <li className={cn.ButtonElement} key={id}>
+            <div className={cn.Topic}>
+              <div
+                className={cn.Title}
+                onClick={handleDownloadMessages}
+                id={String(id)}>
+                {title}
               </div>
-            </li>
-          )
-        )}
+              <div className={cn.MsgCount}>{messagesCount}</div>
+              <div className={cn.DelButtonWrapper}>
+                <DeleteButton onClick={() => handleDeleteForum(`${id}`)} />
+              </div>
+            </div>
+          </li>
+        ))}
       </ul>
     </Forum>
   )

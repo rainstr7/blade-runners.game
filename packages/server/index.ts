@@ -15,12 +15,11 @@ const routes = ['/', '/signin', '/signup']
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 
-dotenv.config();
+dotenv.config()
 async function startServer() {
-
   const app = express()
 
-  const clientPort = Number(process.env.CLIENT_PORT) || 3000;
+  const clientPort = Number(process.env.CLIENT_PORT) || 3000
   const serverPort = Number(process.env.SERVER_PORT) || 3001
 
   const corsOptions = {
@@ -29,13 +28,13 @@ async function startServer() {
       `http://127.0.0.1:${clientPort}`,
       `http://localhost:${clientPort}`,
     ],
-  };
+  }
   app.use(cors(corsOptions))
   app.use(bodyParser.json())
   app.use(cookieParser())
 
   // Подключаемся к БД
-  dbConnect().catch(e => (console.error(e)) )
+  dbConnect().catch(e => console.error(e))
 
   let vite: ViteDevServer | undefined
 
@@ -65,7 +64,7 @@ async function startServer() {
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
-  const initialSSR =  async (req: any, res: any, next: any) => {
+  const initialSSR = async (req: any, res: any, next: any) => {
     const url = req.originalUrl
 
     try {
@@ -130,11 +129,11 @@ async function startServer() {
       const html = template.replace(
         `<!--ssr-outlet-->`,
         appHtml +
-        `<script> 
+          `<script> 
           window.__PRELOADED_STATE__=${JSON.stringify(store.getState()).replace(
-          /</g,
-          '\\u003c'
-        )}
+            /</g,
+            '\\u003c'
+          )}
         </script>`
       )
 

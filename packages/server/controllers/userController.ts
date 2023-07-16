@@ -1,37 +1,49 @@
 import type { Request, Response } from 'express'
-import User from '../database/models/user'
-import { INCORRECT_USER_DATA_REASON, MISSING_BODY_REASON, SERVER_ERROR_REASON, USER_NOT_FOUNDED } from './messages'
+import {
+  INCORRECT_USER_DATA_REASON,
+  MISSING_BODY_REASON,
+  SERVER_ERROR_REASON,
+  USER_NOT_FOUNDED,
+} from './messages'
+import User from '../database/models/User'
 
 export const updateUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   const body = req.body
-  console.log('req test', req)
-  console.log('Cookies test: ', req.cookies)
-  console.log('Cookies test uuid: ', req.cookies.uuid)
-  console.log('body', body)
+
   if (!body) {
     res.status(400).send(MISSING_BODY_REASON)
   }
-  const { id, first_name, second_name, display_name, avatar, email, phone, login } = body ?? {}
+  const {
+    id,
+    first_name,
+    second_name,
+    display_name,
+    avatar,
+    email,
+    phone,
+    login,
+  } = body ?? {}
 
   if (!login || !id) {
     res.status(400).send({ reason: INCORRECT_USER_DATA_REASON })
   }
   try {
     const [currentUser] = await User.findOrCreate({
-      where: { userID: id },
+      where: { id },
       defaults: {
-        userID: id,
-        display_name,
+        id,
         first_name,
         second_name,
-        email,
+        display_name,
         login,
+        email,
         phone,
-        avatar
-      }
+        avatar,
+        theme: 'dark',
+      },
     })
     res.json(currentUser)
   } catch (error) {
@@ -55,13 +67,9 @@ export const updateTheme = async (
     res.status(400).send({ reason: INCORRECT_USER_DATA_REASON })
   }
   try {
-    const currentUser = await User.findOne(
-      { where: { userID: id } }
-    )
+    const currentUser = await User.findOne({ where: { id } })
     if (currentUser !== null) {
-      await User.update(
-        { theme },
-        { where: { userID: id } })
+      await User.update({ theme }, { where: { id } })
       res.status(200).send('success')
     } else {
       res.status(401).send({ reason: USER_NOT_FOUNDED })

@@ -17,7 +17,7 @@ import {
   DEL_EMOJI,
   DEL_MESSAGE,
   SET_THEME,
-  TOGGLE_THEME
+  TOGGLE_THEME,
 } from '../actions/types'
 import { EmojiClickData } from 'emoji-picker-react'
 
@@ -75,10 +75,10 @@ export interface ForumsPayloadInterface {
 }
 
 export interface MessagePayloadInterface {
-  author: string
+  display_name: string
   avatar?: string
-  content: string
-  date: Date
+  message: string
+  createdAt: Date
   emoji: EmojiClickData[]
   id: string
 }
@@ -115,5 +115,5 @@ const actions = {
   ADD_MESSAGE,
   DEL_MESSAGE,
   SET_THEME,
-  TOGGLE_THEME
+  TOGGLE_THEME,
 }

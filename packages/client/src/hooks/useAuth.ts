@@ -9,14 +9,15 @@ import {
   changeUserPassword,
   changeUserAvatar,
   oAuthSignin,
-  getServiceId, SERVER_API
+  getServiceId,
+  SERVER_API,
 } from '../api'
 import useHttp from './useHttp'
 import { FieldValues } from 'react-hook-form'
 import {
   changeProfile,
   cleanProfile,
-  createProfile
+  createProfile,
 } from '../store/actions/changeProfile'
 import { REDIRECT_URI } from '../config/oAuth.config'
 import useAlert from './useAlert'
@@ -145,7 +146,7 @@ const useAuth = () => {
     getOAuthServiceId,
     getUserData,
     handleOAuthRegistration,
-    error
+    error,
   }
 }
 

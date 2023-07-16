@@ -12,7 +12,7 @@ const rootStore = combineReducers({
   alert: alertReducer,
   loading: loaderReducer,
   forum: forumReducer,
-  theme: themeReducer
+  theme: themeReducer,
 })
 
 export default rootStore

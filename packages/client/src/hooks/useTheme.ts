@@ -12,13 +12,13 @@ const THEMES = {
   light: {
     type: 'light',
     defaultColor: '#e5dfffeb',
-    layoutBackground: bgLight
+    layoutBackground: bgLight,
   },
   dark: {
     type: 'dark',
     defaultColor: '#fff',
-    layoutBackground: bgDark
-  }
+    layoutBackground: bgDark,
+  },
 }
 
 const useTheme = () => {
@@ -34,27 +34,35 @@ const useTheme = () => {
     }
   }, [error])
 
-  const updateClientTheme = useCallback((newTheme: 'light' | 'dark') => {
-    if (theme !== newTheme) {
-      dispatch(setTheme({ theme: newTheme }))
-    }
-  }, [theme])
-
-  const handleToggleTheme = useCallback(async (theme: 'light' | 'dark') => {
-    if (id) {
-      const { status } = await request(`${SERVER_API}/update-theme`, 'PUT', { id, theme })
-      if (status === 200) {
-        handleShowAlert('success', 'theme has been successfully saved')
+  const updateClientTheme = useCallback(
+    (newTheme: 'light' | 'dark') => {
+      if (theme !== newTheme) {
+        dispatch(setTheme({ theme: newTheme }))
       }
-    }
-    updateClientTheme(theme)
-  }, [theme, id])
+    },
+    [theme]
+  )
 
+  const handleToggleTheme = useCallback(
+    async (theme: 'light' | 'dark') => {
+      if (id) {
+        const { status } = await request(`${SERVER_API}/update-theme`, 'PUT', {
+          id,
+          theme,
+        })
+        if (status === 200) {
+          handleShowAlert('success', 'theme has been successfully saved')
+        }
+      }
+      updateClientTheme(theme)
+    },
+    [theme, id]
+  )
 
   return {
     theme: THEMES[theme],
     handleToggleTheme,
-    updateClientTheme
+    updateClientTheme,
   }
 }
 

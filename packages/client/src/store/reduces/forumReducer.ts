@@ -13,7 +13,7 @@ import {
   DEL_MESSAGE,
   FORUMS_DOWNLOAD,
   MESSAGES_DOWNLOAD,
-  ADD_FORUM
+  ADD_FORUM,
 } from '../actions/types'
 // import { EmojiClickData } from 'emoji-picker-react'
 
@@ -22,16 +22,13 @@ const initialState: {
   messages: MessagePayloadInterface[]
 } = {
   forums: [],
-  messages: []
+  messages: [],
 }
 
 export default function forumReducer(
   state = initialState,
   action: ActionInterface & {
-    payload:
-      | ForumsPayloadInterface
-      | EmojiPayloadInterface
-      | ForumIDPayloadType
+    payload: ForumsPayloadInterface | EmojiPayloadInterface | ForumIDPayloadType
   }
 ) {
   switch (action.type) {
@@ -57,10 +54,11 @@ export default function forumReducer(
     case DEL_EMOJI:
       return {
         ...state,
-    }
+      }
     case ADD_MESSAGE:
       return {
         ...state,
+        messages: [...state.messages, action.payload],
       }
     case DEL_MESSAGE:
       return {
