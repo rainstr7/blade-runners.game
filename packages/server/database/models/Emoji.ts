@@ -8,6 +8,7 @@ import {
   PrimaryKey,
   Table,
 } from 'sequelize-typescript'
+import type { EmojiClickData } from './interfaces'
 
 @Table({
   tableName: 'Emoji',
@@ -20,10 +21,10 @@ class Emoji extends Model {
   @Column(DataType.INTEGER)
   override id: number | undefined
 
-  @AllowNull(false)
+  @AllowNull(true)
   @Length({ max: 999, min: 1 })
   @Column(DataType.JSONB)
-  emoji: [] | undefined
+  emoji: EmojiClickData | undefined
 
   @AllowNull(false)
   @Column(DataType.INTEGER)

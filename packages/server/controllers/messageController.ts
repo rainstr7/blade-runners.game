@@ -8,11 +8,15 @@ import { sequelize } from '../database/init'
 import Forum from '../database/models/Forum'
 import User from '../database/models/User'
 import Message from '../database/models/Message'
+import Emoji from '../database/models/Emoji'
 
 const getMessagesSQLQuery = (forumID: number) => `
-    SELECT public."Message".id, public."Message"."createdAt" , avatar, message, display_name from public."Message"
-    JOIN public."User" on public."Message"."userID"=public."User"."id"
-    WHERE public."Message"."forumID"=${forumID}`
+ select m.id, m."createdAt" , avatar, message, display_name, jsonb_agg(emoji) emoji from public."Message" m
+    join public."User" u on m."userID"=u.id
+    left join public."Emoji" e on e."messageID"=m.id
+    where m."forumID"=${forumID}
+    group by m.id, m."createdAt", avatar, message, display_name
+`
 
 export const addMessage = async (
   req: Request,
@@ -63,7 +67,7 @@ export const getMessages = async (
     }
   } catch (error) {
     console.error(error)
-    res.status(500).json({ reason: SERVER_ERROR_REASON })
+    res.status(500).send({ reason: SERVER_ERROR_REASON })
   }
 }
 
@@ -77,13 +81,23 @@ export const delMessage = async (
     res.status(400).send({ reason: INCORRECT_USER_DATA_REASON })
   }
   try {
+    const deletedEmoji = await Emoji.findAll({
+      where: { forumID, messageID }
+    })
+    await deletedEmoji.forEach((emoji) => emoji.destroy())
+
     await Message.destroy({
       where: { id: messageID, forumID }
     })
 
     const [messages] = await sequelize.query(getMessagesSQLQuery(+forumID))
     if (messages) {
-      res.status(200).send(messages)
+      const forum = await Forum.findOne({where: {id: forumID}})
+      if (forum) {
+        await forum.set({messagesCount: forum.dataValues.messagesCount -1})
+        await forum.save()
+        res.status(200).send(messages)
+      }
     }
   } catch (error) {
     console.error(error)

@@ -18,17 +18,11 @@ interface MessageProps {
   content: string
   avatar?: string
   emoji: EmojiClickData[]
-
   addEmoji(id: number, emoji: EmojiClickData): void
-
   delEmoji(id: number, emoji: EmojiClickData): void
-
   isOpenEmojiList: boolean
-
   handleToggleEmoji(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void
-
   isOwnMessage: boolean
-
   handleDelOwnMessage(id: string): void
 }
 
@@ -66,9 +60,9 @@ const Message = forwardRef(
         </div>
         <div className={cn.MsgBody}>{content}</div>
         <div className={cn.EmojiContainer}>
-          {emoji.map(emoji => (
+          {emoji.map(emoji => ( emoji &&
             <div
-              className={cn.EmojiWrapper}
+              className={cn[isOwnMessage ? 'EmojiWrapper' : 'EmojiStaticWrapper']}
               onClick={() => delEmoji(+id, emoji)}
               key={emoji.unified}>
               <Emoji

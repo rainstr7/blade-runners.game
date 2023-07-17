@@ -21,9 +21,10 @@ const DiscussPage = () => {
   const { messages } = useSelector((state: IRootStore) => state.forum)
   const {
     handleAddEmoji,
-    /*handleDelEmoji,*/ getMessagesList,
+    handleDelEmoji,
+    getMessagesList,
     handleAddMessage,
-    handleDelMessage,
+    handleDelMessage
   } = useForum()
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -55,15 +56,17 @@ const DiscussPage = () => {
     async (messageID: number, emoji: EmojiClickData) => {
       setIdModalEmoji(0)
       if (selectedForum) {
-        await handleAddEmoji(messageID, +selectedForum, emoji)
+        await handleAddEmoji(messageID, selectedForum, emoji)
       }
     },
     [selectedForum]
   )
 
   const handleDelOldEmoji = useCallback(
-    (id: number, emoji: EmojiClickData) => {
-      // handleDelEmoji(emoji, +id)
+    async (messageID: number, emoji: EmojiClickData) => {
+      if (selectedForum) {
+       await handleDelEmoji(messageID, selectedForum, emoji)
+      }
     },
     [selectedForum]
   )
@@ -93,9 +96,9 @@ const DiscussPage = () => {
   }, [forums, selectedForum])
 
   return (
-    <Forum onClick={handleToggleEmoji} id="0">
+    <Forum onClick={handleToggleEmoji} id='0'>
       <nav className={cn.ThemeHeader}>
-        <Button size="small" onClick={handleGoToForum}>
+        <Button size='small' onClick={handleGoToForum}>
           Back
         </Button>
         <h2>{title}</h2>
@@ -132,13 +135,13 @@ const DiscussPage = () => {
       </section>
       <form className={cn.FormSendMsg} onSubmit={handleSubmit(onSubmit)}>
         <Input
-          placeholder="YOUR MESSAGE"
-          autoComplete="off"
-          name="content"
+          placeholder='YOUR MESSAGE'
+          autoComplete='off'
+          name='content'
           options={{ required: true }}
           register={register}
         />
-        <Button size="small" type="submit">
+        <Button size='small' type='submit'>
           SEND
         </Button>
       </form>

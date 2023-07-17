@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { useCallback, useEffect } from 'react'
 import {
+  addEmoji,
   addForum,
   addMessage,
+  delEmoji,
   forumsDownload,
-  messagesDownload,
+  messagesDownload
 } from '../store/actions/forum'
 import { emoji, forums, messages } from '../api'
 import { IRootStore } from '../store/reduces/interfaces'
@@ -31,7 +33,6 @@ const useForum = () => {
     switch (status) {
       case 200:
         dispatch(forumsDownload(data))
-        navigate('/forum')
         handleShowAlert('success', 'forums has been successfully downloaded')
         return true
       default:
@@ -42,7 +43,7 @@ const useForum = () => {
   const handleAddForum = useCallback(async (title: string) => {
     const body = {
       title,
-      userID: user.id,
+      userID: user.id
     }
     const { status, data } = await request(forums, 'POST', body)
     switch (status) {
@@ -59,7 +60,7 @@ const useForum = () => {
   const handleDelForum = useCallback(async (forumID: string) => {
     const body = {
       forumID,
-      userID: user.id,
+      userID: user.id
     }
     const { status, data } = await request(forums, 'DELETE', body)
     switch (status) {
@@ -91,7 +92,7 @@ const useForum = () => {
       const body = {
         userID: user.id,
         forumID,
-        message,
+        message
       }
       const { status, data } = await request(messages, 'POST', body)
       switch (status) {
@@ -110,7 +111,7 @@ const useForum = () => {
       const body = {
         userID: user.id,
         forumID,
-        messageID,
+        messageID
       }
       const { status, data } = await request(messages, 'DELETE', body)
       switch (status) {
@@ -126,17 +127,37 @@ const useForum = () => {
   )
 
   const handleAddEmoji = useCallback(
-    async (messageID: number, forumID: number, newEmoji: EmojiClickData) => {
+    async (messageID: number, forumID: string, newEmoji: EmojiClickData) => {
       const body = {
         userID: user.id,
         forumID,
         messageID,
-        emoji: newEmoji,
+        emoji: newEmoji
       }
-      const { status, data } = await request(emoji, 'POST', body)
+      const { status } = await request(emoji, 'POST', body)
       switch (status) {
         case 200:
-          console.log(data)
+          dispatch(addEmoji({ emoji: newEmoji, messageID }))
+          return true
+        default:
+          return false
+      }
+    },
+    []
+  )
+
+  const handleDelEmoji = useCallback(
+    async (messageID: number, forumID: string, deletedEmoji: EmojiClickData) => {
+      const body = {
+        userID: user.id,
+        forumID,
+        messageID,
+        emoji: deletedEmoji
+      }
+      const { status } = await request(emoji, 'DELETE', body)
+      switch (status) {
+        case 200:
+          dispatch(delEmoji({ emoji: deletedEmoji, messageID }))
           return true
         default:
           return false
@@ -153,6 +174,7 @@ const useForum = () => {
     handleAddMessage,
     handleDelMessage,
     handleAddEmoji,
+    handleDelEmoji
   }
 }
 
