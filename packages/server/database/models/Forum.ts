@@ -32,7 +32,6 @@ class Forum extends Model {
   @AllowNull(false)
   @Column(DataType.INTEGER)
   messagesCount: number | undefined
-
 }
 
 export default Forum

@@ -2,7 +2,7 @@ import type { Request, Response } from 'express'
 import {
   INCORRECT_USER_DATA_REASON,
   SERVER_ERROR_REASON,
-  USER_NOT_FOUNDED
+  USER_NOT_FOUNDED,
 } from './messages'
 import { sequelize } from '../database/init'
 import Forum from '../database/models/Forum'
@@ -35,14 +35,14 @@ export const addMessage = async (
       const newMessage = await Message.create({
         message,
         userID: user.id,
-        forumID: forum.id
+        forumID: forum.id,
       })
       if (newMessage) {
         newMessage.dataValues.avatar = user.avatar
         newMessage.dataValues.display_name = user.display_name
         newMessage.dataValues.emoji = []
 
-        await forum.set({messagesCount: forum.dataValues.messagesCount + 1})
+        await forum.set({ messagesCount: forum.dataValues.messagesCount + 1 })
         await forum.save()
         res.status(200).json(newMessage)
       }
@@ -82,19 +82,19 @@ export const delMessage = async (
   }
   try {
     const deletedEmoji = await Emoji.findAll({
-      where: { forumID, messageID }
+      where: { forumID, messageID },
     })
-    await deletedEmoji.forEach((emoji) => emoji.destroy())
+    await deletedEmoji.forEach(emoji => emoji.destroy())
 
     await Message.destroy({
-      where: { id: messageID, forumID }
+      where: { id: messageID, forumID },
     })
 
     const [messages] = await sequelize.query(getMessagesSQLQuery(+forumID))
     if (messages) {
-      const forum = await Forum.findOne({where: {id: forumID}})
+      const forum = await Forum.findOne({ where: { id: forumID } })
       if (forum) {
-        await forum.set({messagesCount: forum.dataValues.messagesCount -1})
+        await forum.set({ messagesCount: forum.dataValues.messagesCount - 1 })
         await forum.save()
         res.status(200).send(messages)
       }

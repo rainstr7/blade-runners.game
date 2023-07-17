@@ -9,7 +9,7 @@ import {
   addMessage,
   delEmoji,
   forumsDownload,
-  messagesDownload
+  messagesDownload,
 } from '../store/actions/forum'
 import { emoji, forums, messages } from '../api'
 import { IRootStore } from '../store/reduces/interfaces'
@@ -43,7 +43,7 @@ const useForum = () => {
   const handleAddForum = useCallback(async (title: string) => {
     const body = {
       title,
-      userID: user.id
+      userID: user.id,
     }
     const { status, data } = await request(forums, 'POST', body)
     switch (status) {
@@ -60,7 +60,7 @@ const useForum = () => {
   const handleDelForum = useCallback(async (forumID: string) => {
     const body = {
       forumID,
-      userID: user.id
+      userID: user.id,
     }
     const { status, data } = await request(forums, 'DELETE', body)
     switch (status) {
@@ -92,7 +92,7 @@ const useForum = () => {
       const body = {
         userID: user.id,
         forumID,
-        message
+        message,
       }
       const { status, data } = await request(messages, 'POST', body)
       switch (status) {
@@ -111,7 +111,7 @@ const useForum = () => {
       const body = {
         userID: user.id,
         forumID,
-        messageID
+        messageID,
       }
       const { status, data } = await request(messages, 'DELETE', body)
       switch (status) {
@@ -132,7 +132,7 @@ const useForum = () => {
         userID: user.id,
         forumID,
         messageID,
-        emoji: newEmoji
+        emoji: newEmoji,
       }
       const { status } = await request(emoji, 'POST', body)
       switch (status) {
@@ -147,12 +147,16 @@ const useForum = () => {
   )
 
   const handleDelEmoji = useCallback(
-    async (messageID: number, forumID: string, deletedEmoji: EmojiClickData) => {
+    async (
+      messageID: number,
+      forumID: string,
+      deletedEmoji: EmojiClickData
+    ) => {
       const body = {
         userID: user.id,
         forumID,
         messageID,
-        emoji: deletedEmoji
+        emoji: deletedEmoji,
       }
       const { status } = await request(emoji, 'DELETE', body)
       switch (status) {
@@ -174,7 +178,7 @@ const useForum = () => {
     handleAddMessage,
     handleDelMessage,
     handleAddEmoji,
-    handleDelEmoji
+    handleDelEmoji,
   }
 }
 

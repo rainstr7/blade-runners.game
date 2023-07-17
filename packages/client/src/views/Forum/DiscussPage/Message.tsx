@@ -60,18 +60,23 @@ const Message = forwardRef(
         </div>
         <div className={cn.MsgBody}>{content}</div>
         <div className={cn.EmojiContainer}>
-          {emoji.map(emoji => ( emoji &&
-            <div
-              className={cn[isOwnMessage ? 'EmojiWrapper' : 'EmojiStaticWrapper']}
-              onClick={() => delEmoji(+id, emoji)}
-              key={emoji.unified}>
-              <Emoji
-                unified={emoji.unified}
-                emojiStyle={EmojiStyle.APPLE}
-                size={20}
-              />
-            </div>
-          ))}
+          {emoji.map(
+            emoji =>
+              emoji && (
+                <div
+                  className={
+                    cn[isOwnMessage ? 'EmojiWrapper' : 'EmojiStaticWrapper']
+                  }
+                  onClick={() => delEmoji(+id, emoji)}
+                  key={emoji.unified}>
+                  <Emoji
+                    unified={emoji.unified}
+                    emojiStyle={EmojiStyle.APPLE}
+                    size={20}
+                  />
+                </div>
+              )
+          )}
           <div className={cn.AddEmoji} onClick={handleToggleEmoji} id={id}>
             <Emoji unified="2795" emojiStyle={EmojiStyle.APPLE} size={20} />
           </div>

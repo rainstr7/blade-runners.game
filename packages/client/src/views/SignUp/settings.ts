@@ -3,14 +3,14 @@ import * as yup from 'yup'
 export const regFormData = [
   {
     placeholder: 'FIRST NAME',
-    name: 'firstName',
-    autoComplete: 'firstName',
+    name: 'first_name',
+    autoComplete: 'first_name',
     required: true,
   },
   {
     placeholder: 'SECOND NAME',
-    name: 'secondName',
-    autoComplete: 'secondName',
+    name: 'second_name',
+    autoComplete: 'second_name',
     required: true,
   },
   {

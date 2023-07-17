@@ -1,23 +1,21 @@
-import { useEffect, useState } from 'react'
-
+import { useState } from 'react'
 
 const useFullscreen = () => {
-
-  /* 
+  /*
     Установлено в any, т.к typescript не поддерживает webkitrequestFullscreen и mozRequestFullscreen
     https://github.com/Microsoft/TypeScript/issues/9908
   */
   const element: any = document.documentElement
 
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const setFullscreen = (): void => {
     if (element.requestFullscreen) {
-      element.requestFullscreen();
+      element.requestFullscreen()
     } else if (element.webkitrequestFullscreen) {
-      element.webkitRequestFullscreen();
+      element.webkitRequestFullscreen()
     } else if (element.mozRequestFullscreen) {
-      element.mozRequestFullScreen();
+      element.mozRequestFullScreen()
     }
 
     setIsFullscreen(true)
@@ -27,11 +25,13 @@ const useFullscreen = () => {
     const el: any = document
 
     if (el.fullscreenElement) {
-      el.exitFullscreen();
-    } else if (el.webkitExitFullscreen) { /* Safari */
-    el.webkitExitFullscreen();
-    } else if (el.msExitFullscreen) { /* IE11 */
-    el.msExitFullscreen();
+      el.exitFullscreen()
+    } else if (el.webkitExitFullscreen) {
+      /* Safari */
+      el.webkitExitFullscreen()
+    } else if (el.msExitFullscreen) {
+      /* IE11 */
+      el.msExitFullscreen()
     }
 
     setIsFullscreen(false)
@@ -50,7 +50,7 @@ const useFullscreen = () => {
     setIsFullscreen,
     setFullscreen,
     cancelFullscreen,
-    toggleFullscreen
+    toggleFullscreen,
   }
 }
 

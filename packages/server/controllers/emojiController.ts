@@ -1,8 +1,9 @@
 import type { Request, Response } from 'express'
 import {
-  INCORRECT_USER_DATA_REASON, NOT_FOUNDED,
+  INCORRECT_USER_DATA_REASON,
+  NOT_FOUNDED,
   SERVER_ERROR_REASON,
-  USER_NOT_FOUNDED
+  USER_NOT_FOUNDED,
 } from './messages'
 import User from '../database/models/User'
 import Emoji from '../database/models/Emoji'
@@ -22,7 +23,7 @@ export const addEmoji = async (req: Request, res: Response): Promise<void> => {
         emoji,
         userID: user.id,
         messageID: message.id,
-        forumID
+        forumID,
       })
       if (newEmoji) {
         res.status(200).send(newEmoji)
@@ -48,9 +49,9 @@ export const delEmoji = async (req: Request, res: Response): Promise<void> => {
         messageID,
         forumID,
         emoji: {
-          [Op.eq]: emoji
-        }
-      }
+          [Op.eq]: emoji,
+        },
+      },
     })
     if (deletedEmoji) {
       await deletedEmoji.forEach(emoji => emoji.destroy())
@@ -58,8 +59,7 @@ export const delEmoji = async (req: Request, res: Response): Promise<void> => {
     } else {
       res.status(400).send({ reason: NOT_FOUNDED })
     }
-  } catch
-    (error) {
+  } catch (error) {
     console.error(error)
     res.status(500).json({ reason: SERVER_ERROR_REASON })
   }

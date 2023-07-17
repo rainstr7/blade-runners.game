@@ -4,7 +4,7 @@ import { addForum, delForum, getForums } from './controllers/forumController'
 import {
   addMessage,
   delMessage,
-  getMessages
+  getMessages,
 } from './controllers/messageController'
 import { addEmoji, delEmoji } from './controllers/emojiController'
 

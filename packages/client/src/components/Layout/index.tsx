@@ -31,7 +31,7 @@ const Layout = ({ children }: Props) => {
       <div
         className={`${cn.Layout} ${cn[type ?? 'Default']}`}
         style={{ backgroundImage: `url(${theme?.layoutBackground})` }}>
-        <FullScreen/>
+        <FullScreen />
         <NetworkIndicator />
         <div className={`${cn.Container}`}>
           <div className={cn.Wrapper}>

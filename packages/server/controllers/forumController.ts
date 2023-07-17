@@ -2,7 +2,7 @@ import type { Request, Response } from 'express'
 import {
   INCORRECT_USER_DATA_REASON,
   SERVER_ERROR_REASON,
-  USER_NOT_FOUNDED
+  USER_NOT_FOUNDED,
 } from './messages'
 import Forum from '../database/models/Forum'
 import User from '../database/models/User'
@@ -17,7 +17,11 @@ export const addForum = async (req: Request, res: Response): Promise<void> => {
   try {
     const user = await User.findOne({ where: { id: userID } })
     if (user) {
-      const forum = await Forum.create({ title, userID: user.id, messagesCount: 0 })
+      const forum = await Forum.create({
+        title,
+        userID: user.id,
+        messagesCount: 0,
+      })
       if (forum) {
         res.status(200).send(forum)
       }
@@ -37,15 +41,15 @@ export const delForum = async (req: Request, res: Response): Promise<void> => {
   }
   try {
     const deletedEmoji = await Emoji.findAll({
-      where: { forumID }
+      where: { forumID },
     })
     const deletedMessages = await Message.findAll({
-      where: { forumID }
+      where: { forumID },
     })
-    await deletedEmoji.forEach((emoji) => emoji.destroy())
-    await deletedMessages.forEach((message) => message.destroy())
+    await deletedEmoji.forEach(emoji => emoji.destroy())
+    await deletedMessages.forEach(message => message.destroy())
     await Forum.destroy({
-      where: { id: forumID }
+      where: { id: forumID },
     })
     const forums = await Forum.findAll()
     res.status(200).send(forums || [])

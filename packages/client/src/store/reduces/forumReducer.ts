@@ -4,7 +4,7 @@ import {
   ForumIDPayloadType,
   ForumsPayloadInterface,
   ForumType,
-  MessagePayloadInterface
+  MessagePayloadInterface,
 } from './interfaces'
 import {
   ADD_EMOJI,
@@ -13,7 +13,7 @@ import {
   DEL_MESSAGE,
   FORUMS_DOWNLOAD,
   MESSAGES_DOWNLOAD,
-  ADD_FORUM
+  ADD_FORUM,
 } from '../actions/types'
 
 const initialState: {
@@ -21,7 +21,7 @@ const initialState: {
   messages: MessagePayloadInterface[]
 } = {
   forums: [],
-  messages: []
+  messages: [],
 }
 
 export default function forumReducer(
@@ -34,52 +34,60 @@ export default function forumReducer(
     case FORUMS_DOWNLOAD:
       return {
         ...state,
-        forums: action.payload
+        forums: action.payload,
       }
     case ADD_FORUM:
       return {
         ...state,
-        forums: [...state.forums, action.payload]
+        forums: [...state.forums, action.payload],
       }
     case MESSAGES_DOWNLOAD:
       return {
         ...state,
-        messages: action.payload
+        messages: action.payload,
       }
     case ADD_EMOJI:
       return {
         ...state,
-        messages: state.messages.map((message) => {
-          if (message.id === (action.payload as EmojiPayloadInterface).messageID) {
-            message.emoji = [...message.emoji, (action.payload as EmojiPayloadInterface).emoji]
+        messages: state.messages.map(message => {
+          if (
+            message.id === (action.payload as EmojiPayloadInterface).messageID
+          ) {
+            message.emoji = [
+              ...message.emoji,
+              (action.payload as EmojiPayloadInterface).emoji,
+            ]
           }
           return message
-        })
+        }),
       }
-    case
-    DEL_EMOJI:
+    case DEL_EMOJI:
       return {
         ...state,
-        messages: state.messages.map((message) => {
-          if (message.id === (action.payload as EmojiPayloadInterface).messageID) {
+        messages: state.messages.map(message => {
+          if (
+            message.id === (action.payload as EmojiPayloadInterface).messageID
+          ) {
             return {
               ...message,
-              emoji: message.emoji.filter(emoji => emoji.emoji !== (action.payload as EmojiPayloadInterface).emoji.emoji)
+              emoji: message.emoji.filter(
+                emoji =>
+                  emoji.emoji !==
+                  (action.payload as EmojiPayloadInterface).emoji.emoji
+              ),
             }
           }
           return message
-        })
+        }),
       }
-    case
-    ADD_MESSAGE:
+    case ADD_MESSAGE:
       return {
         ...state,
-        messages: [...state.messages, action.payload]
+        messages: [...state.messages, action.payload],
       }
-    case
-    DEL_MESSAGE:
+    case DEL_MESSAGE:
       return {
-        ...state
+        ...state,
       }
     default:
       return state
