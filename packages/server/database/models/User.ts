@@ -2,6 +2,7 @@ import {
   AllowNull,
   Column,
   DataType,
+  Default,
   IsEmail,
   Length,
   Model,
@@ -32,6 +33,7 @@ class User extends Model {
   second_name: string | undefined
 
   @AllowNull(false)
+  @Default('noname')
   @Length({ max: 20, min: 3 })
   @Column(DataType.STRING)
   display_name: string | undefined

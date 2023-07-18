@@ -41,7 +41,9 @@ const CreateTheme = () => {
               register={register}
               options={{ required: true }}
             />
-            <Button size="small" type="submit">CREATE</Button>
+            <Button size="small" type="submit">
+              CREATE
+            </Button>
           </form>
         </div>
       </div>

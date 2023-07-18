@@ -43,7 +43,10 @@ const useAuth = () => {
       dispatch(changeProfile(data))
       const dataFromDB = await request(`${SERVER_API}/auth-user`, 'POST', data)
       if (dataFromDB.status === 200) {
-        if (dataFromDB.data?.theme === 'dark' || dataFromDB.data?.theme === 'light') {
+        if (
+          dataFromDB.data?.theme === 'dark' ||
+          dataFromDB.data?.theme === 'light'
+        ) {
           updateClientTheme(dataFromDB.data.theme)
         }
       }
@@ -107,7 +110,7 @@ const useAuth = () => {
     const { status, data } = await request(createUserProfile, 'POST', body)
     if (status === 200) {
       dispatch(createProfile(data))
-      return true
+      return await handleUpdateData(body)
     }
     return false
   }, [])
