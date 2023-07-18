@@ -18,7 +18,9 @@ const CreateTheme = () => {
 
   //form logic
   const onSubmit: SubmitHandler<FieldValues> = async data => {
+    reset()
     await handleAddForum(data.title)
+    navigate('/forum')
   }
 
   return (
@@ -39,7 +41,7 @@ const CreateTheme = () => {
               register={register}
               options={{ required: true }}
             />
-            <Button size="small">CREATE</Button>
+            <Button size="small" type="submit">CREATE</Button>
           </form>
         </div>
       </div>

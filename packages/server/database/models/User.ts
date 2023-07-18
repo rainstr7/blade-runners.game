@@ -51,8 +51,6 @@ class User extends Model {
   @Column(DataType.STRING)
   phone: string | undefined
 
-  @AllowNull(false)
-  @Length({ max: 100, min: 3 })
   @Column(DataType.STRING)
   avatar: string | undefined
 

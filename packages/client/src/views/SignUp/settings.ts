@@ -14,6 +14,12 @@ export const regFormData = [
     required: true,
   },
   {
+    placeholder: 'DISPLAY NAME',
+    name: 'display_name',
+    autoComplete: 'display_name',
+    required: true,
+  },
+  {
     placeholder: 'E-MAIL',
     name: 'email',
     autoComplete: 'email',
@@ -43,6 +49,7 @@ export const schema = yup
   .object({
     first_name: yup.string().required(),
     second_name: yup.string().required(),
+    display_name: yup.string().required(),
     email: yup.string().email().required(),
     phone: yup
       .string()

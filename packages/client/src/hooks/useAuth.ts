@@ -43,7 +43,9 @@ const useAuth = () => {
       dispatch(changeProfile(data))
       const dataFromDB = await request(`${SERVER_API}/auth-user`, 'POST', data)
       if (dataFromDB.status === 200) {
-        updateClientTheme(dataFromDB.data.theme)
+        if (dataFromDB.data?.theme === 'dark' || dataFromDB.data?.theme === 'light') {
+          updateClientTheme(dataFromDB.data.theme)
+        }
       }
     }
   }, [])
@@ -76,6 +78,7 @@ const useAuth = () => {
   const handleUpdateData = useCallback(async (body: FieldValues) => {
     const { status, data } = await request(changeUserProfile, 'PUT', body)
     if (status === 200) {
+      await request(`${SERVER_API}/auth-user`, 'POST', data)
       dispatch(changeProfile(data))
       return true
     }
