@@ -9,8 +9,6 @@ FROM base as builder
 COPY package.json yarn.lock
 COPY . .
 
-RUN yarn install --frozen-lockfile
-
 RUN yarn build --scope=client
 
 RUN yarn lerna bootstrap
