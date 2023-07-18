@@ -7,7 +7,7 @@ import {
   Length,
   Model,
   PrimaryKey,
-  Table
+  Table,
 } from 'sequelize-typescript'
 
 @Table({
