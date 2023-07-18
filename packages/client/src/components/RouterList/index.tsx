@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import { IRootStore } from '../../store/reduces/interfaces'
-import { redirectRoute, routerList, routerListAfterAuth } from './settings'
+import { routerList, routerListAfterAuth } from './settings'
 import { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 import isEqual from '../../utils/isEqual'
@@ -23,7 +23,7 @@ const RoutersList = () => {
     if (id) {
       setRoutes(prevRoutes => {
         if (isEqual(prevRoutes, routerList)) {
-          return { ...prevRoutes, ...routerListAfterAuth, ...redirectRoute }
+          return { ...prevRoutes, ...routerListAfterAuth }
         }
         return prevRoutes
       })

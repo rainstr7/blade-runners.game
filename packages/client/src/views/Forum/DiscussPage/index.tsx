@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import cn from './style.module.scss'
@@ -7,7 +7,6 @@ import Input from '../../../components/UI/Input'
 import Forum from '../index'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../../store/reduces/interfaces'
-import useAlert from '../../../hooks/useAlert'
 import Message from './Message'
 import { EmojiClickData } from 'emoji-picker-react'
 import useForum from '../../../hooks/useForum'
@@ -16,51 +15,61 @@ const DiscussPage = () => {
   const navigate = useNavigate()
   const { register, handleSubmit, reset } = useForm<FieldValues>()
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
-  const { selectedTopic } = useParams()
-  const { display_name, avatar } = useSelector(
-    (state: IRootStore) => state.user
-  )
+  const { selectedForum } = useParams()
+  const loggedUser = useSelector((state: IRootStore) => state.user)
+  const { forums } = useSelector((state: IRootStore) => state.forum)
   const { messages } = useSelector((state: IRootStore) => state.forum)
-  const { handleShowAlert } = useAlert()
-  const { handleAddEmoji, handleDelEmoji, handleAddMessage, handleDelMessage } =
-    useForum()
+  const {
+    handleAddEmoji,
+    handleDelEmoji,
+    getMessagesList,
+    handleAddMessage,
+    handleDelMessage,
+  } = useForum()
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [])
   const [idModalEmoji, setIdModalEmoji] = useState<number>(0)
 
   useEffect(() => {
+    if (selectedForum) {
+      ;(() => getMessagesList(selectedForum))()
+    }
+  }, [])
+
+  useEffect(() => {
     scrollToBottom()
   }, [messages])
 
-  const handleGoBack = () => {
-    navigate(-1)
-  }
-
-  if (!messages) {
-    handleShowAlert('error', 'MESSAGES NOT FOUND')
+  const handleGoToForum = () => {
     navigate('/forum')
-    return null
   }
 
-  const onSubmit: SubmitHandler<FieldValues> = data => {
-    handleAddMessage(
-      Object.keys(messages).length + 1,
-      data.content,
-      display_name,
-      avatar
-    )
-    reset({ content: '' })
+  const onSubmit: SubmitHandler<FieldValues> = async data => {
+    if (selectedForum) {
+      const resp = await handleAddMessage(selectedForum, data.content)
+      resp && reset({ content: '' })
+    }
   }
 
-  const handleAddNewEmoji = useCallback((emoji: EmojiClickData, id: string) => {
-    setIdModalEmoji(0)
-    handleAddEmoji(emoji, +id)
-  }, [])
+  const handleAddNewEmoji = useCallback(
+    async (messageID: number, emoji: EmojiClickData) => {
+      setIdModalEmoji(0)
+      if (selectedForum) {
+        await handleAddEmoji(messageID, selectedForum, emoji)
+      }
+    },
+    [selectedForum]
+  )
 
-  const handleDelOldEmoji = useCallback((emoji: EmojiClickData, id: string) => {
-    handleDelEmoji(emoji, +id)
-  }, [])
+  const handleDelOldEmoji = useCallback(
+    async (messageID: number, emoji: EmojiClickData) => {
+      if (selectedForum) {
+        await handleDelEmoji(messageID, selectedForum, emoji)
+      }
+    },
+    [selectedForum]
+  )
 
   const handleToggleEmoji = (
     events: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -70,38 +79,54 @@ const DiscussPage = () => {
     setIdModalEmoji(prevState => (prevState === +id ? 0 : +id))
   }
 
-  const handleDelOwnMessage = useCallback((id: string) => {
-    handleDelMessage(+id)
+  const handleDelOwnMessage = useCallback(async (messageID: string) => {
+    if (selectedForum) {
+      await handleDelMessage(selectedForum, messageID)
+    }
   }, [])
+
+  const title = useMemo(() => {
+    const unknown = 'UNKNOWN FORUM'
+    if (!selectedForum) {
+      return unknown
+    }
+    const findTitle =
+      forums.find(forum => +forum.id === +selectedForum)?.title ?? 'no title'
+    return findTitle ?? unknown
+  }, [forums, selectedForum])
 
   return (
     <Forum onClick={handleToggleEmoji} id="0">
       <nav className={cn.ThemeHeader}>
-        <Button size="small" onClick={handleGoBack}>
+        <Button size="small" onClick={handleGoToForum}>
           Back
         </Button>
-        <h2>{selectedTopic}</h2>
+        <h2>{title}</h2>
       </nav>
-      <section className={cn.MsgContainer} >
-        {Object.keys(messages).length === 0 ? (
-          <div>Empty topic</div>
+      <section className={cn.MsgContainer}>
+        {messages.length === 0 ? (
+          <div>Empty discuss</div>
         ) : (
-          Object.entries(messages).map(
-            ([id, { avatar, content, author, date, emoji }], index, array) => (
+          messages.map(
+            (
+              { id, avatar, message, display_name, emoji, createdAt },
+              index,
+              array
+            ) => (
               <Message
                 key={id}
                 id={id}
                 avatar={avatar}
-                content={content}
-                author={author}
-                date={date}
+                content={message}
+                author={display_name}
+                createdAt={createdAt}
                 ref={index === array.length - 1 ? messagesEndRef : undefined}
-                emoji={emoji}
+                emoji={emoji || []}
                 addEmoji={handleAddNewEmoji}
                 delEmoji={handleDelOldEmoji}
                 isOpenEmojiList={idModalEmoji === +id}
                 handleToggleEmoji={handleToggleEmoji}
-                isOwnMessage={display_name === author}
+                isOwnMessage={loggedUser.display_name === display_name}
                 handleDelOwnMessage={handleDelOwnMessage}
               />
             )

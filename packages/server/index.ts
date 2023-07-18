@@ -9,44 +9,32 @@ dotenv.config()
 import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
-
-// import { createClientAndConnect } from './db'
-// import sequelize from './dbapi'
-import Forum from './models/Forum'
 import { dbConnect } from './database/init'
-import { getAllForums, getForumById } from './controllers/forumController'
-import { createTopic, getTopicsByForumId } from './controllers/topicController'
-import {
-  getMessagesByTopicId,
-  createMessage,
-  updateMessage,
-  deleteMessage,
-} from './controllers/messageController'
 
 const routes = ['/', '/signin', '/signup']
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
 
+dotenv.config()
 async function startServer() {
   const app = express()
-  app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3001
+
+  const clientPort = Number(process.env.CLIENT_PORT) || 3000
+  const serverPort = Number(process.env.SERVER_PORT) || 3001
+
+  const corsOptions = {
+    credentials: true,
+    origin: [
+      `http://127.0.0.1:${clientPort}`,
+      `http://localhost:${clientPort}`,
+    ],
+  }
+  app.use(cors(corsOptions))
+  app.use(bodyParser.json())
+  app.use(cookieParser())
 
   // Подключаемся к БД
-  dbConnect().then(async () => {
-    await Forum.create({title: 'forum first'})
-    const forums = await Forum.findAll()
-    console.log('FORUMS :',forums)
-  })
-  // createClientAndConnect()
-  // sequelize
-  //   .authenticate()
-  //   .then(() => {
-  //     console.log('Соединение с БД установленно')
-  //   })
-  //   .catch((err: Error) => {
-  //     console.error('Неудалось подключиться к БД: ', err)
-  //   })
-
-  // sequelize.sync({ force: true })
+  dbConnect().catch(e => console.error(e))
 
   let vite: ViteDevServer | undefined
 
@@ -55,20 +43,13 @@ async function startServer() {
   const swPath = path.resolve('../../client/sw')
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
 
-  app.get('/forum', getAllForums)
-  app.get('/topics/:id', getForumById)
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const api = require('./routesAPI')
+  app.use('/api', api)
 
-  app.get('/topics/:forumId', getTopicsByForumId)
-  app.post('/topics', createTopic)
-
-  app.get('/discuss/:topicId', getMessagesByTopicId)
-  app.post('/discuss', createMessage)
-  app.put('/discuss/:id', updateMessage)
-  app.delete('/discuss/:id', deleteMessage)
-
-  app.get("/sw.js", (_, res) => {
-    res.sendFile(path.resolve(swPath, 'sw.js'));
-  });
+  app.get('/sw.js', (_, res) => {
+    res.sendFile(path.resolve(swPath, 'sw.js'))
+  })
 
   if (isDev()) {
     vite = await createViteServer({
@@ -80,15 +61,10 @@ async function startServer() {
     app.use(vite.middlewares)
   }
 
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)')
-  })
-
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
-
-  app.use('*', async (req, res, next) => {
+  const initialSSR = async (req: any, res: any, next: any) => {
     const url = req.originalUrl
 
     try {
@@ -168,10 +144,13 @@ async function startServer() {
       }
       next(e)
     }
-  })
+  }
+  app.use('/', initialSSR)
+  app.use('/signin', initialSSR)
+  app.use('/signup', initialSSR)
 
-  app.listen(port, () => {
-    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  app.listen(serverPort, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${serverPort}`)
   })
 }
 

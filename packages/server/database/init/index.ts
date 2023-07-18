@@ -1,9 +1,16 @@
 import { Sequelize, SequelizeOptions } from 'sequelize-typescript'
-// import { Forum } from '../models/forum'
-// import Forum from '../../models/Forum'
+import User from '../models/User'
+import Forum from '../models/Forum'
+import Message from '../models/Message'
+import Emoji from '../models/Emoji'
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB, POSTGRES_PORT, POSTGRES_HOST } =
-  process.env
+const {
+  POSTGRES_USER,
+  POSTGRES_PASSWORD,
+  POSTGRES_DB,
+  POSTGRES_PORT,
+  POSTGRES_HOST,
+} = process.env
 
 const sequelizeOptions: SequelizeOptions = {
   host: POSTGRES_HOST,
@@ -12,20 +19,40 @@ const sequelizeOptions: SequelizeOptions = {
   password: POSTGRES_PASSWORD,
   database: POSTGRES_DB,
   dialect: 'postgres',
-  models: ['../models']
+  models: [Forum, User, Message, Emoji],
 }
 
-// Создаем инстанс Sequelize
 export const sequelize = new Sequelize(sequelizeOptions)
 
-// Инициализируем модели
-// export const forum = sequelize.define('Forums', Forum, {})
+User.hasMany(Forum, { foreignKey: 'userID' })
+Forum.belongsTo(User, { foreignKey: 'userID' })
+
+User.hasMany(Message, { foreignKey: 'userID' })
+Message.belongsTo(User, { foreignKey: 'userID' })
+
+Message.belongsTo(Forum, { foreignKey: 'forumID' })
+Forum.hasMany(Message, { foreignKey: 'forumID' })
+
+// Message.hasMany(Emoji, { foreignKey: 'messageID'})
+// Emoji.belongsTo(Message, { foreignKey: 'messageID'});
+
+// Forum.hasMany(Emoji, { foreignKey: 'forumID'});
+// User.hasMany(Emoji, { foreignKey: 'userID' });
+
+// Emoji.belongsTo(Forum, { foreignKey: 'forumID'});
+// Emoji.belongsTo(User, { foreignKey: 'userID'});
 
 export async function dbConnect() {
   try {
-    await sequelize.authenticate() // Проверка аутентификации в БД
-    await sequelize.sync({force: true}) // Синхронизация базы данных
-    console.log('Connection has been established successfully.')
+    await sequelize.authenticate()
+    await sequelize.sync({ force: true })
+    console.log(
+      `Connection has been established successfully with options ${JSON.stringify(
+        sequelizeOptions,
+        null,
+        2
+      )}`
+    )
   } catch (error) {
     console.error('Unable to connect to the database:', error)
   }

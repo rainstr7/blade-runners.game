@@ -9,7 +9,7 @@ FROM base as builder
 COPY package.json yarn.lock
 COPY . .
 
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 RUN yarn build --scope=client
 

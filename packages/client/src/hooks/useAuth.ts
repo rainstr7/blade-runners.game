@@ -10,6 +10,7 @@ import {
   changeUserAvatar,
   oAuthSignin,
   getServiceId,
+  SERVER_API,
 } from '../api'
 import useHttp from './useHttp'
 import { FieldValues } from 'react-hook-form'
@@ -21,12 +22,15 @@ import {
 import { REDIRECT_URI } from '../config/oAuth.config'
 import useAlert from './useAlert'
 import { useNavigate } from 'react-router-dom'
+import useTheme from './useTheme'
 
 const useAuth = () => {
   const { request, error } = useHttp()
   const { handleShowAlert } = useAlert()
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { updateClientTheme } = useTheme()
+
   useEffect(() => {
     if (error) {
       handleShowAlert('error', error)
@@ -37,6 +41,12 @@ const useAuth = () => {
     const { status, data } = await request(userData)
     if (status === 200) {
       dispatch(changeProfile(data))
+      const dataFromDB = await request(`${SERVER_API}/auth-user`, 'POST', data)
+      if (dataFromDB.status === 200) {
+        if (dataFromDB.data?.theme === 'dark' || dataFromDB.data?.theme === 'light') {
+          updateClientTheme(dataFromDB.data.theme)
+        }
+      }
     }
   }, [])
 
@@ -68,6 +78,7 @@ const useAuth = () => {
   const handleUpdateData = useCallback(async (body: FieldValues) => {
     const { status, data } = await request(changeUserProfile, 'PUT', body)
     if (status === 200) {
+      await request(`${SERVER_API}/auth-user`, 'POST', data)
       dispatch(changeProfile(data))
       return true
     }

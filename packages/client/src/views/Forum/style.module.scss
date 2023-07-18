@@ -11,6 +11,11 @@ nav {
   padding: 1.25rem;
   width: 100%;
 
+  nav {
+    display: flex;
+    justify-content: space-between;
+  }
+
   a {
     color: $default-color;
   }

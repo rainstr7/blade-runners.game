@@ -8,11 +8,12 @@ interface Props {
 const Button: FC<ButtonHTMLAttributes<HTMLButtonElement> & Props> = ({
   children,
   size = 'medium',
+  type = 'button',
   ...props
 }) => {
   const buttonSize = cn[size]
   return (
-    <button className={`${cn.Button} ${buttonSize}`} {...props}>
+    <button className={`${cn.Button} ${buttonSize}`} type={type} {...props}>
       {children}
     </button>
   )

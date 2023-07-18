@@ -1,1 +1,1 @@
-export const REDIRECT_URI = 'https://blade-runners-game-client.vercel.app/'
+export const REDIRECT_URI = 'https://51.250.31.185:3001/'

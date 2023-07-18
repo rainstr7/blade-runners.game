@@ -10,19 +10,24 @@ import {
   SHOW_LOADER,
   UPDATE_PROFILE,
   ADD_FORUM,
-  ADD_TOPIC,
   ADD_MESSAGE,
   FORUMS_DOWNLOAD,
   MESSAGES_DOWNLOAD,
   ADD_EMOJI,
   DEL_EMOJI,
   DEL_MESSAGE,
-  DEL_TOPIC,
+  SET_THEME,
+  TOGGLE_THEME,
 } from '../actions/types'
 import { EmojiClickData } from 'emoji-picker-react'
 
 type responseInfo = string | undefined
 export type AlertType = 'success' | 'error' | 'warning' | 'info'
+
+export interface ThemePayloadInterface {
+  theme: 'light' | 'dark'
+}
+
 export interface AlertPayloadInterface {
   show: boolean
   type: AlertType
@@ -49,9 +54,9 @@ export interface UserPayloadInterface {
 }
 
 export interface ForumPayloadInterface {
+  id: number
+  authorID: number
   title: string
-  topics: TopicsPayloadInterface
-  topicsCount: number
   messagesCount: number
 }
 
@@ -60,31 +65,22 @@ export interface EmojiPayloadInterface {
   messageID: number | string
 }
 
-export type ForumType = { [id: string | number]: ForumPayloadInterface }
+export type ForumType = ForumPayloadInterface[]
 export type MessageIDPayloadType = { messageID: number }
 export type ForumIDPayloadType = { forumID: number }
-export type TopicIDPayloadType = { topicID: number }
+
 export interface ForumsPayloadInterface {
   forums: ForumType
-  messages: MessagesPayloadInterface
+  messages: MessagePayloadInterface[]
 }
 
-export interface TopicPayloadInterface {
-  title: string
-  messagesCount: number
-}
-export interface TopicsPayloadInterface {
-  [id: string | number]: TopicPayloadInterface
-}
 export interface MessagePayloadInterface {
-  author: string
+  display_name: string
   avatar?: string
-  content: string
-  date: Date
+  message: string
+  createdAt: Date
   emoji: EmojiClickData[]
-}
-export interface MessagesPayloadInterface {
-  [id: string | number]: MessagePayloadInterface
+  id: string
 }
 
 export interface IRootStore {
@@ -93,6 +89,7 @@ export interface IRootStore {
   alert: AlertPayloadInterface
   loading: LoadingPayloadInterface
   forum: ForumsPayloadInterface
+  theme: ThemePayloadInterface
 }
 
 export interface ActionInterface {
@@ -115,8 +112,8 @@ const actions = {
   ADD_EMOJI,
   DEL_EMOJI,
   ADD_FORUM,
-  ADD_TOPIC,
-  DEL_TOPIC,
   ADD_MESSAGE,
   DEL_MESSAGE,
+  SET_THEME,
+  TOGGLE_THEME,
 }

@@ -3,14 +3,20 @@ import * as yup from 'yup'
 export const regFormData = [
   {
     placeholder: 'FIRST NAME',
-    name: 'firstName',
-    autoComplete: 'firstName',
+    name: 'first_name',
+    autoComplete: 'first_name',
     required: true,
   },
   {
     placeholder: 'SECOND NAME',
-    name: 'secondName',
-    autoComplete: 'secondName',
+    name: 'second_name',
+    autoComplete: 'second_name',
+    required: true,
+  },
+  {
+    placeholder: 'DISPLAY NAME',
+    name: 'display_name',
+    autoComplete: 'display_name',
     required: true,
   },
   {
@@ -43,6 +49,7 @@ export const schema = yup
   .object({
     first_name: yup.string().required(),
     second_name: yup.string().required(),
+    display_name: yup.string().required(),
     email: yup.string().email().required(),
     phone: yup
       .string()
