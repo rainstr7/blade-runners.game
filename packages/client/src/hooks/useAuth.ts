@@ -104,10 +104,10 @@ const useAuth = () => {
   }, [])
 
   const handleRegistration = useCallback(async (body: FieldValues) => {
-    const { status, data } = await request(createUserProfile, 'POST', body)
+    const { status, data} = await request(createUserProfile, 'POST', body)
+    dispatch(createProfile(data))
     if (status === 200) {
-      dispatch(createProfile(data))
-      return true
+      return await handleUpdateData(body)
     }
     return false
   }, [])
