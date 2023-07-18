@@ -1,1 +1,1 @@
-export const REDIRECT_URI = 'https://51.250.31.185:3001/'
+export const REDIRECT_URI = 'http://51.250.31.185:3001'
