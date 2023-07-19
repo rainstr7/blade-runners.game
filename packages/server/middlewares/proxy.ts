@@ -4,7 +4,7 @@ import {
   responseInterceptor,
 } from 'http-proxy-middleware'
 import User from '../database/models/User'
-import { allowedHosts, YANDEX_API_HOST } from './constants'
+import { YANDEX_API_HOST } from './constants'
 
 export const proxyMiddleware: RequestHandler = (req, res, next) => {
   // if (!allowedHosts.includes(req.hostname)) {
