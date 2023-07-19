@@ -11,6 +11,7 @@ import {
   oAuthSignin,
   getServiceId,
   SERVER_API,
+  theme,
 } from '../api'
 import useHttp from './useHttp'
 import { FieldValues } from 'react-hook-form'
@@ -41,13 +42,13 @@ const useAuth = () => {
     const { status, data } = await request(userData)
     if (status === 200) {
       dispatch(changeProfile(data))
-      const dataFromDB = await request(`${SERVER_API}/auth-user`, 'POST', data)
-      if (dataFromDB.status === 200) {
+      const response = await request(`${theme}?userID=${data.id}`)
+      if (response.status === 200) {
         if (
-          dataFromDB.data?.theme === 'dark' ||
-          dataFromDB.data?.theme === 'light'
+          response.data?.theme === 'dark' ||
+          response.data?.theme === 'light'
         ) {
-          updateClientTheme(dataFromDB.data.theme)
+          updateClientTheme(response.data.theme)
         }
       }
     }

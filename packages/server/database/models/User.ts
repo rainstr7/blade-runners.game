@@ -57,6 +57,7 @@ class User extends Model {
   avatar: string | undefined
 
   @AllowNull(false)
+  @Default('dark')
   @Length({ max: 20, min: 3 })
   @Column(DataType.STRING)
   theme: string | undefined

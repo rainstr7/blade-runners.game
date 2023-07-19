@@ -46,7 +46,7 @@ const useTheme = () => {
   const handleToggleTheme = useCallback(
     async (theme: 'light' | 'dark') => {
       if (id) {
-        const { status } = await request(`${SERVER_API}/update-theme`, 'PUT', {
+        const { status } = await request(`${SERVER_API}/theme`, 'PUT', {
           id,
           theme,
         })

@@ -1,5 +1,4 @@
 import dotenv from 'dotenv'
-import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
 import isDev from './utils/IsDev'
@@ -12,26 +11,12 @@ import * as path from 'path'
 import { dbConnect } from './database/init'
 
 const routes = ['/', '/signin', '/signup']
-import bodyParser from 'body-parser'
-import cookieParser from 'cookie-parser'
+import { corsMiddleware } from './middlewares/cors'
 
 dotenv.config()
 async function startServer() {
   const app = express()
-
-  const clientPort = Number(process.env.CLIENT_PORT) || 3000
   const serverPort = Number(process.env.SERVER_PORT) || 3001
-
-  const corsOptions = {
-    credentials: true,
-    origin: [
-      `http://127.0.0.1:${clientPort}`,
-      `http://localhost:${clientPort}`,
-    ],
-  }
-  app.use(cors(corsOptions))
-  app.use(bodyParser.json())
-  app.use(cookieParser())
 
   // Подключаемся к БД
   dbConnect().catch(e => console.error(e))
@@ -44,8 +29,13 @@ async function startServer() {
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
 
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const api = require('./routesAPI')
-  app.use('/api', api)
+  const routesAPI = require('./routesAPI')
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const proxyAPI = require('./proxyAPI')
+
+  app.use([corsMiddleware()])
+  app.use('/api', routesAPI)
+  app.use('/yandex-api', proxyAPI)
 
   app.get('/sw.js', (_, res) => {
     res.sendFile(path.resolve(swPath, 'sw.js'))
@@ -110,10 +100,17 @@ async function startServer() {
           phone: undefined,
           avatar: undefined,
         },
+        theme: {
+          theme: 'dark',
+        },
         alert: {
           show: false,
           type: 'success',
           text: '',
+        },
+        forum: {
+          forums: [],
+          messages: [],
         },
         loading: { loading: false },
       })
@@ -145,10 +142,7 @@ async function startServer() {
       next(e)
     }
   }
-  app.use('/', initialSSR)
-  app.use('/signin', initialSSR)
-  app.use('/signup', initialSSR)
-
+  app.use('*', initialSSR)
   app.listen(serverPort, () => {
     console.log(`  ➜ 🎸 Server is listening on port: ${serverPort}`)
   })
