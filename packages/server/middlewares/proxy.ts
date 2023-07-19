@@ -7,11 +7,11 @@ import User from '../database/models/User'
 import { allowedHosts, YANDEX_API_HOST } from './constants'
 
 export const proxyMiddleware: RequestHandler = (req, res, next) => {
-  if (!allowedHosts.includes(req.hostname)) {
-    res.statusCode = 403
-    res.send('<!doctype html><p>req.hostname</p>')
-    return
-  }
+  // if (!allowedHosts.includes(req.hostname)) {
+  //   res.statusCode = 403
+  //   res.send(`<!doctype html><p>${req.hostname}</p>`)
+  //   return
+  // }
 
   return createProxyMiddleware({
     target: YANDEX_API_HOST,
