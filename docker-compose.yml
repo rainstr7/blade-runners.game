@@ -50,7 +50,8 @@ services:
         - ./blade-runner.crt:/etc/ssl/blade-runner.crt
         - ./blade-runner-privateKey.key:/etc/ssl/blade-runner-privateKey.key
       ports:
-        - "3005:3005"
+        - "80:80"
+        - "443:443"
       depends_on:
         - server
       networks:
