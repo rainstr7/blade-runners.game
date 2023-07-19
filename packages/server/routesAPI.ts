@@ -13,9 +13,10 @@ import bodyParser from 'body-parser'
 const routesAPI = express.Router()
 
 routesAPI
-  .get('/forums', getForums)
   .use('/', checkAuthMiddleware)
   .use(bodyParser.json())
+  .get('/forums', getForums)
+
   .post('/forums', addForum)
   .delete('/forums', delForum)
 
