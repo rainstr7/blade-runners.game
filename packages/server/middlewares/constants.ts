@@ -5,5 +5,6 @@ export const API_HOST =
 export const allowedHosts = [
   'localhost',
   '127.0.0.1',
+  'blade-runner.ya-praktikum.tech',
   new URL(API_HOST).hostname,
 ]
