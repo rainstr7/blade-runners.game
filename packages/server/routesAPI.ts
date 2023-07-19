@@ -1,4 +1,4 @@
-import { updateTheme, updateUser } from './controllers/userController'
+import { getTheme, updateTheme } from './controllers/userController'
 import express from 'express'
 import { addForum, delForum, getForums } from './controllers/forumController'
 import {
@@ -7,22 +7,26 @@ import {
   getMessages,
 } from './controllers/messageController'
 import { addEmoji, delEmoji } from './controllers/emojiController'
+import { checkAuthMiddleware } from './middlewares/checkAuth'
+import bodyParser from 'body-parser'
 
 const routesAPI = express.Router()
 
-routesAPI.get('/forums', getForums)
-routesAPI.post('/forums', addForum)
-routesAPI.delete('/forums', delForum)
+routesAPI
+  .get('/forums', getForums)
+  .use('/', checkAuthMiddleware)
+  .use(bodyParser.json())
+  .post('/forums', addForum)
+  .delete('/forums', delForum)
 
-routesAPI.get('/messages', getMessages)
-routesAPI.post('/messages', addMessage)
-routesAPI.delete('/messages', delMessage)
+  .get('/messages', getMessages)
+  .post('/messages', addMessage)
+  .delete('/messages', delMessage)
 
-routesAPI.post('/emoji', addEmoji)
-routesAPI.delete('/emoji', delEmoji)
+  .post('/emoji', addEmoji)
+  .delete('/emoji', delEmoji)
 
-routesAPI.post('/auth-user', updateUser)
-
-routesAPI.put('/update-theme', updateTheme)
+  .get('/theme', getTheme)
+  .put('/theme', updateTheme)
 
 module.exports = routesAPI

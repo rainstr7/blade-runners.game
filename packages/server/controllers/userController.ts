@@ -7,48 +7,22 @@ import {
 } from './messages'
 import User from '../database/models/User'
 
-export const updateUser = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
-  const body = req.body
+export const getTheme = async (req: Request, res: Response): Promise<void> => {
+  const { userID } = req.query
 
-  if (!body) {
-    res.status(400).send(MISSING_BODY_REASON)
-  }
-  const {
-    id,
-    first_name,
-    second_name,
-    display_name,
-    avatar,
-    email,
-    phone,
-    login,
-  } = body ?? {}
-
-  if (!login || !id) {
+  if (!userID) {
     res.status(400).send({ reason: INCORRECT_USER_DATA_REASON })
   }
   try {
-    const [currentUser] = await User.findOrCreate({
-      where: { id },
-      defaults: {
-        id,
-        first_name,
-        second_name,
-        display_name,
-        login,
-        email,
-        phone,
-        avatar,
-        theme: 'dark',
-      },
-    })
-    res.json(currentUser)
+    const currentUser = await User.findOne({ where: { id: userID } })
+    if (currentUser !== null) {
+      res.status(200).send({ theme: currentUser.theme })
+    } else {
+      res.status(401).send({ reason: USER_NOT_FOUNDED })
+    }
   } catch (error) {
     console.error(error)
-    res.status(500).json({ reason: SERVER_ERROR_REASON })
+    res.status(500).send({ reason: SERVER_ERROR_REASON })
   }
 }
 
