@@ -30,7 +30,7 @@ const Layout = ({ children }: Props) => {
     return (
       <div
         className={`${cn.Layout} ${cn[type ?? 'Default']}`}
-        style={{ backgroundImage: `url(${theme?.layoutBackground})` }}>
+        style={{ backgroundImage: `url(${theme?.layoutBackground})`, backgroundColor: `${theme.type === 'light' ? '#FC7BEF' : '#0E0462'}` }}>
         <FullScreen />
         <NetworkIndicator />
         <div className={`${cn.Container}`}>
