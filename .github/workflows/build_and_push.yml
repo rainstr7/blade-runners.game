@@ -3,9 +3,8 @@ name: Push to GitHub Container Registry
 on:
   push:
     branches:
-#      - dev
-#      - master
-      - BLA-55
+      - dev
+      - master
 
 jobs:
   build-and-push:
