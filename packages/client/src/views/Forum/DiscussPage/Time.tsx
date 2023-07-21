@@ -1,16 +1,15 @@
 import { useMemo } from 'react'
 
 interface TimeInterface {
-  createdAt: Date
+  date: Date
 }
 
-const Time = ({ createdAt }: TimeInterface) => {
+const Time = ({ date }: TimeInterface) => {
   const normalizedTime = useMemo(() => {
-    const createdAtDate = new Date(createdAt)
-    return `${String(createdAtDate.getHours()).padStart(2, '0')}:${String(
-      createdAtDate.getMinutes()
+    return `${String(date.getHours()).padStart(2, '0')}:${String(
+      date.getMinutes()
     ).padStart(2, '0')}`
-  }, [createdAt])
+  }, [date])
   return <span>{normalizedTime}</span>
 }
 

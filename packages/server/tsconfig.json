@@ -8,8 +8,6 @@
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "removeComments": true,
     "strict": true,
     "noImplicitAny": true,

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 import cn from './style.module.scss'
 import Button from '../../../components/UI/Button'
@@ -10,17 +10,21 @@ import useForum from '../../../hooks/useForum'
 const CreateTheme = () => {
   const { register, handleSubmit, reset } = useForm<FieldValues>()
   const navigate = useNavigate()
-  const { handleAddForum } = useForum()
+  const { handleAddTopic } = useForum()
+  const { selectedForum } = useParams()
 
   function handleGoBack() {
     navigate(-1)
   }
-
+  if (!selectedForum) {
+    navigate('/forums')
+    return null
+  }
   //form logic
-  const onSubmit: SubmitHandler<FieldValues> = async data => {
-    reset()
-    await handleAddForum(data.title)
-    navigate('/forum')
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+    handleAddTopic(+selectedForum, data.title)
+    reset({ title: '' })
+    navigate(`/topics/${selectedForum}`)
   }
 
   return (
@@ -41,9 +45,7 @@ const CreateTheme = () => {
               register={register}
               options={{ required: true }}
             />
-            <Button size="small" type="submit">
-              CREATE
-            </Button>
+            <Button size="small">CREATE</Button>
           </form>
         </div>
       </div>

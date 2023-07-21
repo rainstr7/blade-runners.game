@@ -28,8 +28,3 @@
   grid-column-end: 3;
   @include flex-between;
 }
-
-.location {
-  color: var(--default-color);
-  text-align: right;
-}

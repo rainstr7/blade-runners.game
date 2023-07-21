@@ -18,9 +18,6 @@ const Profile = () => {
   const [view, setView] = useState<'changeProfile' | 'changePassword'>(
     'changeProfile'
   )
-
-  const [location, setLocation] = useState<GeolocationPosition | undefined>(undefined)
-
   const resolver = useMemo(() => {
     return yupResolver<FieldValues>(schema[view])
   }, [view])
@@ -48,12 +45,6 @@ const Profile = () => {
       handleShowAlert('error', error)
     }
   }, [error])
-
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLocation(position)
-    });
-  }, [])
 
   const onSubmit: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     const {
@@ -148,13 +139,6 @@ const Profile = () => {
 
   return (
     <main className={cn.profile}>
-      {location ?
-        <div className={cn.location}>
-          <p>Your location:</p>
-          <p>{location?.coords?.latitude}</p>
-          <p>{location?.coords?.longitude}</p>
-        </div> : ''
-      }
       <div className={cn.title}>
         <CardLink to="/start">Back</CardLink>
         <Avatar

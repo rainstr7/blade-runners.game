@@ -8,10 +8,9 @@ WORKDIR /app
 FROM base as builder
 
 COPY package.json yarn.lock
-COPY . .
-
 RUN yarn install --frozen-lockfile
 
+COPY . .
 
 RUN yarn lerna bootstrap
 RUN rm -rf /app/packages/server/dist/ && yarn build --scope=client

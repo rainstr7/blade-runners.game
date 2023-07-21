@@ -10,6 +10,7 @@ import Game from '../../views/Game'
 import Profile from '../../views/Profile'
 import LeaderBoard from '../../views/Leaderboard'
 import CreateTheme from '../../views/Forum/CreateTheme'
+import TopicPage from '../../views/Forum/TopicPage'
 import DiscussPage from '../../views/Forum/DiscussPage'
 import ForumPage from '../../views/Forum/ForumPage'
 
@@ -54,7 +55,7 @@ export const routerListBeforeAuth = {
     header: 'BLADE RUNNERS',
     type: 'Default',
   },
-  '/create-theme': {
+  '/topics/*': {
     component: <Navigate to="/signin" replace />,
     header: 'BLADE RUNNERS',
     type: 'Default',
@@ -79,13 +80,13 @@ export const forError = {
   },
 }
 
-// export const redirectRoute = {
-//   '*': {
-//     component: <Navigate to="/404" replace />,
-//     header: '',
-//     type: '',
-//   },
-// }
+export const redirectRoute = {
+  '*': {
+    component: <Navigate to="/404" replace />,
+    header: '',
+    type: '',
+  },
+}
 
 export const routerListForGame = {
   '/start': {
@@ -118,12 +119,17 @@ export const routerListForGame = {
     header: 'BLADE RUNNERS',
     type: 'Default',
   },
-  '/create-theme': {
+  '/forum/newtheme/:selectedForum': {
     component: <CreateTheme />,
     header: 'BLADE RUNNERS',
     type: 'Default',
   },
-  '/discuss/:selectedForum': {
+  '/topics/:selectedForum': {
+    component: <TopicPage />,
+    header: 'BLADE RUNNERS',
+    type: 'Default',
+  },
+  '/discuss/:selectedTopic': {
     component: <DiscussPage />,
     header: 'BLADE RUNNERS',
     type: 'Default',
@@ -151,5 +157,5 @@ export const routerList = {
   },
   ...routerListBeforeAuth,
   ...forError,
-  // ...redirectRoute,
+  ...redirectRoute,
 }

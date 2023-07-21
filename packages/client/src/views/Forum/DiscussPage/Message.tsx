@@ -14,12 +14,12 @@ import DeleteButton from '../../../components/UI/DeleteButton'
 interface MessageProps {
   id: string
   author: string
-  createdAt: Date
+  date: Date
   content: string
   avatar?: string
   emoji: EmojiClickData[]
-  addEmoji(id: number, emoji: EmojiClickData): void
-  delEmoji(id: number, emoji: EmojiClickData): void
+  addEmoji(emoji: EmojiClickData, id: string): void
+  delEmoji(emoji: EmojiClickData, id: string): void
   isOpenEmojiList: boolean
   handleToggleEmoji(event: React.MouseEvent<HTMLDivElement, MouseEvent>): void
   isOwnMessage: boolean
@@ -31,7 +31,7 @@ const Message = forwardRef(
     {
       id,
       author,
-      createdAt,
+      date,
       content,
       avatar,
       emoji,
@@ -44,7 +44,7 @@ const Message = forwardRef(
     }: MessageProps,
     ref: LegacyRef<HTMLDivElement> | undefined
   ) => {
-    if (!createdAt || !author) {
+    if (!date || !author || !emoji) {
       return <div>No messages</div>
     }
     return (
@@ -52,7 +52,7 @@ const Message = forwardRef(
         <div className={cn.MsgHeader}>
           <Avatar src={getAvatarFullUrl(avatar)} name={author} />
           <div className={cn.DelButtonWrapper}>
-            <Time createdAt={createdAt} />
+            <Time date={date} />
             {isOwnMessage && (
               <DeleteButton onClick={() => handleDelOwnMessage(id)} />
             )}
@@ -60,30 +60,25 @@ const Message = forwardRef(
         </div>
         <div className={cn.MsgBody}>{content}</div>
         <div className={cn.EmojiContainer}>
-          {emoji.map(
-            emoji =>
-              emoji && (
-                <div
-                  className={
-                    cn[isOwnMessage ? 'EmojiWrapper' : 'EmojiStaticWrapper']
-                  }
-                  onClick={() => delEmoji(+id, emoji)}
-                  key={emoji.unified}>
-                  <Emoji
-                    unified={emoji.unified}
-                    emojiStyle={EmojiStyle.APPLE}
-                    size={20}
-                  />
-                </div>
-              )
-          )}
+          {emoji.map(emoji => (
+            <div
+              className={cn.EmojiWrapper}
+              onClick={() => delEmoji(emoji, id)}
+              key={emoji.unified}>
+              <Emoji
+                unified={emoji.unified}
+                emojiStyle={EmojiStyle.APPLE}
+                size={20}
+              />
+            </div>
+          ))}
           <div className={cn.AddEmoji} onClick={handleToggleEmoji} id={id}>
             <Emoji unified="2795" emojiStyle={EmojiStyle.APPLE} size={20} />
           </div>
           {isOpenEmojiList && (
             <div className={cn.EmojiPickerWrapper}>
               <EmojiPicker
-                onEmojiClick={emoji => addEmoji(+id, emoji)}
+                onEmojiClick={emoji => addEmoji(emoji, id)}
                 autoFocusSearch={false}
                 emojiStyle={EmojiStyle.APPLE}
                 searchDisabled

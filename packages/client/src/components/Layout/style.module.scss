@@ -1,47 +1,6 @@
 @import './../../styles/vars';
 @import './../../styles/mixins';
 
-.ThemeWrapper {
-  display: flex;
-  width: 100%;
-  height: 100%;
-}
-
-.button {
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  z-index: 2;
-  cursor: pointer;
-
-  @include flex-center;
-
-  top: 10px;
-  left: 10px;
-  position: absolute;
-
-  &.light {
-    background: transparent;
-    border: none;
-    backdrop-filter: blur(40px);
-
-    &::before {
-      content: '\1F315';
-      font-size: 33px;
-    }
-  }
-
-  &.dark {
-    background: #00000080;
-    border: none;
-
-    &::before {
-      content: '\1F319';
-      font-size: 33px;
-    }
-  }
-}
-
 .Layout {
   display: flex;
   flex-grow: 1;
@@ -68,7 +27,7 @@
 }
 
 .GameOver {
-  background-image: url('../../assets/gameover_bg.jpg');
+  background-image: url('../../assets/gameover_bg.jpeg');
 }
 
 .Default {
@@ -76,7 +35,7 @@
 }
 
 .Error {
-  background-image: url('../../assets/error_bg.jpg');
+  background-image: url('../../assets/error_bg.png');
 
   h1 {
     color: $active;

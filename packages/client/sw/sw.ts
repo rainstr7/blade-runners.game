@@ -2,7 +2,7 @@ const CHECK_ONLINE_STATUS_PARAM = 'check-online'
 const VERSION = '0.0.1'
 const STATIC_CACHE_NAME = `static-app-v-${VERSION}`
 const DYNAMIC_CACHE_NAME = `dynamic-app-v-${VERSION}`
-const INDEX_HTML_PATH = './index.html'
+const INDEX_HTML_PATH = '/index.html'
 
 const ASSET_URLS = ['/*', INDEX_HTML_PATH]
 
@@ -53,7 +53,7 @@ self.addEventListener('fetch', async event => {
   }
 })
 
-async function networkFirst(request) {
+async function networkFirst(request: Request) {
   const fetchRequest = await request.clone()
   const cache = await caches.open(DYNAMIC_CACHE_NAME)
 

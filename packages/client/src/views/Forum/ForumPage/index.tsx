@@ -1,75 +1,56 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import cn from './style.module.scss'
 import Button from '../../../components/UI/Button'
 import Forum from '../index'
-import React, { useCallback, useEffect } from 'react'
-import useForum from '../../../hooks/useForum'
-import DeleteButton from '../../../components/UI/DeleteButton'
 import { useSelector } from 'react-redux'
 import { IRootStore } from '../../../store/reduces/interfaces'
+import { useEffect } from 'react'
+import useForum from '../../../hooks/useForum'
 
 const ForumPage = () => {
   const navigate = useNavigate()
   const { forums } = useSelector((state: IRootStore) => state.forum)
-  const { getForumsList, handleDelForum } = useForum()
+  const { getForumsList } = useForum()
 
   useEffect(() => {
-    ;(async () => await getForumsList())()
-  }, [])
-
-  const handleGoCreate = useCallback(() => {
-    navigate('/create-theme')
+    getForumsList().catch()
   }, [])
 
   const handleGoToStart = () => {
     navigate('/start')
   }
 
-  const handleDownloadMessages = useCallback(
-    async (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      const { id } = event.currentTarget
-      navigate(`/discuss/${id}`)
-    },
-    []
-  )
-  const handleDeleteForum = async (id: string) => {
-    await handleDelForum(id)
-  }
   return (
     <Forum>
       <nav>
         <Button size="small" onClick={handleGoToStart}>
           Back
         </Button>
-        <h2>Forums</h2>
-        <Button size="small" onClick={handleGoCreate}>
-          CREATE THEME
-        </Button>
       </nav>
-      <ul className={cn.ListContainer}>
-        <li className={cn.ListElement}>
-          <div className={cn.HeaderContainer}>
-            <div className={cn.TitleHeader}>THEME</div>
-            <div className={cn.MsgCountHeader}>COMMENTS</div>
-          </div>
-        </li>
-        {forums.map(({ id, title, messagesCount }) => (
-          <li className={cn.ButtonElement} key={id}>
-            <div className={cn.Topic}>
-              <div
-                className={cn.Title}
-                onClick={handleDownloadMessages}
-                id={String(id)}>
-                {title}
-              </div>
-              <div className={cn.MsgCount}>{messagesCount}</div>
-              <div className={cn.DelButtonWrapper}>
-                <DeleteButton onClick={() => handleDeleteForum(`${id}`)} />
-              </div>
+      <div className={cn.ListContainer}>
+        <ul className={cn.List}>
+          <li className={cn.ListElement}>
+            <div className={cn.HeaderContainer}>
+              <div className={cn.TitleHeader}>FORUMS/SOCIAL</div>
+              <div className={cn.TopicCountHeader}>TRENDS</div>
+              <div className={cn.MsgCountHeader}>COMMENTS</div>
             </div>
           </li>
-        ))}
-      </ul>
+          {Object.entries(forums).map(
+            ([id, { title, topicsCount, messagesCount }]) => {
+              return (
+                <li className={cn.ListElement} key={id}>
+                  <Link className={cn.LinkElement} to={`/topics/${id}`}>
+                    <p className={cn.Title}>{title}</p>
+                    <p className={cn.TopicCount}>{topicsCount}</p>
+                    <p className={cn.MsgCount}>{messagesCount}</p>
+                  </Link>
+                </li>
+              )
+            }
+          )}
+        </ul>
+      </div>
     </Forum>
   )
 }
