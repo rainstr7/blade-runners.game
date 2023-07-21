@@ -2,15 +2,13 @@ import './App.css'
 import Layout from './components/Layout'
 import ErrorBoundary from './components/ErrorBoundary'
 import RoutersList from './components/RouterList'
-import { ThemeProvider } from './components/Theme'
+import React from 'react'
 
 const App = () => (
-  <ThemeProvider>
-    <Layout>
-      <ErrorBoundary>
-        <RoutersList />
-      </ErrorBoundary>
-    </Layout>
-  </ThemeProvider>
+  <Layout>
+    <ErrorBoundary>
+      <RoutersList />
+    </ErrorBoundary>
+  </Layout>
 )
 export default App

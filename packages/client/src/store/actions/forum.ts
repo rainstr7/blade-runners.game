@@ -1,22 +1,18 @@
 import {
   ADD_EMOJI,
+  ADD_FORUM,
   ADD_MESSAGE,
-  ADD_TOPIC,
   DEL_EMOJI,
   DEL_MESSAGE,
-  DEL_TOPIC,
   FORUMS_DOWNLOAD,
   MESSAGES_DOWNLOAD,
 } from './types'
 import {
   EmojiPayloadInterface,
-  ForumIDPayloadType,
+  ForumPayloadInterface,
   ForumType,
   MessageIDPayloadType,
   MessagePayloadInterface,
-  MessagesPayloadInterface,
-  TopicIDPayloadType,
-  TopicPayloadInterface,
 } from '../reduces/interfaces'
 
 export const forumsDownload = (payload: ForumType) => {
@@ -26,9 +22,17 @@ export const forumsDownload = (payload: ForumType) => {
   }
 }
 
-export const messagesDownload = (payload: MessagesPayloadInterface) => {
+export const messagesDownload = (payload: any[]) => {
+  //TODO add interface
   return {
     type: MESSAGES_DOWNLOAD,
+    payload,
+  }
+}
+
+export const addForum = (payload: ForumPayloadInterface) => {
+  return {
+    type: ADD_FORUM,
     payload,
   }
 }
@@ -57,22 +61,6 @@ export const addMessage = (payload: MessagePayloadInterface) => {
 export const delMessage = (payload: MessageIDPayloadType) => {
   return {
     type: DEL_MESSAGE,
-    payload,
-  }
-}
-
-export const addTopic = (
-  payload: TopicPayloadInterface & ForumIDPayloadType
-) => {
-  return {
-    type: ADD_TOPIC,
-    payload,
-  }
-}
-
-export const delTopic = (payload: ForumIDPayloadType & TopicIDPayloadType) => {
-  return {
-    type: DEL_TOPIC,
     payload,
   }
 }

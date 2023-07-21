@@ -11,8 +11,7 @@ initialServiceWorker()
 const store = create(window.__PRELOADED_STATE__)
 delete window.__PRELOADED_STATE__
 
-ReactDOM.hydrateRoot(
-  document.getElementById('root') as HTMLElement,
+const app = (
   <StrictMode>
     <Provider store={store}>
       <BrowserRouter>
@@ -21,3 +20,10 @@ ReactDOM.hydrateRoot(
     </Provider>
   </StrictMode>
 )
+
+const rootElement = document.getElementById('root') as HTMLElement
+if (rootElement.innerHTML === '<!--ssr-outlet-->') {
+  ReactDOM.createRoot(rootElement).render(app)
+} else {
+  ReactDOM.hydrateRoot(rootElement, app)
+}

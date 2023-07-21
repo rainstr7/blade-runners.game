@@ -2,6 +2,7 @@ import cn from './style.module.scss'
 import { useMemo } from 'react'
 import { ChangeEvent } from 'react'
 import EditIcon from '../../Icons/EditIcon'
+import avatar from '../../../assets/avatar.jpg'
 
 interface AvatarProps {
   src?: string
@@ -11,7 +12,7 @@ interface AvatarProps {
 }
 
 const Avatar = ({
-  src = './avatar.jpeg',
+  src = avatar,
   name,
   size = 'small',
   onChangeAvatar,

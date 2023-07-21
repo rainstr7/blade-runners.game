@@ -1,5 +1,4 @@
 import dotenv from 'dotenv'
-import cors from 'cors'
 import { createServer as createViteServer } from 'vite'
 import type { ViteDevServer } from 'vite'
 import isDev from './utils/IsDev'
@@ -9,23 +8,38 @@ dotenv.config()
 import express from 'express'
 import * as fs from 'fs'
 import * as path from 'path'
-
-import { createClientAndConnect } from './db'
+import { dbConnect } from './database/init'
 
 const routes = ['/', '/signin', '/signup']
+import { corsMiddleware } from './middlewares/cors'
 
+dotenv.config()
 async function startServer() {
   const app = express()
-  app.use(cors())
-  const port = Number(process.env.SERVER_PORT) || 3000
+  const serverPort = Number(process.env.SERVER_PORT) || 3001
 
-  createClientAndConnect()
+  // Подключаемся к БД
+  dbConnect().catch(e => console.error(e))
 
   let vite: ViteDevServer | undefined
 
   const distPath = path.resolve('../../client/dist')
   const srcPath = path.resolve('../../client')
+  const swPath = path.resolve('../../client/sw')
   const ssrClientPath = path.resolve('../../client/ssr-dist/client.cjs')
+
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const routesAPI = require('./routesAPI')
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const proxyAPI = require('./proxyAPI')
+
+  app.use([corsMiddleware()])
+  app.use('/api', routesAPI)
+  app.use('/yandex-api', proxyAPI)
+
+  app.get('/sw.js', (_, res) => {
+    res.sendFile(path.resolve(swPath, 'sw.js'))
+  })
 
   if (isDev()) {
     vite = await createViteServer({
@@ -37,33 +51,24 @@ async function startServer() {
     app.use(vite.middlewares)
   }
 
-  app.get('/api', (_, res) => {
-    res.json('👋 Howdy from the server :)')
-  })
-
   if (!isDev()) {
     app.use('/assets', express.static(path.resolve(distPath, 'assets')))
   }
-
-  app.use('*', async (req, res, next) => {
+  const initialSSR = async (req: any, res: any, next: any) => {
     const url = req.originalUrl
 
     try {
       let template: string
 
-
       if (!isDev()) {
         template = fs.readFileSync(
           path.resolve(distPath, 'index.html'),
           'utf-8'
-        );
+        )
       } else {
-        template = fs.readFileSync(
-          path.resolve(srcPath, 'index.html'),
-          'utf-8'
-        );
+        template = fs.readFileSync(path.resolve(srcPath, 'index.html'), 'utf-8')
 
-        template = await vite!.transformIndexHtml(url, template);
+        template = await vite!.transformIndexHtml(url, template)
       }
 
       let create: (initialState: any) => any
@@ -95,10 +100,17 @@ async function startServer() {
           phone: undefined,
           avatar: undefined,
         },
+        theme: {
+          theme: 'dark',
+        },
         alert: {
           show: false,
           type: 'success',
           text: '',
+        },
+        forum: {
+          forums: [],
+          messages: [],
         },
         loading: { loading: false },
       })
@@ -129,10 +141,10 @@ async function startServer() {
       }
       next(e)
     }
-  })
-
-  app.listen(port, () => {
-    console.log(`  ➜ 🎸 Server is listening on port: ${port}`)
+  }
+  app.use('*', initialSSR)
+  app.listen(serverPort, () => {
+    console.log(`  ➜ 🎸 Server is listening on port: ${serverPort}`)
   })
 }
 
